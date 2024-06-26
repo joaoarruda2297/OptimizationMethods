@@ -52,6 +52,14 @@ class ParticleSwarmOptimization:
         posicao_final = (
             vecPos + vecVeloc
         )
+
+        #tratativa para caso ultrapasse os limites
+        for i in range(len(posicao_final)):
+            if posicao_final[i] > self.lim_sup:
+                posicao_final[i] = float(self.lim_sup)
+            elif posicao_final[i] < self.lim_inf:
+                posicao_final[i] = float(self.lim_inf)
+
         return posicao_final
 
 def main():
