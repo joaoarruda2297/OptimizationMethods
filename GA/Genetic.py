@@ -89,7 +89,7 @@ class GeneticAlgorithm:
 
 
 def main():
-    alg = GenteticAlgorithm()
+    alg = GeneticAlgorithm()
     populacao = alg.inicia_populacao()
 
     solucoes = []
