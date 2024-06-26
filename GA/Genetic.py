@@ -3,7 +3,7 @@ from contextlib import redirect_stdout
 from copy import deepcopy
 import matplotlib.pyplot as plt
 
-class GenteticAlgorithm:
+class GeneticAlgorithm:
     def __init__(self):
         self.num_individuos = 500
         self.num_variaveis = 10 #no minimo 4
