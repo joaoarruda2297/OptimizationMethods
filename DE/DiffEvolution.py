@@ -3,44 +3,69 @@ from contextlib import redirect_stdout
 from copy import deepcopy
 import matplotlib.pyplot as plt
 
-class GeneticAlgorithm:
+class DifferentialEvolution:
     def __init__(self):
-        self.num_individuos = 500
-        self.num_variaveis = 10 #no minimo 4
+        self.num_individuos = 100
+        self.num_variaveis = 4 #no minimo 4
         self.num_geracoes = 100
-        self.taxa_cruzamento = 0.6 #quantidade de pais que gerarão individuos (pais/2)
-        self.taxa_mutacao = 0.3 #quantidade de individuos que vão receber mutação
         self.lim_sup = 5.0
         self.lim_inf = -5.0
+        self.passo = 1
+        self.taxa_cruzamento = 0.6
 
-    def avaliacao(self, vetor):#funcao objetivo aqui!!!
-        
+    def avaliacao(self, individuo):#funcao objetivo aqui!!!
+        valoravaliado = np.sum(individuo**2)
+        return valoravaliado
 
     def inicia_populacao(self):
+        popinicial = np.random.randint(self.lim_inf, self.lim_sup, (self.num_individuos, self.num_variaveis))
         
+        return popinicial
 
-    def seleciona_pais(self, populacao):
-        
+    #def crossover(self, populacao, mutantes):
+        #for i in range(len(populacao)):
+            
 
-    def crossover(self, pais):
-        
-    
-    def seleciona_mutantes(self, populacao):
-        
+    def mutacao(self, populacao):
+        mutantes = []
+        for i in range(len(populacao)):
 
-    def mutacao(self, ind_para_mutacao):
+            #gerando 3 indices aleatórios
+            idx = [i]
+            while len(idx) < 4:
+                random_index = np.random.randint(0, self.num_variaveis)
+                alreadyExists = False
+                for j in range(len(idx)):
+                    if idx[j] == random_index:
+                        alreadyExists = True
+                        break
+                if alreadyExists is False:
+                    idx.append(random_index)
+
+            #gerando mutante
+            mutante = (
+                populacao[idx[1]] + 
+                self.passo*(populacao[idx[3]] - populacao[idx[2]])
+                )
+
+            mutantes.append(mutante)
+                
+        return mutantes
         
 
 
 def main():
-    alg = GeneticAlgorithm()
+    alg = DifferentialEvolution()
     populacao = alg.inicia_populacao()
+    mutantes = alg.mutacao(populacao)
+    evoluidos = alg.crossover(populacao, mutantes)
 
-    solucoes = []
+    '''solucoes = []
     melhor_solucao = (alg.lim_inf**2) * alg.num_variaveis if abs(alg.lim_inf) > abs(alg.lim_sup) else (alg.lim_sup**2) * alg.num_variaveis
     geracao = -1
 
     for i in range(alg.num_geracoes):
+
         
 
     print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", populacao[0][0])
@@ -58,7 +83,7 @@ def main():
     plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
     plt.tight_layout()
     plt.savefig('SolutionEvolutionGA.png')
-    plt.show()
+    plt.show()'''
     
 
 if __name__ == "__main__":
