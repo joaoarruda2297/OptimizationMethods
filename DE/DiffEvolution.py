@@ -11,19 +11,30 @@ class DifferentialEvolution:
         self.lim_sup = 5.0
         self.lim_inf = -5.0
         self.passo = 1
-        self.taxa_cruzamento = 0.6
+        self.CR = 0.6
 
     def avaliacao(self, individuo):#funcao objetivo aqui!!!
         valoravaliado = np.sum(individuo**2)
         return valoravaliado
 
     def inicia_populacao(self):
-        popinicial = np.random.randint(self.lim_inf, self.lim_sup, (self.num_individuos, self.num_variaveis))
+        popinicial = np.random.uniform(self.lim_inf, self.lim_sup, (self.num_individuos, self.num_variaveis))
         
         return popinicial
 
-    #def crossover(self, populacao, mutantes):
-        #for i in range(len(populacao)):
+    def crossover(self, populacao, mutantes):
+        novos_candidatos = []
+        for i in range(len(populacao)):
+            trial_vector = []
+            l = np.random.randint(0, self.num_variaveis)
+            for j in range(self.num_variaveis):
+                r = np.random.rand()
+                if r > self.CR and j != l:
+                    trial_vector[j] = populacao[i][j]
+                elif r <= self.CR or j == l:
+                    trial_vector[j] = mutantes[i][j]
+            novos_candidatos.append(trial_vector)
+        return novos_candidatos
             
 
     def mutacao(self, populacao):
