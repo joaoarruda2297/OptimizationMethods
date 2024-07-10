@@ -135,7 +135,7 @@ def main():
     texto = "Valor final: " + str(round(melhor_solucao, 4)) + "\nAlcançado na geração: " + str(geracao) 
     plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
     plt.tight_layout()
-    plt.savefig('SolutionEvolutionGA.png')
+    plt.savefig('SolutionEvolutionDE.png')
     plt.show()
     
 
