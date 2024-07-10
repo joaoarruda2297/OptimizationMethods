@@ -13,8 +13,9 @@ class DifferentialEvolution:
         self.passo = 1
         self.CR = 0.6
 
-    def avaliacao(self, individuo):#funcao objetivo aqui!!!
-        valoravaliado = np.sum(individuo**2)
+    def avaliacao(self, vetor):#funcao objetivo aqui!
+        vetor_array = np.array(vetor)
+        valoravaliado = np.sum(vetor_array**2)
         return valoravaliado
 
     def inicia_populacao(self):
@@ -30,9 +31,9 @@ class DifferentialEvolution:
             for j in range(self.num_variaveis):
                 r = np.random.rand()
                 if r > self.CR and j != l:
-                    trial_vector[j] = populacao[i][j]
+                    trial_vector.append(populacao[i][j])
                 elif r <= self.CR or j == l:
-                    trial_vector[j] = mutantes[i][j]
+                    trial_vector.append(mutantes[i][j])
             novos_candidatos.append(trial_vector)
         return novos_candidatos
             
@@ -68,21 +69,62 @@ class DifferentialEvolution:
 def main():
     alg = DifferentialEvolution()
     populacao = alg.inicia_populacao()
-    mutantes = alg.mutacao(populacao)
-    evoluidos = alg.crossover(populacao, mutantes)
 
-    '''solucoes = []
+    solucoes = []
     melhor_solucao = (alg.lim_inf**2) * alg.num_variaveis if abs(alg.lim_inf) > abs(alg.lim_sup) else (alg.lim_sup**2) * alg.num_variaveis
+    idx_melhor_solucao = -1
     geracao = -1
 
     for i in range(alg.num_geracoes):
+        print("GERACAO {}".format(i+1))
 
+        mutantes = alg.mutacao(populacao)
+
+        for l in range(len(mutantes)):
+            print("Mutante {}:".format(l+1))
+            print("FuncObj: {}".format(alg.avaliacao(mutantes[l])))
+            print("Cromossomo: {}".format(mutantes[l]))
+            print(" ")
+        print("-----------------------------------------")
+
+        evoluidos = alg.crossover(populacao, mutantes)
+
+        for l in range(len(evoluidos)):
+            print("Evoluido {}:".format(l+1))
+            print("FuncObj: {}".format(alg.avaliacao(evoluidos[l])))
+            print("Cromossomo: {}".format(evoluidos[l]))
+            print(" ")
+        print("-----------------------------------------")
+
+        for j in range(alg.num_individuos):
+            fit_evoluido = alg.avaliacao(evoluidos[j])
+            fit_individuo = alg.avaliacao(populacao[j])
+
+            if fit_evoluido < fit_individuo:
+                populacao[j] = evoluidos[j]
         
+        for l in range(len(populacao)):
+            print("Individuo {}:".format(l+1))
+            print("FuncObj: {}".format(alg.avaliacao(populacao[l])))
+            print("Cromossomo: {}".format(populacao[l]))
+            print(" ")
+        print("-----------------------------------------")
+        
+        for k in range(alg.num_individuos):
+            fit_vetor = alg.avaliacao(populacao[k])
 
-    print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", populacao[0][0])
+            if fit_vetor < melhor_solucao:
+                melhor_solucao = fit_vetor
+                idx_melhor_solucao = k
+                geracao = i
+        
+        solucoes.append(melhor_solucao)
+            
+
+    print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", melhor_solucao)
     print("Com os seguintes valores para cada variavel de decisao:")
     for z in range(alg.num_variaveis):
-        print("x{}: {}".format(z+1, populacao[0][1][z]))
+        print("x{}: {}".format(z+1, populacao[idx_melhor_solucao][z]))
 
     # Plotando o gráfico
     plt.plot(range(1, alg.num_geracoes+1), solucoes)
@@ -90,11 +132,11 @@ def main():
     plt.ylabel('Valor da Função Objetivo')
     plt.title('Evolução da Melhor Solução ao Longo das Gerações')
     plt.grid(True)
-    texto = "Valor final: " + str(round(populacao[0][0], 4)) + "\nAlcançado na geração: " + str(geracao) 
+    texto = "Valor final: " + str(round(melhor_solucao, 4)) + "\nAlcançado na geração: " + str(geracao) 
     plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
     plt.tight_layout()
     plt.savefig('SolutionEvolutionGA.png')
-    plt.show()'''
+    plt.show()
     
 
 if __name__ == "__main__":
