@@ -12,5 +12,5 @@
  - Cada individuo é considerado como um cromossomo em matriz de 5 linhas e N colunas. Onde cada valor dentro dela se refere a um tipo de componente que foi gerado inicialmente no algoritmo.
 
 <h1 align="center">
-    <img src="../SistemaPonte.svg"/>
+    <img src="../ImgSistemaPonteSVG.svg"/>
 </h1>

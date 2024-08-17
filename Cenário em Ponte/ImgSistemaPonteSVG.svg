@@ -6,21 +6,25 @@
         fill: #1d1d1b;
       }
 
-      .cls-1, .cls-2, .cls-3 {
+      .cls-1, .cls-2, .cls-3, .cls-4 {
         stroke: #1d1d1b;
         stroke-miterlimit: 10;
       }
 
-      .cls-2 {
+      .cls-1, .cls-2, .cls-4 {
+        stroke-width: 3px;
+      }
+
+      .cls-2, .cls-3 {
         fill: #fff;
       }
 
-      .cls-3 {
+      .cls-4 {
         fill: #ccc;
       }
     </style>
   </defs>
-  <rect class="cls-2" x="20.3" y="19.85" width="789.79" height="553.53"/>
+  <rect class="cls-3" x="20.3" y="19.85" width="789.79" height="553.53"/>
   <line class="cls-2" x1="31.19" y1="297.64" x2="100.5" y2="297.64"/>
   <polyline class="cls-2" points="100.07 297.64 99.14 132.19 411.72 132.19 724.3 132.19 724.3 297.64"/>
   <path class="cls-2" d="M488.04,45.2"/>
@@ -31,11 +35,11 @@
   <polyline class="cls-2" points="191.75 111.71 191.75 132.19 191.75 150.2 191.75 220.43 305.7 220.43 305.7 150.2 305.7 132.19 305.7 111.71"/>
   <polyline class="cls-2" points="305.65 67.29 305.64 62.49 305.59 43.77 191.64 43.95 191.68 62.67 191.69 67.47"/>
   <line class="cls-2" x1="191.75" y1="132.19" x2="305.7" y2="132.19"/>
-  <rect class="cls-3" x="233.41" y="124.54" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="233.41" y="124.54" width="30.46" height="15.31"/>
   <line class="cls-2" x1="191.75" y1="175.19" x2="305.7" y2="175.19"/>
-  <rect class="cls-3" x="233.41" y="36.11" width="30.46" height="15.31"/>
-  <rect class="cls-3" x="233.41" y="167.53" width="30.46" height="15.31"/>
-  <rect class="cls-3" x="233.41" y="212.96" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="233.41" y="36.11" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="233.41" y="167.53" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="233.41" y="212.96" width="30.46" height="15.31"/>
   <ellipse class="cls-1" cx="191.64" cy="103.88" rx="1.48" ry="1.18"/>
   <ellipse class="cls-1" cx="191.75" cy="90.77" rx="1.48" ry="1.18"/>
   <ellipse class="cls-1" cx="191.64" cy="78.53" rx="1.48" ry="1.18"/>
@@ -46,11 +50,11 @@
   <polyline class="cls-2" points="191.67 442.6 191.67 463.08 191.67 481.09 191.67 551.33 305.62 551.33 305.62 481.09 305.62 463.08 305.62 442.6"/>
   <polyline class="cls-2" points="305.57 398.18 305.56 393.38 305.51 374.66 191.56 374.84 191.6 393.56 191.61 398.36"/>
   <line class="cls-2" x1="191.67" y1="463.08" x2="305.62" y2="463.08"/>
-  <rect class="cls-3" x="233.33" y="455.43" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="233.33" y="455.43" width="30.46" height="15.31"/>
   <line class="cls-2" x1="191.67" y1="506.08" x2="305.62" y2="506.08"/>
-  <rect class="cls-3" x="233.33" y="367.01" width="30.46" height="15.31"/>
-  <rect class="cls-3" x="233.33" y="498.43" width="30.46" height="15.31"/>
-  <rect class="cls-3" x="233.33" y="543.85" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="233.33" y="367.01" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="233.33" y="498.43" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="233.33" y="543.85" width="30.46" height="15.31"/>
   <ellipse class="cls-1" cx="191.56" cy="434.78" rx="1.48" ry="1.18"/>
   <ellipse class="cls-1" cx="191.67" cy="421.66" rx="1.48" ry="1.18"/>
   <ellipse class="cls-1" cx="191.56" cy="409.42" rx="1.48" ry="1.18"/>
@@ -61,11 +65,11 @@
   <polyline class="cls-2" points="392.12 354.62 412.6 354.62 430.61 354.62 500.85 354.62 500.85 240.66 430.61 240.66 412.6 240.66 392.12 240.66"/>
   <polyline class="cls-2" points="347.7 240.71 342.9 240.72 324.18 240.77 324.36 354.73 343.08 354.68 347.88 354.67"/>
   <line class="cls-2" x1="412.6" y1="354.62" x2="412.6" y2="240.66"/>
-  <rect class="cls-3" x="397.37" y="290.06" width="30.46" height="15.31" transform="translate(114.88 710.32) rotate(-90)"/>
+  <rect class="cls-4" x="397.37" y="290.06" width="30.46" height="15.31" transform="translate(114.88 710.32) rotate(-90)"/>
   <line class="cls-2" x1="455.6" y1="354.62" x2="455.6" y2="240.66"/>
-  <rect class="cls-3" x="308.95" y="290.06" width="30.46" height="15.31" transform="translate(26.46 621.9) rotate(-90)"/>
-  <rect class="cls-3" x="440.37" y="290.06" width="30.46" height="15.31" transform="translate(157.88 753.32) rotate(-90)"/>
-  <rect class="cls-3" x="485.8" y="290.06" width="30.46" height="15.31" transform="translate(203.31 798.75) rotate(-90)"/>
+  <rect class="cls-4" x="308.95" y="290.06" width="30.46" height="15.31" transform="translate(26.46 621.9) rotate(-90)"/>
+  <rect class="cls-4" x="440.37" y="290.06" width="30.46" height="15.31" transform="translate(157.88 753.32) rotate(-90)"/>
+  <rect class="cls-4" x="485.8" y="290.06" width="30.46" height="15.31" transform="translate(203.31 798.75) rotate(-90)"/>
   <ellipse class="cls-1" cx="384.3" cy="354.73" rx="1.18" ry="1.48"/>
   <ellipse class="cls-1" cx="371.18" cy="354.62" rx="1.18" ry="1.48"/>
   <ellipse class="cls-1" cx="358.94" cy="354.73" rx="1.18" ry="1.48"/>
@@ -76,11 +80,11 @@
   <polyline class="cls-2" points="511.63 111.71 511.63 132.19 511.63 150.2 511.63 220.43 625.59 220.43 625.59 150.2 625.59 132.19 625.59 111.71"/>
   <polyline class="cls-2" points="625.53 67.29 625.52 62.49 625.48 43.77 511.52 43.95 511.57 62.67 511.58 67.47"/>
   <line class="cls-2" x1="511.63" y1="132.19" x2="625.59" y2="132.19"/>
-  <rect class="cls-3" x="553.3" y="124.54" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="553.3" y="124.54" width="30.46" height="15.31"/>
   <line class="cls-2" x1="511.63" y1="175.19" x2="625.59" y2="175.19"/>
-  <rect class="cls-3" x="553.3" y="36.11" width="30.46" height="15.31"/>
-  <rect class="cls-3" x="553.3" y="167.53" width="30.46" height="15.31"/>
-  <rect class="cls-3" x="553.3" y="212.96" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="553.3" y="36.11" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="553.3" y="167.53" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="553.3" y="212.96" width="30.46" height="15.31"/>
   <ellipse class="cls-1" cx="511.52" cy="103.88" rx="1.48" ry="1.18"/>
   <ellipse class="cls-1" cx="511.63" cy="90.77" rx="1.48" ry="1.18"/>
   <ellipse class="cls-1" cx="511.52" cy="78.53" rx="1.48" ry="1.18"/>
@@ -91,11 +95,11 @@
   <polyline class="cls-2" points="511.55 442.6 511.55 463.08 511.55 481.09 511.55 551.33 625.5 551.33 625.5 481.09 625.5 463.08 625.5 442.6"/>
   <polyline class="cls-2" points="625.45 398.18 625.44 393.38 625.39 374.66 511.44 374.84 511.49 393.56 511.5 398.36"/>
   <line class="cls-2" x1="511.55" y1="463.08" x2="625.5" y2="463.08"/>
-  <rect class="cls-3" x="553.21" y="455.43" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="553.21" y="455.43" width="30.46" height="15.31"/>
   <line class="cls-2" x1="511.55" y1="506.08" x2="625.5" y2="506.08"/>
-  <rect class="cls-3" x="553.21" y="367.01" width="30.46" height="15.31"/>
-  <rect class="cls-3" x="553.21" y="498.43" width="30.46" height="15.31"/>
-  <rect class="cls-3" x="553.21" y="543.85" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="553.21" y="367.01" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="553.21" y="498.43" width="30.46" height="15.31"/>
+  <rect class="cls-4" x="553.21" y="543.85" width="30.46" height="15.31"/>
   <ellipse class="cls-1" cx="511.44" cy="434.78" rx="1.48" ry="1.18"/>
   <ellipse class="cls-1" cx="511.55" cy="421.66" rx="1.48" ry="1.18"/>
   <ellipse class="cls-1" cx="511.44" cy="409.42" rx="1.48" ry="1.18"/>
