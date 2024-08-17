@@ -7,32 +7,28 @@ import matplotlib.pyplot as plt
 class GeneticAlgorithm:
     def __init__(self):
         #variáveis para execução do algoritmo genético
-        self.num_individuos = 3
+        self.num_individuos = 10
         self.num_variaveis = 5 #5 subsistemas
         self.num_geracoes = 100
         self.taxa_cruzamento = 0.6 #quantidade de pais que gerarão individuos (pais/2)
         self.taxa_mutacao = 0.3 #quantidade de individuos que vão receber mutação
 
         #variáveis para geração de banco de dados de componentes
-        self.num_tipos_componentes = 7
-        self.lim_sup_peso = 10
+        self.num_tipos_componentes = 50
+        self.lim_sup_peso = 15
         self.lim_inf_peso = 0
-        self.lim_sup_custo = 10
+        self.lim_sup_custo = 25
         self.lim_inf_custo = 0
-        self.peso_max = 20
-        self.custo_max = 30
+        self.peso_max = 191
+        self.custo_max = 130
 
-        self.num_max_componentes_subsistema = self.num_tipos_componentes
+        self.num_max_componentes_subsistema = 10
         self.num_min_componentes_subsistema = 3
 
         self.coeficiente_custo = 1.1
         self.coeficiente_peso = 1.05
         
         self.componentes = self.cria_componentes()
-    
-    def truncate(self, number, decimals=0):
-        factor = 10.0 ** decimals
-        return math.trunc(number * factor) / factor
 
     #ok
     def cria_componentes(self):
@@ -48,12 +44,12 @@ class GeneticAlgorithm:
     def confiabilidade_paralelo(self, subsistema):
         confiabilidade = 1
 
-        for i,componente in enumerate(subsistema):
+        for componente in subsistema:
             if componente != -1:
                 conf_componente = self.componentes[0][componente]
                 confiabilidade *= (1 - conf_componente)
 
-        confiabilidade = self.truncate(1 - confiabilidade, 8)
+        confiabilidade = 1 - confiabilidade
         return confiabilidade
 
     #ok
@@ -64,12 +60,14 @@ class GeneticAlgorithm:
         r_3 = self.confiabilidade_paralelo(individuo[2])
         r_4 = self.confiabilidade_paralelo(individuo[3])
         r_5 = self.confiabilidade_paralelo(individuo[4])
+        print("AQUI:",r_1,r_2,r_3,r_4,r_5)
 
         confiabilidade_sistema = (
             r_1*r_2 + r_3*r_4 + r_1*r_4*r_5 + r_2*r_3*r_5
             - r_1*r_2*r_3*r_4 - r_1*r_2*r_3*r_5 - r_1*r_2*r_4*r_5 - r_1*r_3*r_4*r_5 - r_2*r_3*r_4*r_5 
             + 2*r_1*r_2*r_3*r_4*r_5 
         )
+
         return confiabilidade_sistema
 
     #ok
@@ -79,7 +77,6 @@ class GeneticAlgorithm:
             for componente in subsistema:
                 if componente != -1:
                     custo_total += self.componentes[1][componente]
-        print("Custo total:", custo_total)
         return custo_total
 
     #ok
@@ -89,12 +86,12 @@ class GeneticAlgorithm:
             for componente in subsistema:
                 if componente != -1:
                     peso_total += self.componentes[2][componente]
-        print("Peso total:", peso_total)
         return peso_total
 
     #ok
     def funcao_objetivo(self, individuo):
         confiabilidade = self.confiabilidade_ponte(individuo)
+        print("COnfiabilidade funcao:\n", confiabilidade)
 
         soma_pesos = self.somatoria_pesos(individuo)
         soma_custos = self.somatoria_custos(individuo)
@@ -126,17 +123,165 @@ class GeneticAlgorithm:
         populacao = sorted(pop_avaliada, key=lambda x: x[0], reverse=True)
         return populacao
 
+    #ok
+    def seleciona_pais(self, populacao):
+        #selecionando os pais de forma simples, apenas pelos mais fortes
+        num_pais = int(self.taxa_cruzamento*self.num_individuos)
+
+        if(num_pais % 2 != 0):
+            num_pais-=1
+
+        pais = [populacao[i] for i in range(num_pais)]
+
+        return pais
+
+    #ok
+    def crossover(self, pais):
+        filhos = []
+
+        for i in range(0, len(pais) - 1, 2):
+            taxa_crossover = np.random.randint(1,self.num_variaveis-1)
+            parte1 = pais[i][2][:, :taxa_crossover]
+            parte2 = pais[i+1][2][:, taxa_crossover:]
+            filho = np.hstack((parte1, parte2))
+            filhos.append(filho)
+
+        filhosavaliados = self.avaliacao_populacao(filhos)
+
+        return filhosavaliados
+
+    #ok
+    def seleciona_mutantes(self, populacao):
+        #selecionando os mutantes de forma simples, apenas pelos mais fracos
+        num_mutantes = int(self.taxa_mutacao*self.num_individuos)
+        ind_para_mutacao = [deepcopy(populacao[i]) for i in range(self.num_individuos-1, self.num_individuos - num_mutantes -1, -1)]
+        
+        return ind_para_mutacao
+    
+    def mutacao(self, ind_para_mutacao):
+        mutantes = []
+        
+        for i in range(len(ind_para_mutacao)):
+            taxa_muta = 1 #quantos genes serão mudados
+            index_subsistema = np.random.choice(self.num_variaveis, size=taxa_muta, replace=False) #quais genes serão mudados
+            index_componente = np.random.choice(self.num_max_componentes_subsistema, size=taxa_muta, replace=False)
+
+            for k in range(taxa_muta):
+                operation = np.random.randint(0,5) #qual será a operação realizada em cima do gene, se for do tipo 1, exclui componente
+                
+                if operation == 1:
+                    ind_para_mutacao[i][2][index_subsistema, index_componente] = -1
+                else:
+                    value = np.random.randint(0, self.num_tipos_componentes) #qual componente entrará no lugar
+                    while value == ind_para_mutacao[i][2][index_subsistema, index_componente]:#garantindo que troque por um valor diferente
+                        value = np.random.randint(0, self.num_tipos_componentes)
+                    ind_para_mutacao[i][2][index_subsistema, index_componente] = value
+            
+            mutantes.append(ind_para_mutacao[i][2])
+
+        mutantesavaliados = self.avaliacao_populacao(mutantes)
+            
+        return mutantesavaliados
 
 def main():
     alg = GeneticAlgorithm()
     populacao = alg.inicia_populacao()
-    
-    print("Componentes:")
-    print(alg.componentes)
 
-    print("\nPopulação:")
-    print(populacao)
+    solucoes = []
+    melhor_solucao = -10000000
+    geracao = -1
+
+    for i in range(alg.num_geracoes):
+        print("GERACAO {}".format(i+1))
+
+        pais = alg.seleciona_pais(populacao)
+        filhos = alg.crossover(pais)
     
+        for l in range(len(filhos)):
+            print("Filho {}:".format(l+1))
+            print("FuncObj: {}".format(filhos[l][0]))
+            print("Confiabilidade: {}".format(filhos[l][1]))
+            print("Cromossomo: {}".format(filhos[l][2]))
+            print(" ")
+        print("-----------------------------------------")
+
+        ind_para_mutacao = alg.seleciona_mutantes(populacao)
+        mutantes = alg.mutacao(ind_para_mutacao)
+
+        for l in range(len(mutantes)):
+            print("Filho {}:".format(l+1))
+            print("FuncObj: {}".format(mutantes[l][0]))
+            print("Confiabilidade: {}".format(mutantes[l][1]))
+            print("Cromossomo: {}".format(mutantes[l][2]))
+            print(" ")
+        print("-----------------------------------------")
+
+        print("Populacao antes da mescla:")
+        for l in range(len(populacao)):
+            print("Filho {}:".format(l+1))
+            print("FuncObj: {}".format(populacao[l][0]))
+            print("Confiabilidade: {}".format(populacao[l][1]))
+            print("Cromossomo: {}".format(populacao[l][2]))
+            print(" ")
+        print("-----------------------------------------")
+
+        populacao = populacao + mutantes + filhos
+        print("Populacao depois da mescla e antes de ordenar:")
+        for l in range(len(populacao)):
+            print("Filho {}:".format(l+1))
+            print("FuncObj: {}".format(populacao[l][0]))
+            print("Confiabilidade: {}".format(populacao[l][1]))
+            print("Cromossomo: {}".format(populacao[l][2]))
+            print(" ")
+        print("-----------------------------------------")
+
+        populacao = sorted(populacao, key=lambda x: x[0], reverse=True)
+
+        print("Populacao depois de ordenar e antes de elitizar:")
+        for l in range(len(populacao)):
+            print("Filho {}:".format(l+1))
+            print("FuncObj: {}".format(populacao[l][0]))
+            print("Confiabilidade: {}".format(populacao[l][1]))
+            print("Cromossomo: {}".format(populacao[l][2]))
+            print(" ")
+        print("-----------------------------------------")
+
+        populacao = populacao[:alg.num_individuos]
+        print("Populacao final da era:")
+        for l in range(len(populacao)):
+            print("Filho {}:".format(l+1))
+            print("FuncObj: {}".format(populacao[l][0]))
+            print("Confiabilidade: {}".format(populacao[l][1]))
+            print("Cromossomo: {}".format(populacao[l][2]))
+            print(" ")
+        print("-----------------------------------------")
+        print("-----------------------------------------")
+        print("-----------------------------------------")
+        print("-----------------------------------------")
+
+        solucoes.append(populacao[0][0])
+
+        if populacao[0][0] > melhor_solucao:
+            melhor_solucao = populacao[0][0]
+            geracao = i
+        
+    print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", populacao[0][0])
+    print("Com os seguintes valores para cada variavel de decisao:")
+    for z in range(alg.num_variaveis):
+        print("x{}: {}".format(z+1, populacao[0][2][z]))
+
+    # Plotando o gráfico
+    plt.plot(range(1, alg.num_geracoes+1), solucoes)
+    plt.xlabel('Geração')
+    plt.ylabel('Valor da Função Objetivo')
+    plt.title('Evolução da Melhor Solução ao Longo das Gerações')
+    plt.grid(True)
+    plt.axhline(y=0, color='red', linestyle='-')
+    texto = "Valor final: " + str(round(populacao[0][0], 4)) + "\nAlcançado na geração: " + str(geracao)
+    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    plt.tight_layout()
+    plt.savefig('SolutionEvolutionGA.png')
+    plt.show()
 
 if __name__ == "__main__":
     with open('output.txt', 'w') as f:
