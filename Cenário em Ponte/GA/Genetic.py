@@ -31,7 +31,6 @@ class GeneticAlgorithm:
         
         self.componentes = self.cria_componentes()
 
-    #ok
     def cria_componentes(self):
         linha1 = np.round(np.random.uniform(0.9, 0.95, self.num_tipos_componentes), 8)  # confiabilidade com max 8 casas decimais
         linha2 = np.random.randint(self.lim_inf_custo + 1, self.lim_sup_custo + 1, self.num_tipos_componentes)#custo
@@ -41,7 +40,6 @@ class GeneticAlgorithm:
         matriz = np.vstack([linha1, linha2, linha3])
         return matriz
 
-    #ok
     def confiabilidade_paralelo(self, subsistema):
         getcontext().prec = 50
         confiabilidade = Decimal(1)
@@ -55,7 +53,6 @@ class GeneticAlgorithm:
         confiabilidade = 1 - confiabilidade
         return confiabilidade
 
-    #ok
     def confiabilidade_ponte(self, individuo):
         getcontext().prec = 50
         #considerando a confiabilidade do sistema em ponte
@@ -73,7 +70,6 @@ class GeneticAlgorithm:
 
         return confiabilidade_sistema
 
-    #ok
     def somatoria_custos(self, individuo):
         custo_total = 0
         for subsistema in individuo:
@@ -82,7 +78,6 @@ class GeneticAlgorithm:
                     custo_total += self.componentes[1][componente]
         return custo_total
 
-    #ok
     def somatoria_pesos(self, individuo):
         peso_total = 0
         for subsistema in individuo:
@@ -91,7 +86,6 @@ class GeneticAlgorithm:
                     peso_total += self.componentes[2][componente]
         return peso_total
 
-    #ok
     def funcao_objetivo(self, individuo):
         confiabilidade = self.confiabilidade_ponte(individuo)
 
@@ -104,13 +98,11 @@ class GeneticAlgorithm:
         f_obj = confiabilidade - Decimal(self.coeficiente_peso*max(0, f_peso)) - Decimal(self.coeficiente_custo*max(0, f_custo))
         return f_obj
 
-    #ok
     def avaliacao_populacao(self, populacao):
         getcontext().prec = 50
         pop_avaliada = [(Decimal(self.funcao_objetivo(individuo)), Decimal(self.confiabilidade_ponte(individuo)), individuo) for individuo in populacao]
         return pop_avaliada
 
-    #ok
     def inicia_populacao(self):
         #gerando população inicial
         pop_inicial = np.random.randint(0, self.num_tipos_componentes, (self.num_individuos, self.num_variaveis, self.num_max_componentes_subsistema))
@@ -126,7 +118,6 @@ class GeneticAlgorithm:
         populacao = sorted(pop_avaliada, key=lambda x: x[0], reverse=True)
         return populacao
 
-    #ok
     def seleciona_pais(self, populacao):
         #selecionando os pais de forma simples, apenas pelos mais fortes
         num_pais = int(self.taxa_cruzamento*self.num_individuos)
@@ -138,7 +129,6 @@ class GeneticAlgorithm:
 
         return pais
 
-    #ok
     def crossover(self, pais):
         filhos = []
 
@@ -153,7 +143,6 @@ class GeneticAlgorithm:
 
         return filhosavaliados
 
-    #ok
     def seleciona_mutantes(self, populacao):
         #selecionando os mutantes de forma simples, apenas pelos mais fracos
         num_mutantes = int(self.taxa_mutacao*self.num_individuos)
