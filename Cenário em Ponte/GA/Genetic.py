@@ -15,7 +15,7 @@ class GeneticAlgorithm:
         self.taxa_mutacao = 0.3 #quantidade de individuos que vão receber mutação
 
         #variáveis para geração de banco de dados de componentes
-        self.num_tipos_componentes = 50
+        self.num_tipos_componentes = 25
         self.lim_sup_peso = 15
         self.lim_inf_peso = 0
         self.lim_sup_custo = 25
