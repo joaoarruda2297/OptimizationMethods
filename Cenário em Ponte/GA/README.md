@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="./SolutionEvolutionGA.png"/>
+    <img src="./SolutionEvolutionGA2.png"/>
 </h1>
 
 ## Descrição do algoritmo
