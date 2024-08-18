@@ -263,21 +263,26 @@ def main():
                     .format(ganhador, alg.componentes[0][ganhador], alg.componentes[1][ganhador], alg.componentes[2][ganhador])
                 )
 
-
-
     # Plotando o gráfico
-    plt.plot(range(1, alg.num_geracoes+1), solucoes)
+    plt.axhline(y=0, color='red', linestyle='-', linewidth=0.5)  # Linha vermelha mais fina e plotada primeiro
+    plt.plot(range(1, alg.num_geracoes+1), solucoes, color='blue')  # Linha azul plotada depois
+
+    # Configurações do gráfico
     plt.xlabel('Geração')
     plt.ylabel('Valor da Função Objetivo')
     plt.title('Evolução da Melhor Solução ao Longo das Gerações')
     plt.grid(True)
-    plt.axhline(y=0, color='red', linestyle='-')
+
+    # Texto adicional no gráfico
     valor_final = alg.truncate(populacao[0][0], 4)
     texto = "Valor final: " + str(valor_final) + "\nAlcançado na geração: " + str(geracao)
     plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+
+    # Ajustes finais e salvamento
     plt.tight_layout()
     plt.savefig('SolutionEvolutionGA.png')
     plt.show()
+
 
 if __name__ == "__main__":
     with open('output.txt', 'w') as f:
