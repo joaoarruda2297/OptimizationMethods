@@ -280,7 +280,7 @@ def main():
 
     # Ajustes finais e salvamento
     plt.tight_layout()
-    plt.savefig('SolutionEvolutionGA2.png')
+    plt.savefig('./img/SolutionEvolutionGA.png')
     plt.show()
 
 

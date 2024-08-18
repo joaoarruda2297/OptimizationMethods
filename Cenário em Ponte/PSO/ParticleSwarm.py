@@ -261,7 +261,7 @@ def main():
 
     # Ajustes finais e salvamento
     plt.tight_layout()
-    plt.savefig('SolutionEvolutionPSO.png')
+    plt.savefig('./img/SolutionEvolutionPSO.png')
     plt.show()
         
 

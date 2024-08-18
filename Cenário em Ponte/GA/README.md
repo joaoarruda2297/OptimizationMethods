@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="./SolutionEvolutionGA2.png"/>
+    <img src="./img/SolutionEvolutionGA.png"/>
 </h1>
 
 ## Descrição do algoritmo
@@ -11,7 +11,7 @@
  - O cenário é descrito por uma função de maximização ligada a confiabilidade do sistema com duas restrições de custo e peso. Por isso, foi utilizado método de penalização para cálculo da função objetivo:
 
 <p align="center">
-  <img src="./FuncaoObjetivo.png" alt="Função Objetivo" />
+  <img src="./img/FuncaoObjetivo.png" alt="Função Objetivo" />
 </p>
 
 ## Descrição do cenário
@@ -24,9 +24,9 @@
 
  - A baixo podemos ver como modelamos o cromossomo e seu indivíduo, juntamente com um exemplo real, os 3 respectivamente:
  <p align="center">
-    <img src="./Cromossomo.png"/>
-    <img src="./Individuo.png"/>
-    <img src="./ExemploReal.png"/>
+    <img src="./img/Cromossomo.png"/>
+    <img src="./img/Individuo.png"/>
+    <img src="./img/ExemploReal.png"/>
 </p>
 
  - Apesar da matriz ser definida em até N colunas, os subsistemas não ficam restritos a utilizar componentes em sua capacidade máxima.
