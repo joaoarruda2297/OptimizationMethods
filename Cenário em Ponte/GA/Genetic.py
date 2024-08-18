@@ -1,5 +1,6 @@
 import numpy as np
 import math
+from decimal import Decimal, getcontext
 from contextlib import redirect_stdout
 from copy import deepcopy
 import matplotlib.pyplot as plt
@@ -7,7 +8,7 @@ import matplotlib.pyplot as plt
 class GeneticAlgorithm:
     def __init__(self):
         #variáveis para execução do algoritmo genético
-        self.num_individuos = 10
+        self.num_individuos = 50
         self.num_variaveis = 5 #5 subsistemas
         self.num_geracoes = 100
         self.taxa_cruzamento = 0.6 #quantidade de pais que gerarão individuos (pais/2)
@@ -19,8 +20,8 @@ class GeneticAlgorithm:
         self.lim_inf_peso = 0
         self.lim_sup_custo = 25
         self.lim_inf_custo = 0
-        self.peso_max = 191
-        self.custo_max = 130
+        self.peso_max = 120
+        self.custo_max = 80
 
         self.num_max_componentes_subsistema = 10
         self.num_min_componentes_subsistema = 3
@@ -32,7 +33,7 @@ class GeneticAlgorithm:
 
     #ok
     def cria_componentes(self):
-        linha1 = np.round(np.random.uniform(0.91, 0.99, self.num_tipos_componentes), 8)  # confiabilidade com max 8 casas decimais
+        linha1 = np.round(np.random.uniform(0.9, 0.95, self.num_tipos_componentes), 8)  # confiabilidade com max 8 casas decimais
         linha2 = np.random.randint(self.lim_inf_custo + 1, self.lim_sup_custo + 1, self.num_tipos_componentes)#custo
         linha3 = np.random.randint(self.lim_inf_peso + 1, self.lim_sup_peso + 1, self.num_tipos_componentes)#peso
         
@@ -42,27 +43,29 @@ class GeneticAlgorithm:
 
     #ok
     def confiabilidade_paralelo(self, subsistema):
-        confiabilidade = 1
+        getcontext().prec = 50
+        confiabilidade = Decimal(1)
 
         for componente in subsistema:
             if componente != -1:
-                conf_componente = self.componentes[0][componente]
-                confiabilidade *= (1 - conf_componente)
+                conf_componente = Decimal(self.componentes[0][componente])
+                confiabilidade = confiabilidade*(1 - conf_componente)
+        print("\n")
 
         confiabilidade = 1 - confiabilidade
         return confiabilidade
 
     #ok
     def confiabilidade_ponte(self, individuo):
+        getcontext().prec = 50
         #considerando a confiabilidade do sistema em ponte
-        r_1 = self.confiabilidade_paralelo(individuo[0])
-        r_2 = self.confiabilidade_paralelo(individuo[1])
-        r_3 = self.confiabilidade_paralelo(individuo[2])
-        r_4 = self.confiabilidade_paralelo(individuo[3])
-        r_5 = self.confiabilidade_paralelo(individuo[4])
-        print("AQUI:",r_1,r_2,r_3,r_4,r_5)
+        r_1 = Decimal(self.confiabilidade_paralelo(individuo[0]))
+        r_2 = Decimal(self.confiabilidade_paralelo(individuo[1]))
+        r_3 = Decimal(self.confiabilidade_paralelo(individuo[2]))
+        r_4 = Decimal(self.confiabilidade_paralelo(individuo[3]))
+        r_5 = Decimal(self.confiabilidade_paralelo(individuo[4]))
 
-        confiabilidade_sistema = (
+        confiabilidade_sistema = Decimal(
             r_1*r_2 + r_3*r_4 + r_1*r_4*r_5 + r_2*r_3*r_5
             - r_1*r_2*r_3*r_4 - r_1*r_2*r_3*r_5 - r_1*r_2*r_4*r_5 - r_1*r_3*r_4*r_5 - r_2*r_3*r_4*r_5 
             + 2*r_1*r_2*r_3*r_4*r_5 
@@ -91,7 +94,6 @@ class GeneticAlgorithm:
     #ok
     def funcao_objetivo(self, individuo):
         confiabilidade = self.confiabilidade_ponte(individuo)
-        print("COnfiabilidade funcao:\n", confiabilidade)
 
         soma_pesos = self.somatoria_pesos(individuo)
         soma_custos = self.somatoria_custos(individuo)
@@ -99,12 +101,13 @@ class GeneticAlgorithm:
         f_custo = soma_custos - self.custo_max
         f_peso =  soma_pesos - self.peso_max
 
-        f_obj = confiabilidade - self.coeficiente_peso*max(0, f_peso) - self.coeficiente_custo*max(0, f_custo)
+        f_obj = confiabilidade - Decimal(self.coeficiente_peso*max(0, f_peso)) - Decimal(self.coeficiente_custo*max(0, f_custo))
         return f_obj
 
     #ok
     def avaliacao_populacao(self, populacao):
-        pop_avaliada = [(self.funcao_objetivo(individuo), self.confiabilidade_ponte(individuo), individuo) for individuo in populacao]
+        getcontext().prec = 50
+        pop_avaliada = [(Decimal(self.funcao_objetivo(individuo)), Decimal(self.confiabilidade_ponte(individuo)), individuo) for individuo in populacao]
         return pop_avaliada
 
     #ok
@@ -183,12 +186,16 @@ class GeneticAlgorithm:
             
         return mutantesavaliados
 
+    def truncate(self, number, decimals=0):
+        factor = 10 ** decimals
+        return math.trunc(number * factor) / factor
+
 def main():
     alg = GeneticAlgorithm()
     populacao = alg.inicia_populacao()
 
     solucoes = []
-    melhor_solucao = -10000000
+    melhor_solucao = Decimal(-10000000)
     geracao = -1
 
     for i in range(alg.num_geracoes):
@@ -226,25 +233,7 @@ def main():
         print("-----------------------------------------")
 
         populacao = populacao + mutantes + filhos
-        print("Populacao depois da mescla e antes de ordenar:")
-        for l in range(len(populacao)):
-            print("Filho {}:".format(l+1))
-            print("FuncObj: {}".format(populacao[l][0]))
-            print("Confiabilidade: {}".format(populacao[l][1]))
-            print("Cromossomo: {}".format(populacao[l][2]))
-            print(" ")
-        print("-----------------------------------------")
-
         populacao = sorted(populacao, key=lambda x: x[0], reverse=True)
-
-        print("Populacao depois de ordenar e antes de elitizar:")
-        for l in range(len(populacao)):
-            print("Filho {}:".format(l+1))
-            print("FuncObj: {}".format(populacao[l][0]))
-            print("Confiabilidade: {}".format(populacao[l][1]))
-            print("Cromossomo: {}".format(populacao[l][2]))
-            print(" ")
-        print("-----------------------------------------")
 
         populacao = populacao[:alg.num_individuos]
         print("Populacao final da era:")
@@ -269,6 +258,23 @@ def main():
     print("Com os seguintes valores para cada variavel de decisao:")
     for z in range(alg.num_variaveis):
         print("x{}: {}".format(z+1, populacao[0][2][z]))
+    print("\n")
+    
+    componentes_utilizados = []
+    for z in range(alg.num_variaveis):
+        for w in range(alg.num_max_componentes_subsistema):
+            ganhador = populacao[0][2][z, w]
+            if ganhador != -1 and ganhador not in componentes_utilizados:
+                componentes_utilizados.append(ganhador)
+                print(
+                    "Componente {}:\n"
+                    "Confiabilidade: {}\n"
+                    "Custo: {}\n"
+                    "Peso: {}\n"
+                    .format(ganhador, alg.componentes[0][ganhador], alg.componentes[1][ganhador], alg.componentes[2][ganhador])
+                )
+
+
 
     # Plotando o gráfico
     plt.plot(range(1, alg.num_geracoes+1), solucoes)
@@ -277,7 +283,8 @@ def main():
     plt.title('Evolução da Melhor Solução ao Longo das Gerações')
     plt.grid(True)
     plt.axhline(y=0, color='red', linestyle='-')
-    texto = "Valor final: " + str(round(populacao[0][0], 4)) + "\nAlcançado na geração: " + str(geracao)
+    valor_final = alg.truncate(populacao[0][0], 4)
+    texto = "Valor final: " + str(valor_final) + "\nAlcançado na geração: " + str(geracao)
     plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
     plt.tight_layout()
     plt.savefig('SolutionEvolutionGA.png')
