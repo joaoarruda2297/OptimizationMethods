@@ -6,39 +6,24 @@ from copy import deepcopy
 import matplotlib.pyplot as plt
 
 class GeneticAlgorithm:
-    def __init__(self):
+    def __init__(self, componentes, peso_max, custo_max, num_geracoes):
         #variáveis para execução do algoritmo genético
         self.num_individuos = 50
         self.num_variaveis = 5 #5 subsistemas
-        self.num_geracoes = 100
+        self.num_geracoes = num_geracoes
         self.taxa_cruzamento = 0.6 #quantidade de pais que gerarão individuos (pais/2)
         self.taxa_mutacao = 0.3 #quantidade de individuos que vão receber mutação
 
-        #variáveis para geração de banco de dados de componentes
-        self.num_tipos_componentes = 25
-        self.lim_sup_peso = 15
-        self.lim_inf_peso = 0
-        self.lim_sup_custo = 25
-        self.lim_inf_custo = 0
-        self.peso_max = 120
-        self.custo_max = 80
+        self.num_tipos_componentes = componentes.shape[1]
+        self.componentes = componentes
+        self.peso_max = peso_max
+        self.custo_max = custo_max
 
         self.num_max_componentes_subsistema = 10
         self.num_min_componentes_subsistema = 3
 
         self.coeficiente_custo = 1.1
         self.coeficiente_peso = 1.05
-        
-        self.componentes = self.cria_componentes()
-
-    def cria_componentes(self):
-        linha1 = np.round(np.random.uniform(0.9, 0.95, self.num_tipos_componentes), 8)  # confiabilidade com max 8 casas decimais
-        linha2 = np.random.randint(self.lim_inf_custo + 1, self.lim_sup_custo + 1, self.num_tipos_componentes)#custo
-        linha3 = np.random.randint(self.lim_inf_peso + 1, self.lim_sup_peso + 1, self.num_tipos_componentes)#peso
-        
-        # Combina as linhas em uma matriz
-        matriz = np.vstack([linha1, linha2, linha3])
-        return matriz
 
     def confiabilidade_paralelo(self, subsistema):
         getcontext().prec = 50
@@ -179,8 +164,8 @@ class GeneticAlgorithm:
         factor = 10 ** decimals
         return math.trunc(number * factor) / factor
 
-def main():
-    alg = GeneticAlgorithm()
+def main(componentes, peso_max, custo_max, num_geracoes):
+    alg = GeneticAlgorithm(componentes, peso_max, custo_max, num_geracoes)
     populacao = alg.inicia_populacao()
 
     solucoes = []
@@ -248,29 +233,15 @@ def main():
     for z in range(alg.num_variaveis):
         print("x{}: {}".format(z+1, populacao[0][2][z]))
     print("\n")
-    
-    componentes_utilizados = []
-    for z in range(alg.num_variaveis):
-        for w in range(alg.num_max_componentes_subsistema):
-            ganhador = populacao[0][2][z, w]
-            if ganhador != -1 and ganhador not in componentes_utilizados:
-                componentes_utilizados.append(ganhador)
-                print(
-                    "Componente {}:\n"
-                    "Confiabilidade: {}\n"
-                    "Custo: {}\n"
-                    "Peso: {}\n"
-                    .format(ganhador, alg.componentes[0][ganhador], alg.componentes[1][ganhador], alg.componentes[2][ganhador])
-                )
 
     # Plotando o gráfico
-    plt.axhline(y=0, color='red', linestyle='-', linewidth=0.5)  # Linha vermelha mais fina e plotada primeiro
-    plt.plot(range(1, alg.num_geracoes+1), solucoes, color='blue')  # Linha azul plotada depois
+    plt.axhline(y=0, color='red', linestyle='-', linewidth=0.4)  # Linha vermelha mais fina e plotada primeiro
+    plt.plot(range(1, alg.num_geracoes+1), solucoes, color='orange')  # Linha azul plotada depois
 
     # Configurações do gráfico
     plt.xlabel('Geração')
     plt.ylabel('Valor da Função Objetivo')
-    plt.title('Evolução da Melhor Solução ao Longo das Gerações')
+    plt.title('Evolução da Melhor Solução ao Longo das Gerações (GA)')
     plt.grid(True)
 
     # Texto adicional no gráfico
@@ -280,8 +251,10 @@ def main():
 
     # Ajustes finais e salvamento
     plt.tight_layout()
-    plt.savefig('./img/SolutionEvolutionGA.png')
+    plt.savefig('./GA/img/SolutionEvolutionGA.png')
     plt.show()
+
+    return solucoes, valor_final
 
 
 if __name__ == "__main__":

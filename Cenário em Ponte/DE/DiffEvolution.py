@@ -6,38 +6,23 @@ from decimal import Decimal, getcontext
 import math
 
 class DifferentialEvolution:
-    def __init__(self):
-        self.num_individuos = 100
+    def __init__(self, componentes, peso_max, custo_max, num_geracoes):
+        self.num_individuos = 50
         self.num_variaveis = 5 #5 subsistemas
-        self.num_geracoes = 100
+        self.num_geracoes = num_geracoes
         self.passo = 1
         self.CR = 0.6
 
-        #variáveis para geração de banco de dados de componentes
-        self.num_tipos_componentes = 25
-        self.lim_sup_peso = 15
-        self.lim_inf_peso = 0
-        self.lim_sup_custo = 25
-        self.lim_inf_custo = 0
-        self.peso_max = 120
-        self.custo_max = 80
+        self.num_tipos_componentes = componentes.shape[1]
+        self.componentes = componentes
+        self.peso_max = peso_max
+        self.custo_max = custo_max
 
         self.num_max_componentes_subsistema = 10
         self.num_min_componentes_subsistema = 3
 
         self.coeficiente_custo = 1.1
         self.coeficiente_peso = 1.05
-        
-        self.componentes = self.cria_componentes()
-
-    def cria_componentes(self):
-        linha1 = np.round(np.random.uniform(0.9, 0.95, self.num_tipos_componentes), 8)  # confiabilidade com max 8 casas decimais
-        linha2 = np.random.randint(self.lim_inf_custo + 1, self.lim_sup_custo + 1, self.num_tipos_componentes)#custo
-        linha3 = np.random.randint(self.lim_inf_peso + 1, self.lim_sup_peso + 1, self.num_tipos_componentes)#peso
-        
-        # Combina as linhas em uma matriz
-        matriz = np.vstack([linha1, linha2, linha3])
-        return matriz
 
     def confiabilidade_paralelo(self, subsistema):
         getcontext().prec = 50
@@ -170,8 +155,8 @@ class DifferentialEvolution:
         return math.trunc(number * factor) / factor
 
 
-def main():
-    alg = DifferentialEvolution()
+def main(componentes, peso_max, custo_max, num_geracoes):
+    alg = DifferentialEvolution(componentes, peso_max, custo_max, num_geracoes)
     populacao = alg.inicia_populacao()
 
     solucoes = []
@@ -230,13 +215,13 @@ def main():
 
 
     # Plotando o gráfico
-    plt.axhline(y=0, color='red', linestyle='-', linewidth=0.5)  # Linha vermelha mais fina e plotada primeiro
-    plt.plot(range(1, alg.num_geracoes+1), solucoes, color='blue')  # Linha azul plotada depois
+    plt.axhline(y=0, color='red', linestyle='-', linewidth=0.4)  # Linha vermelha mais fina e plotada primeiro
+    plt.plot(range(1, alg.num_geracoes+1), solucoes, color='green')  # Linha azul plotada depois
 
     # Configurações do gráfico
     plt.xlabel('Geração')
     plt.ylabel('Valor da Função Objetivo')
-    plt.title('Evolução da Melhor Solução ao Longo das Gerações')
+    plt.title('Evolução da Melhor Solução ao Longo das Gerações (DE)')
     plt.grid(True)
 
     # Texto adicional no gráfico
@@ -246,8 +231,10 @@ def main():
 
     # Ajustes finais e salvamento
     plt.tight_layout()
-    plt.savefig('./img/SolutionEvolutionDE.png')
+    plt.savefig('./DE/img/SolutionEvolutionDE.png')
     plt.show()
+
+    return solucoes, valor_final
     
 
 if __name__ == "__main__":

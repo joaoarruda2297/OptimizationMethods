@@ -1,0 +1,50 @@
+Componente 0:
+Confiabilidade: 0.62713135
+Custo: 2.05
+Peso: 6.87
+
+Componente 1:
+Confiabilidade: 0.66430335
+Custo: 2.78
+Peso: 5.67
+
+Componente 2:
+Confiabilidade: 0.58050486
+Custo: 9.03
+Peso: 14.15
+
+Componente 3:
+Confiabilidade: 0.50814566
+Custo: 13.15
+Peso: 14.73
+
+Componente 4:
+Confiabilidade: 0.57224179
+Custo: 7.58
+Peso: 10.23
+
+Componente 5:
+Confiabilidade: 0.54563189
+Custo: 1.12
+Peso: 6.41
+
+Componente 6:
+Confiabilidade: 0.64729352
+Custo: 6.94
+Peso: 12.32
+
+Componente 7:
+Confiabilidade: 0.606563
+Custo: 9.0
+Peso: 10.59
+
+Componente 8:
+Confiabilidade: 0.63216434
+Custo: 11.99
+Peso: 2.8
+
+Componente 9:
+Confiabilidade: 0.57667877
+Custo: 24.51
+Peso: 12.62
+

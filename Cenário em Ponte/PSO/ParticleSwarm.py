@@ -6,22 +6,18 @@ import matplotlib.pyplot as plt
 from decimal import Decimal, getcontext
 
 class ParticleSwarmOptimization:
-    def __init__(self):
+    def __init__(self, componentes, peso_max, custo_max, num_geracoes):
         self.num_particulas = 50
         self.num_variaveis = 5 #5 subsistemas
-        self.num_geracoes = 100
+        self.num_geracoes = num_geracoes
         self.exploracao_global = 0.25 #C2
         self.auto_exploracao = 0.3 #C1
         self.taxa_inercia = 0.2 #w
 
-        #variáveis para geração de banco de dados de componentes
-        self.num_tipos_componentes = 25
-        self.lim_sup_peso = 15
-        self.lim_inf_peso = 0
-        self.lim_sup_custo = 25
-        self.lim_inf_custo = 0
-        self.peso_max = 120
-        self.custo_max = 80
+        self.num_tipos_componentes = componentes.shape[1]
+        self.componentes = componentes
+        self.peso_max = peso_max
+        self.custo_max = custo_max
 
         self.num_max_componentes_subsistema = 10
         self.num_min_componentes_subsistema = 3
@@ -29,17 +25,6 @@ class ParticleSwarmOptimization:
         self.coeficiente_custo = 1.1
         self.coeficiente_peso = 1.05
         
-        self.componentes = self.cria_componentes()
-
-    def cria_componentes(self):
-        linha1 = np.round(np.random.uniform(0.9, 0.95, self.num_tipos_componentes), 8)  # confiabilidade com max 8 casas decimais
-        linha2 = np.random.randint(self.lim_inf_custo + 1, self.lim_sup_custo + 1, self.num_tipos_componentes)#custo
-        linha3 = np.random.randint(self.lim_inf_peso + 1, self.lim_sup_peso + 1, self.num_tipos_componentes)#peso
-        
-        # Combina as linhas em uma matriz
-        matriz = np.vstack([linha1, linha2, linha3])
-        return matriz
-
     def somatoria_custos(self, individuo):
         custo_total = 0
         for subsistema in individuo:
@@ -180,8 +165,8 @@ class ParticleSwarmOptimization:
         factor = 10 ** decimals
         return math.trunc(number * factor) / factor
 
-def main():
-    alg = ParticleSwarmOptimization()
+def main(componentes, peso_max, custo_max, num_geracoes):
+    alg = ParticleSwarmOptimization(componentes, peso_max, custo_max, num_geracoes)
     populacao = alg.inicia_populacao()
 
     solucoes = []
@@ -245,13 +230,13 @@ def main():
         print("x{}: {}".format(z+1, global_best[z]))
 
     # Plotando o gráfico
-    plt.axhline(y=0, color='red', linestyle='-', linewidth=0.5)  # Linha vermelha mais fina e plotada primeiro
-    plt.plot(range(1, alg.num_geracoes+1), solucoes, color='blue')  # Linha azul plotada depois
+    plt.axhline(y=0, color='red', linestyle='-', linewidth=0.4)  # Linha vermelha mais fina e plotada primeiro
+    plt.plot(range(1, alg.num_geracoes+1), solucoes, color='purple')  # Linha azul plotada depois
 
     # Configurações do gráfico
     plt.xlabel('Geração')
     plt.ylabel('Valor da Função Objetivo')
-    plt.title('Evolução da Melhor Solução ao Longo das Gerações')
+    plt.title('Evolução da Melhor Solução ao Longo das Gerações (PSO)')
     plt.grid(True)
 
     # Texto adicional no gráfico
@@ -261,8 +246,10 @@ def main():
 
     # Ajustes finais e salvamento
     plt.tight_layout()
-    plt.savefig('./img/SolutionEvolutionPSO.png')
+    plt.savefig('./PSO/img/SolutionEvolutionPSO.png')
     plt.show()
+
+    return solucoes, valor_final
         
 
 if __name__ == "__main__":
