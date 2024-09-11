@@ -6,7 +6,7 @@ from decimal import Decimal, getcontext
 import math
 
 class DifferentialEvolution:
-    def __init__(self, componentes, peso_max, custo_max, num_geracoes):
+    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes):
         self.num_individuos = 50
         self.num_variaveis = 5 #5 subsistemas
         self.num_geracoes = num_geracoes
@@ -15,6 +15,7 @@ class DifferentialEvolution:
 
         self.num_tipos_componentes = componentes.shape[1]
         self.componentes = componentes
+        self.individuos = individuos
         self.peso_max = peso_max
         self.custo_max = custo_max
 
@@ -87,17 +88,8 @@ class DifferentialEvolution:
         return pop_avaliada
 
     def inicia_populacao(self):
-        #gerando população inicial
-        pop_inicial = np.random.randint(0, self.num_tipos_componentes, (self.num_individuos, self.num_variaveis, self.num_max_componentes_subsistema))
-
-        #corrigindo quantos componentes cada subsistema irá ter
-        for individuo in pop_inicial:
-            for subsistema in individuo:
-                num_componentes = np.random.randint(self.num_min_componentes_subsistema, self.num_max_componentes_subsistema+1)
-                subsistema[num_componentes:] = -1
-
-        #pop_avaliada = self.avaliacao_populacao(pop_inicial)
-        #populacao = sorted(pop_avaliada, key=lambda x: x[0], reverse=True)
+        pop_inicial = self.individuos
+        print(self.individuos)
         return pop_inicial
 
     def crossover(self, populacao, mutantes):
@@ -155,17 +147,36 @@ class DifferentialEvolution:
         return math.trunc(number * factor) / factor
 
 
-def main(componentes, peso_max, custo_max, num_geracoes):
-    alg = DifferentialEvolution(componentes, peso_max, custo_max, num_geracoes)
+def main(componentes, individuos, peso_max, custo_max, num_geracoes):
+    alg = DifferentialEvolution(componentes, individuos, peso_max, custo_max, num_geracoes)
     populacao = alg.inicia_populacao()
 
     solucoes = []
+    solucoes_log = []
     melhor_solucao = -10000
+    melhor_solucao_log = -10000
     idx_melhor_solucao = -1
+    idx_melhor_solucao_log = -1
     geracao = -1
+    geracao_log = -1
 
     for i in range(alg.num_geracoes):
         print("GERACAO {}".format(i+1))
+
+        if i == 0:
+            for j in range(alg.num_individuos):
+                fit_individuo = alg.funcao_objetivo(populacao[j])
+                fit_vetor = fit_individuo
+                
+                if fit_vetor > melhor_solucao:
+                    melhor_solucao = fit_vetor
+                    melhor_solucao_log = math.log(fit_vetor)
+                    idx_melhor_solucao = j
+                    idx_melhor_solucao_log = j
+            solucoes.append(melhor_solucao)
+            solucoes_log.append(melhor_solucao_log)
+            geracao = 0
+            geracao_log = 0
 
         mutantes = alg.mutacao(populacao)
 
@@ -196,10 +207,12 @@ def main(componentes, peso_max, custo_max, num_geracoes):
             
             if fit_vetor > melhor_solucao:
                 melhor_solucao = fit_vetor
+                melhor_solucao_log = math.log(fit_vetor)
                 idx_melhor_solucao = j
-                geracao = i
+                idx_melhor_solucao_log = j
 
         solucoes.append(melhor_solucao)
+        solucoes_log.append(melhor_solucao_log)
         
         for l in range(len(populacao)):
             print("Individuo {}:".format(l+1))
@@ -215,26 +228,39 @@ def main(componentes, peso_max, custo_max, num_geracoes):
 
 
     # Plotando o gráfico
-    plt.axhline(y=0, color='red', linestyle='-', linewidth=0.4)  # Linha vermelha mais fina e plotada primeiro
-    plt.plot(range(1, alg.num_geracoes+1), solucoes, color='green')  # Linha azul plotada depois
-
+    #plt.axhline(y=0, color='red', linestyle='-', linewidth=0.4)  # Linha vermelha mais fina e plotada primeiro
+    plt.plot(range(0, alg.num_geracoes+1), solucoes, color='green')  # Linha verde plotada depois
     # Configurações do gráfico
     plt.xlabel('Geração')
     plt.ylabel('Valor da Função Objetivo')
     plt.title('Evolução da Melhor Solução ao Longo das Gerações (DE)')
     plt.grid(True)
-
     # Texto adicional no gráfico
     valor_final = alg.truncate(melhor_solucao, 4)
     texto = "Valor final: " + str(valor_final) + "\nAlcançado na geração: " + str(geracao)
     plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
-
     # Ajustes finais e salvamento
     plt.tight_layout()
     plt.savefig('./DE/img/SolutionEvolutionDE.png')
     plt.show()
 
-    return solucoes, valor_final
+    # Plotando o gráfico em log
+    plt.plot(range(0, alg.num_geracoes+1), solucoes_log, color='green')  # Linha verde plotada depois
+    # Configurações do gráfico
+    plt.xlabel('Geração')
+    plt.ylabel('log(confiabilidade)')
+    plt.title('Evolução da Melhor Solução ao Longo das Gerações (DE)')
+    plt.grid(True)
+    # Texto adicional no gráfico
+    valor_final_log = alg.truncate(melhor_solucao_log, 4)
+    texto = "Valor final: " + str(valor_final_log) + "\nAlcançado na geração: " + str(geracao_log)
+    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    # Ajustes finais e salvamento
+    plt.tight_layout()
+    plt.savefig('./DE/img/SolutionEvolutionDELog.png')
+    plt.show()
+
+    return solucoes_log, valor_final_log
     
 
 if __name__ == "__main__":
