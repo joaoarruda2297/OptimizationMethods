@@ -52,6 +52,8 @@ def main():
         print("Individuo {}:".format(i))
         print(individuos[i])
 
+    print("")
+
     for i in range(componentes.shape[1]):
         print("Componente {}:".format(i))
         print("Confiabilidade: {}".format(componentes[0][i]))
