@@ -11,13 +11,13 @@ from GeradorIndividuos import main as GeradorIndividuos
 def main():
     # Variáveis para geração de componentes e individuos
     confiabilidade_minima = 0.3
-    confiabilidade_maxima = 0.65
-    lim_sup_peso = 25
+    confiabilidade_maxima = 0.75
+    lim_sup_peso = 30
     lim_inf_peso = 1
-    lim_sup_custo = 15
+    lim_sup_custo = 20
     lim_inf_custo = 1
-    num_tipos_componentes = 10
-    num_individuos = 10
+    num_tipos_componentes = 100
+    num_individuos = 50
     num_variaveis = 5
     num_max_componentes_subsistema = 2
     num_min_componentes_subsistema = 1
@@ -26,8 +26,8 @@ def main():
 
     # Variáveis para execução do algoritmo
     num_geracoes = 80
-    peso_max = 50
-    custo_max = 30
+    peso_max = 40
+    custo_max = 25
 
     componentes = GeradorComponentes(
         num_tipos_componentes,

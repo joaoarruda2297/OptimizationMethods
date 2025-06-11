@@ -200,11 +200,12 @@ class GeneticAlgorithm:
                 coluna = random.randint(0, self.num_variaveis - 1)
 
                 valor_atual = novo_cromossomo[linha][coluna]
+                limite_inferior = 0 if linha == 0 else 1
                 limite_superior = self.num_tipos_componentes-1 if linha == 0 else self.num_max_componentes_subsistema
 
                 # Gera novo valor diferente
                 while True:
-                    valor_mutacao = random.randint(0, limite_superior)
+                    valor_mutacao = random.randint(limite_inferior, limite_superior)
                     if valor_mutacao != valor_atual:
                         break
 
