@@ -3,34 +3,50 @@ from contextlib import redirect_stdout
 import numpy as np
 from decimal import Decimal, getcontext
 from contextlib import redirect_stdout
+from copy import deepcopy
 
 class Individuo:
-    def __init__(self, cromossomo=None, componentes=None, peso_max=0, custo_max=0, coeficiente_peso=1, coeficiente_custo=1):
-        #print("Cromossomo: ", cromossomo)
-
+    def __init__(self, solucao=None, componentes=None, peso_max=0, custo_max=0, coeficiente_peso=1, coeficiente_custo=1):
         self.componentes = componentes
         self.peso_max = peso_max
         self.custo_max = custo_max
-        self.cromossomo = cromossomo
         self.coeficiente_peso = coeficiente_peso
         self.coeficiente_custo = coeficiente_custo
 
-        if cromossomo is not None:
-            self.valor_funcao_objetivo = self.funcao_objetivo(cromossomo)
-            self.confiabilidade_total = self.confiabilidade_ponte(cromossomo)
-        else:
-            self.valor_funcao_objetivo = None
-            self.confiabilidade_total = None
+        self._solucao = None
+        self.valor_funcao_objetivo = None
+        self.confiabilidade_total = None
 
+        self.solucao = solucao
+
+        self.peso = None
+        self.custo = None
+    
     def __str__(self):
         return (
             "{\n"
-            f"  \"cromossomo\": {self.cromossomo[0]}\n"
-            f"                {self.cromossomo[1]},\n"
+            f"  \"solucao\": {self.solucao[0]}\n"
+            f"                {self.solucao[1]},\n"
             f"  \"funcao_objetivo\": {self.valor_funcao_objetivo},\n"
             f"  \"confiabilidade_total\": {self.confiabilidade_total}\n"
             "}"
         )
+
+    @property
+    def solucao(self):
+        return self._solucao
+
+    @solucao.setter
+    def solucao(self, nova_solucao):
+        self._solucao = nova_solucao
+        if nova_solucao is not None:
+            self.peso = self.somatoria_pesos(nova_solucao)
+            self.custo = self.somatoria_custos(nova_solucao)
+            self.valor_funcao_objetivo = self.funcao_objetivo(nova_solucao)
+            self.confiabilidade_total = self.confiabilidade_ponte(nova_solucao)
+        else:
+            self.valor_funcao_objetivo = None
+            self.confiabilidade_total = None
 
     def funcao_objetivo(self, individuo):
         confiabilidade = Decimal(self.confiabilidade_ponte(individuo))
@@ -47,9 +63,8 @@ class Individuo:
     def confiabilidade_paralelo(self, tipo, quantidade):
         getcontext().prec = 50
         confiabilidade = Decimal(1)
-
-        for i in range(quantidade):
-            conf_componente = Decimal(self.componentes[0][tipo])
+        for i in range(int(quantidade)):
+            conf_componente = Decimal(self.componentes[0][int(tipo)])
             confiabilidade = confiabilidade*(1 - conf_componente)
 
         confiabilidade = 1 - confiabilidade
@@ -75,15 +90,72 @@ class Individuo:
     def somatoria_custos(self, individuo):
         custo_total = 0
         for i in range(len(individuo[0])):
-            custo_total += self.componentes[1][individuo[0][i]] * individuo[1][i]
+            custo_total += self.componentes[1][int(individuo[0][i])] * int(individuo[1][i])
         return custo_total
 
     def somatoria_pesos(self, individuo):
         peso_total = 0
         for i in range(len(individuo[0])):
-            peso_total += self.componentes[2][individuo[0][i]] * individuo[1][i]
+            peso_total += self.componentes[2][int(individuo[0][i])] * int(individuo[1][i])
         return peso_total
 
+class IndividuoPSO(Individuo):
+    def __init__(self, solucao=None, componentes=None, velocidade=None, peso_max=0, custo_max=0, coeficiente_peso=1, coeficiente_custo=1, num_tipos_componentes=0, num_variaveis=0, num_max_componentes_subsistema=0, num_min_componentes_subsistema=0):
+        super().__init__(solucao, componentes, peso_max, custo_max, coeficiente_peso, coeficiente_custo)
+
+        self.num_tipos_componentes = num_tipos_componentes
+        self.num_variaveis = num_variaveis
+        self.num_max_componentes_subsistema = num_max_componentes_subsistema
+        self.num_min_componentes_subsistema = num_min_componentes_subsistema
+
+        self.velocidade = None
+        if velocidade is None:
+            self.velocidade = self.gera_velocidade()
+
+        self.melhor_posicao = None
+        if solucao is not None:
+            self.melhor_posicao = deepcopy(self)
+
+    def __str__(self):
+        return (
+            "{\n"
+            f"  \"Posicao\": {self.solucao[0]}\n"
+            f"             {self.solucao[1]},\n"
+            f"  \"Velocidade\": {self.velocidade[0]}\n"
+            f"                {self.velocidade[1]},\n"
+            f"  \"funcao_objetivo\": {self.valor_funcao_objetivo},\n"
+            f"  \"confiabilidade_total\": {self.confiabilidade_total}\n"
+            "}"
+        )
+
+    #verificar depois se há algum jeito de melhorar!!!!!!
+    def gera_velocidade(self):
+        #existe um problema pra gerar a velocidade, pois se voce gera valores aletórios dentro da região viável inteira, fica muito fácil do vetor ultrapassar os limites, entao a melhor forma de resolver isso é gerar um aleatório e dividir sempre por 2 ou 3 ou até 4
+        while True:
+            linha_tipos = np.random.randint(-self.num_tipos_componentes//4, (self.num_tipos_componentes//4) + 1, self.num_variaveis)
+            linha_quantidades = np.random.randint(-self.num_max_componentes_subsistema//4,(self.num_max_componentes_subsistema//4) + 1,self.num_variaveis)
+            velocidade = np.vstack((linha_tipos, linha_quantidades))
+
+            posicao_seguinte = self.solucao + velocidade
+
+            # Verifica se há algum valor <= 0  na segunda linha (quantidades), caso sim, ele quebra o codigo e reinicia o loop
+            if np.any(posicao_seguinte[1] <= 0):
+                continue
+            # Verifica se a quantidade de componentes é maior que o máximo permitido
+            if np.any(posicao_seguinte[1] > self.num_max_componentes_subsistema):
+                continue
+            # verifica se o tipo do componente é maior que o número de tipos de componentes ou menor que 0
+            if np.any((posicao_seguinte[0] >= self.num_tipos_componentes) | (posicao_seguinte[0] < 0)):
+                continue
+
+            individuo = Individuo(posicao_seguinte, self.componentes, self.peso_max, self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
+
+            # Retorna apenas indivíduos viáveis
+            if individuo.valor_funcao_objetivo >= 0:
+                return velocidade
+
+    
+    
 class GeradorIndividuos:
     def __init__(self, num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes, coeficiente_custo, coeficiente_peso):
         self.num_tipos_componentes = num_tipos_componentes
@@ -106,10 +178,10 @@ class GeradorIndividuos:
             linha_quantidades = np.random.randint(self.num_min_componentes_subsistema,self.num_max_componentes_subsistema + 1,self.num_variaveis)
 
             # Empilha o cromossomo
-            cromossomo = np.vstack((linha_tipos, linha_quantidades))
+            solucao = np.vstack((linha_tipos, linha_quantidades))
 
             # Cria o indivíduo
-            individuo = Individuo(cromossomo, self.componentes, self.peso_max,
+            individuo = Individuo(solucao, self.componentes, self.peso_max,
                                 self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
 
             # Retorna apenas indivíduos viáveis

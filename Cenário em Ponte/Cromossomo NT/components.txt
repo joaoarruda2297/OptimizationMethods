@@ -1,851 +1,851 @@
 Individuo 0:
 {
-  "cromossomo": [46 44 46 44 56]
-                [2 1 1 1 1],
-  "funcao_objetivo": 0.30231447264328903703598110333532028938648811044835,
-  "confiabilidade_total": 0.30231447264328903703598110333532028938648811044835
+  "solucao": [74 97 98 98 47]
+                [1 2 1 1 1],
+  "funcao_objetivo": 0.76045935615044073564008402891721802770436654948335,
+  "confiabilidade_total": 0.76045935615044073564008402891721802770436654948335
 }
 Individuo 1:
 {
-  "cromossomo": [44 74 66  7 97]
-                [1 1 2 1 1],
-  "funcao_objetivo": 0.65620797389224591150527410700251523501038927780862,
-  "confiabilidade_total": 0.65620797389224591150527410700251523501038927780862
+  "solucao": [23 97 98 72 69]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.61437656704321568453755020684850138942368268242677,
+  "confiabilidade_total": 0.61437656704321568453755020684850138942368268242677
 }
 Individuo 2:
 {
-  "cromossomo": [ 3 14 90 83  7]
-                [1 1 2 1 1],
-  "funcao_objetivo": 0.68910673886544841491378338512527897035466142697207,
-  "confiabilidade_total": 0.68910673886544841491378338512527897035466142697207
+  "solucao": [53 63 71 94 61]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.57367693004888363363141550210205870512812966729799,
+  "confiabilidade_total": 0.57367693004888363363141550210205870512812966729799
 }
 Individuo 3:
 {
-  "cromossomo": [56 43 86 14 66]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.63844793075300672069808605858303228126753248529832,
-  "confiabilidade_total": 0.63844793075300672069808605858303228126753248529832
+  "solucao": [99 94 66 93 75]
+                [1 1 1 2 1],
+  "funcao_objetivo": 0.73622334136356536966212020270948319992359458892406,
+  "confiabilidade_total": 0.73622334136356536966212020270948319992359458892406
 }
 Individuo 4:
 {
-  "cromossomo": [74 80 57 59  7]
-                [1 1 1 1 2],
-  "funcao_objetivo": 0.65956970651921816382044868184398964106163604735254,
-  "confiabilidade_total": 0.65956970651921816382044868184398964106163604735254
+  "solucao": [88 93 99 98 34]
+                [1 1 2 1 1],
+  "funcao_objetivo": 0.79242248163038397156309280823626972081685432458742,
+  "confiabilidade_total": 0.79242248163038397156309280823626972081685432458742
 }
 Individuo 5:
 {
-  "cromossomo": [57 86 51 90  7]
-                [1 2 1 1 1],
-  "funcao_objetivo": 0.76787855329326097969133330552535380176715323537827,
-  "confiabilidade_total": 0.76787855329326097969133330552535380176715323537827
+  "solucao": [76 70 82 74 75]
+                [1 1 2 1 1],
+  "funcao_objetivo": 0.063641301114765990424533474635991476315818964823141,
+  "confiabilidade_total": 0.72514130111476874288945612532408649458345049558486
 }
 Individuo 6:
 {
-  "cromossomo": [90 74 79 28 86]
-                [2 1 1 1 2],
-  "funcao_objetivo": 0.71920250126214811413462479445728832094169541268254,
-  "confiabilidade_total": 0.71920250126214811413462479445728832094169541268254
+  "solucao": [97 62 79 20 87]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.58747693822518949629174602579169029769540563036050,
+  "confiabilidade_total": 0.58747693822518949629174602579169029769540563036050
 }
 Individuo 7:
 {
-  "cromossomo": [90  3 86 44 86]
-                [2 1 2 1 1],
-  "funcao_objetivo": 0.69298246161208135384816071881424336926459300302675,
-  "confiabilidade_total": 0.69298246161208135384816071881424336926459300302675
+  "solucao": [93 92 69 31 96]
+                [1 1 2 1 1],
+  "funcao_objetivo": 0.13986991274885730633539839450242518836236504325537,
+  "confiabilidade_total": 0.72286991274885860129953431728501393848634270438818
 }
 Individuo 8:
 {
-  "cromossomo": [16 86  3 22 57]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.66127254522626848133389273398392592287124678653219,
-  "confiabilidade_total": 0.66127254522626848133389273398392592287124678653219
+  "solucao": [75 48 87 98 92]
+                [1 1 1 2 2],
+  "funcao_objetivo": 0.60717627177801885398714013068269026610293728839415,
+  "confiabilidade_total": 0.60717627177801885398714013068269026610293728839415
 }
 Individuo 9:
 {
-  "cromossomo": [74 79 97 97  7]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.54307428128298873851807360735538435528851454258884,
-  "confiabilidade_total": 0.54307428128298873851807360735538435528851454258884
+  "solucao": [58 93 94 99 84]
+                [1 2 1 1 1],
+  "funcao_objetivo": 0.61184453753954240157245674313574017337165184842411,
+  "confiabilidade_total": 0.61184453753954240157245674313574017337165184842411
 }
 Individuo 10:
 {
-  "cromossomo": [39 86  9 57 44]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.53080183267468314087910599790058864381015876912543,
-  "confiabilidade_total": 0.53080183267468314087910599790058864381015876912543
+  "solucao": [61 99 16 97 95]
+                [1 1 1 2 1],
+  "funcao_objetivo": 0.72234387885361155600657657047233494291696239052065,
+  "confiabilidade_total": 0.72234387885361155600657657047233494291696239052065
 }
 Individuo 11:
 {
-  "cromossomo": [48  7 57 44 90]
-                [1 1 1 1 2],
-  "funcao_objetivo": 0.021561629090228098716509978897155244557655582861774,
-  "confiabilidade_total": 0.54656162909022812092097047140028605303028894467818
+  "solucao": [31 96 47 97 87]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.59624441668829154147913881125375142437174569174586,
+  "confiabilidade_total": 0.59624441668829154147913881125375142437174569174586
 }
 Individuo 12:
 {
-  "cromossomo": [80 97 86 97 54]
-                [1 2 1 1 1],
-  "funcao_objetivo": 0.62805347040645984358801988432404117134324321694124,
-  "confiabilidade_total": 0.71205347040645805857144089199735547822824726052034
+  "solucao": [50 53 97 80 50]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.62513278693879166421742299698638225243002702318574,
+  "confiabilidade_total": 0.62513278693879166421742299698638225243002702318574
 }
 Individuo 13:
 {
-  "cromossomo": [ 5 97 86 83  7]
-                [1 1 2 1 1],
-  "funcao_objetivo": 0.63072368088239649273714463608915729341260988305722,
-  "confiabilidade_total": 0.63072368088239649273714463608915729341260988305722
+  "solucao": [99 65 77 34 93]
+                [1 2 1 1 1],
+  "funcao_objetivo": 0.08361679347055943770845281151541143893733598854887,
+  "confiabilidade_total": 0.72411679347055884085255477303125530719295122292387
 }
 Individuo 14:
 {
-  "cromossomo": [90 66 46  5 96]
+  "solucao": [59 96 66 99 22]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.37993138680909327121704863391389834445495284678144,
-  "confiabilidade_total": 0.37993138680909327121704863391389834445495284678144
+  "funcao_objetivo": 0.40956905316746017946208861327978937315460826079640,
+  "confiabilidade_total": 0.60756905316745988347663024821305569621440554778370
 }
 Individuo 15:
 {
-  "cromossomo": [96 59 90 14 80]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.42489099682276571202535973568835360484771817077416,
-  "confiabilidade_total": 0.42489099682276571202535973568835360484771817077416
+  "solucao": [99 70 98 89 32]
+                [1 1 1 2 1],
+  "funcao_objetivo": 0.64314261298605394386937624633632458925446798044202,
+  "confiabilidade_total": 0.64314261298605394386937624633632458925446798044202
 }
 Individuo 16:
 {
-  "cromossomo": [44 90  3 46  2]
-                [1 2 1 1 1],
-  "funcao_objetivo": 0.44151680256631873143636055142555831529694081684492,
-  "confiabilidade_total": 0.44151680256631873143636055142555831529694081684492
+  "solucao": [74 23 71 97 60]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.68760957606173070494614220853976613899502298364324,
+  "confiabilidade_total": 0.68760957606173070494614220853976613899502298364324
 }
 Individuo 17:
 {
-  "cromossomo": [90 74 59 90 96]
-                [1 2 1 1 1],
-  "funcao_objetivo": 0.33581336745662549047928282605692456413893016794093,
-  "confiabilidade_total": 0.33581336745662549047928282605692456413893016794093
+  "solucao": [38 35 99 90 63]
+                [1 1 2 1 1],
+  "funcao_objetivo": 0.15827536640468528400530925540699092243419109219211,
+  "confiabilidade_total": 0.74627536640468769363336190184674625788436351650852
 }
 Individuo 18:
 {
-  "cromossomo": [44 97 46 44 66]
-                [1 1 1 1 2],
-  "funcao_objetivo": 0.32024543877956094661860863935427469880828434404788,
-  "confiabilidade_total": 0.32024543877956094661860863935427469880828434404788
+  "solucao": [99 23 94 93 60]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.66449894579529699674270652920818274555620166342630,
+  "confiabilidade_total": 0.66449894579529699674270652920818274555620166342630
 }
 Individuo 19:
 {
-  "cromossomo": [44 80 86 86 90]
-                [1 1 1 2 2],
-  "funcao_objetivo": 0.75971344811039191621270107615656648629766537481455,
-  "confiabilidade_total": 0.75971344811039191621270107615656648629766537481455
+  "solucao": [97 62 97 89 81]
+                [2 1 1 1 1],
+  "funcao_objetivo": 0.76643634756268130339592084182624404500697252854883,
+  "confiabilidade_total": 0.76643634756268130339592084182624404500697252854883
 }
 Individuo 20:
 {
-  "cromossomo": [96 80 90 86 41]
+  "solucao": [32 99 98 10 98]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.46313887632804503144989297385759979953838486659502,
-  "confiabilidade_total": 0.46313887632804503144989297385759979953838486659502
+  "funcao_objetivo": 0.60653003828464476971157057232143544875860822998076,
+  "confiabilidade_total": 0.60653003828464476971157057232143544875860822998076
 }
 Individuo 21:
 {
-  "cromossomo": [39 90 86 85  3]
-                [1 1 2 1 1],
-  "funcao_objetivo": 0.54437075511797553860768371796326729243653976823639,
-  "confiabilidade_total": 0.54437075511797553860768371796326729243653976823639
+  "solucao": [94 35 90 81 98]
+                [1 1 1 2 1],
+  "funcao_objetivo": 0.78432137551119682522681349641054543907157720957124,
+  "confiabilidade_total": 0.78432137551119682522681349641054543907157720957124
 }
 Individuo 22:
 {
-  "cromossomo": [ 7 76 86 86 56]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.082546476743584951777425103127568191793118396488734,
-  "confiabilidade_total": 0.67054647674358736140547774956732352724329082080514
+  "solucao": [55 95 83 97 41]
+                [1 1 2 1 1],
+  "funcao_objetivo": 0.08466467252976017844755833604837687062937773940136,
+  "confiabilidade_total": 0.72266467252975830261473592938388617086131133315136
 }
 Individuo 23:
 {
-  "cromossomo": [68 97 86 46 15]
+  "solucao": [75 33 79 77 81]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.47924844406505241239041520480357156844530863567832,
-  "confiabilidade_total": 0.47924844406505241239041520480357156844530863567832
+  "funcao_objetivo": 0.66387303180547875839266640862611504889427250333924,
+  "confiabilidade_total": 0.66387303180547875839266640862611504889427250333924
 }
 Individuo 24:
 {
-  "cromossomo": [66 90 57 56 86]
-                [2 1 1 1 1],
-  "funcao_objetivo": 0.51317443037716264969481307961615951742482279482125,
-  "confiabilidade_total": 0.51317443037716264969481307961615951742482279482125
+  "solucao": [52 86 98 93 32]
+                [1 1 2 1 1],
+  "funcao_objetivo": 0.73390543919692868984262760741354374602717090361609,
+  "confiabilidade_total": 0.73390543919692868984262760741354374602717090361609
 }
 Individuo 25:
 {
-  "cromossomo": [66 66 44 66 59]
-                [2 1 1 1 2],
-  "funcao_objetivo": 0.61054580410919410149383653749477371728996530671307,
-  "confiabilidade_total": 0.61054580410919410149383653749477371728996530671307
+  "solucao": [98 94 34 94 92]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.63517224070686147721581320060802417221885472078955,
+  "confiabilidade_total": 0.63517224070686147721581320060802417221885472078955
 }
 Individuo 26:
 {
-  "cromossomo": [59 66 57 14 74]
-                [1 2 1 1 1],
-  "funcao_objetivo": 0.63428621516732513347373874895538168173552881669161,
-  "confiabilidade_total": 0.70778621516732543467724532976035109866680036973116
+  "solucao": [97 61 69 77 97]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.66951514438667726877900700780771722761240825775492,
+  "confiabilidade_total": 0.66951514438667726877900700780771722761240825775492
 }
 Individuo 27:
 {
-  "cromossomo": [52 28 90 22 46]
+  "solucao": [91 12 82 38 97]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.60392499297575853019908692997306384503546268491112,
-  "confiabilidade_total": 0.60392499297575853019908692997306384503546268491112
+  "funcao_objetivo": 0.68873130165054270840553911900838549639348190358930,
+  "confiabilidade_total": 0.68873130165054270840553911900838549639348190358930
 }
 Individuo 28:
 {
-  "cromossomo": [86 44 54 86 90]
-                [1 1 2 1 2],
-  "funcao_objetivo": 0.084507872827103544768248446078404439446929703194214,
-  "confiabilidade_total": 0.64100787282710476068450501554984751140833259626062
+  "solucao": [66 99 87 98 13]
+                [1 1 1 2 1],
+  "funcao_objetivo": 0.56871916703883780264949326838987307072898164536046,
+  "confiabilidade_total": 0.56871916703883780264949326838987307072898164536046
 }
 Individuo 29:
 {
-  "cromossomo": [90 43 90 14 80]
-                [2 1 1 1 1],
-  "funcao_objetivo": 0.52146309043995378139136885019857187778671569543515,
-  "confiabilidade_total": 0.52146309043995378139136885019857187778671569543515
+  "solucao": [76 89 57 75 99]
+                [2 1 1 1 2],
+  "funcao_objetivo": 0.75903138558470867469225643697317276623490378803271,
+  "confiabilidade_total": 0.75903138558470867469225643697317276623490378803271
 }
 Individuo 30:
 {
-  "cromossomo": [90  3 86 79 22]
-                [1 1 2 1 1],
-  "funcao_objetivo": 0.34367614405348170325595420182583151147331120296662,
-  "confiabilidade_total": 0.79467614405348188177981656155100321159328343197053
+  "solucao": [99 88 97 79 71]
+                [1 1 1 2 1],
+  "funcao_objetivo": 0.76670095231289191740456933960504108972210953316423,
+  "confiabilidade_total": 0.76670095231289191740456933960504108972210953316423
 }
 Individuo 31:
 {
-  "cromossomo": [ 7 97 73 90 86]
-                [1 2 1 2 1],
-  "funcao_objetivo": 0.72607839604935294868374816896754996610601813681124,
-  "confiabilidade_total": 0.72607839604935294868374816896754996610601813681124
+  "solucao": [89 67 92 83 91]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.63980159339202275650546203456629818965528360753121,
+  "confiabilidade_total": 0.63980159339202275650546203456629818965528360753121
 }
 Individuo 32:
 {
-  "cromossomo": [ 3 86 59 57 97]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.67443129611858223246518124036906362694071351970074,
-  "confiabilidade_total": 0.67443129611858223246518124036906362694071351970074
+  "solucao": [97 87 98 96 64]
+                [1 1 3 2 1],
+  "funcao_objetivo": 0.78422726990649147901046213255738302497346163088413,
+  "confiabilidade_total": 0.78422726990649147901046213255738302497346163088413
 }
 Individuo 33:
 {
-  "cromossomo": [90 66 59  7 95]
-                [1 1 1 2 1],
-  "funcao_objetivo": 0.50915471804702434188249521703440434989415089004105,
-  "confiabilidade_total": 0.50915471804702434188249521703440434989415089004105
+  "solucao": [49 82 32 76 94]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.17953907950962305648780932801846991804879448270771,
+  "confiabilidade_total": 0.77353907950962214077585861718935537663739464139912
 }
 Individuo 34:
 {
-  "cromossomo": [86 59 85 73 86]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.53908969567453213857757554336662175925934645894267,
-  "confiabilidade_total": 0.53908969567453213857757554336662175925934645894267
+  "solucao": [20 98 81 99 91]
+                [1 1 2 2 1],
+  "funcao_objetivo": 0.84647155975879900120814552575946081923513538752915,
+  "confiabilidade_total": 0.84647155975879900120814552575946081923513538752915
 }
 Individuo 35:
 {
-  "cromossomo": [90 90 29 66 59]
+  "solucao": [93 88 51 28 63]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.37795981152812694351169654498403835775676801401882,
-  "confiabilidade_total": 0.37795981152812694351169654498403835775676801401882
+  "funcao_objetivo": 0.44665986581106717229810457945074771994644409914384,
+  "confiabilidade_total": 0.70915986581106718340033482570231312418276078005204
 }
 Individuo 36:
 {
-  "cromossomo": [90 57 97 90 44]
+  "solucao": [77 98 97 55 82]
                 [1 1 1 1 2],
-  "funcao_objetivo": 0.44063714247190459685413135083290210637553470411952,
-  "confiabilidade_total": 0.44063714247190459685413135083290210637553470411952
+  "funcao_objetivo": 0.61722149646876748137084998008645794343168127033893,
+  "confiabilidade_total": 0.61722149646876748137084998008645794343168127033893
 }
 Individuo 37:
 {
-  "cromossomo": [90 96 79 90 85]
-                [2 1 1 1 1],
-  "funcao_objetivo": 0.43584258231484043202830219722017816588116997683788,
-  "confiabilidade_total": 0.43584258231484043202830219722017816588116997683788
+  "solucao": [93 69 97 50 76]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.64168379832141939331558094035449844832300164763713,
+  "confiabilidade_total": 0.64168379832141939331558094035449844832300164763713
 }
 Individuo 38:
 {
-  "cromossomo": [90 86 98 46  7]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.090121886049367514522437793668701732131294891571068,
-  "confiabilidade_total": 0.46412188604936740261195691145292245742922274801638
+  "solucao": [87 92 97 67 83]
+                [1 1 2 1 1],
+  "funcao_objetivo": 0.68348067131051141327382027920369259641083152028425,
+  "confiabilidade_total": 0.68348067131051141327382027920369259641083152028425
 }
 Individuo 39:
 {
-  "cromossomo": [16 44 90 59 28]
-                [1 1 1 1 2],
-  "funcao_objetivo": 0.37975539331437784425480344488639382075464216833127,
-  "confiabilidade_total": 0.37975539331437784425480344488639382075464216833127
+  "solucao": [91 94 69 35 89]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.60704124673180355040943057113908083778589226328788,
+  "confiabilidade_total": 0.60704124673180355040943057113908083778589226328788
 }
 Individuo 40:
 {
-  "cromossomo": [57 97 46  3 46]
-                [1 1 1 2 1],
-  "funcao_objetivo": 0.63452807748814166413600207453225089154535915396842,
-  "confiabilidade_total": 0.63452807748814166413600207453225089154535915396842
+  "solucao": [32 78 64 82 97]
+                [1 1 1 1 2],
+  "funcao_objetivo": 0.81088459829426399951035431891656163992540214390803,
+  "confiabilidade_total": 0.81088459829426399951035431891656163992540214390803
 }
 Individuo 41:
 {
-  "cromossomo": [14 59 90 97  2]
-                [1 2 2 1 1],
-  "funcao_objetivo": 0.61188212972597797639616620400594245608012403746078,
-  "confiabilidade_total": 0.61188212972597797639616620400594245608012403746078
+  "solucao": [62 91 99 91 92]
+                [1 1 2 1 2],
+  "funcao_objetivo": 0.46510526248221149584192161497148544908681571784475,
+  "confiabilidade_total": 0.69610526248221245041167818768107890532532394233205
 }
 Individuo 42:
 {
-  "cromossomo": [74 83 56 28 86]
+  "solucao": [73 64 83 84 69]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.46812415575970371708089022671286692857812692705737,
-  "confiabilidade_total": 0.46812415575970371708089022671286692857812692705737
+  "funcao_objetivo": 0.60446696514004336002385918872661295733493611157458,
+  "confiabilidade_total": 0.60446696514004336002385918872661295733493611157458
 }
 Individuo 43:
 {
-  "cromossomo": [66 97 97 74 86]
+  "solucao": [22 89 78 68 75]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.47488162000500065994724147569446673688471615053348,
-  "confiabilidade_total": 0.47488162000500065994724147569446673688471615053348
+  "funcao_objetivo": 0.59349136591280161947914784340370957777703414949850,
+  "confiabilidade_total": 0.62649136591280287003436278118003671095574508699850
 }
 Individuo 44:
 {
-  "cromossomo": [73 66 59 86 90]
+  "solucao": [61 95 76 97 37]
                 [1 1 1 2 1],
-  "funcao_objetivo": 0.56834542873555949940226716770181656212191433548906,
-  "confiabilidade_total": 0.56834542873555949940226716770181656212191433548906
+  "funcao_objetivo": 0.79492323027935207656477332824695147315009870021731,
+  "confiabilidade_total": 0.79492323027935207656477332824695147315009870021731
 }
 Individuo 45:
 {
-  "cromossomo": [96 66 90 22 59]
-                [1 1 2 1 1],
-  "funcao_objetivo": 0.38823395867854837952964415244630947045938106054741,
-  "confiabilidade_total": 0.38823395867854837952964415244630947045938106054741
+  "solucao": [96 63 82 71 77]
+                [1 2 1 1 1],
+  "funcao_objetivo": 0.31779750594113057753206494094756334182131566474066,
+  "confiabilidade_total": 0.63279750594113507615576072208186513837683476874457
 }
 Individuo 46:
 {
-  "cromossomo": [97 80  9 86 90]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.58171672622761246129076079770115113724799099964500,
-  "confiabilidade_total": 0.58171672622761246129076079770115113724799099964500
+  "solucao": [99 94 90 21 69]
+                [4 1 1 1 1],
+  "funcao_objetivo": 0.63712384399660058908596502831924579338633890057725,
+  "confiabilidade_total": 0.63712384399660058908596502831924579338633890057725
 }
 Individuo 47:
 {
-  "cromossomo": [66 52  7 97  3]
-                [1 1 2 2 1],
-  "funcao_objetivo": 0.86034893118196399776174089287408154726602655959335,
-  "confiabilidade_total": 0.86034893118196399776174089287408154726602655959335
+  "solucao": [82 96 18 62 85]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.59086166814506469471747045496803571496599939709489,
+  "confiabilidade_total": 0.59086166814506469471747045496803571496599939709489
 }
 Individuo 48:
 {
-  "cromossomo": [97 90 43 79 85]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.46279828518562556908965579623349744907371447013190,
-  "confiabilidade_total": 0.46279828518562556908965579623349744907371447013190
+  "solucao": [97 99 83 84 77]
+                [2 2 2 1 1],
+  "funcao_objetivo": 0.89107962653281677190101854121544888741421207663612,
+  "confiabilidade_total": 0.89107962653281677190101854121544888741421207663612
 }
 Individuo 49:
 {
-  "cromossomo": [90 54 95  7 90]
+  "solucao": [76 96 17 98 52]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.59545127227843650484030073333257892000299311276382,
-  "confiabilidade_total": 0.59545127227843650484030073333257892000299311276382
+  "funcao_objetivo": 0.57860760037161351217347203101527057475498082643843,
+  "confiabilidade_total": 0.57860760037161351217347203101527057475498082643843
 }
 
 Componente 0:
-Confiabilidade: 0.47628094
-Custo: 18.5
-Peso: 19.03
+Confiabilidade: 0.46616633
+Custo: 13.73
+Peso: 19.48
 
 Componente 1:
-Confiabilidade: 0.51103286
-Custo: 10.29
-Peso: 25.13
+Confiabilidade: 0.64671169
+Custo: 11.58
+Peso: 18.15
 
 Componente 2:
-Confiabilidade: 0.41244564
-Custo: 8.74
-Peso: 2.26
+Confiabilidade: 0.72963395
+Custo: 12.78
+Peso: 15.26
 
 Componente 3:
-Confiabilidade: 0.68537721
-Custo: 6.79
-Peso: 1.82
+Confiabilidade: 0.45681344
+Custo: 13.06
+Peso: 14.7
 
 Componente 4:
-Confiabilidade: 0.64727584
-Custo: 6.78
-Peso: 23.03
+Confiabilidade: 0.30757842
+Custo: 7.16
+Peso: 19.89
 
 Componente 5:
-Confiabilidade: 0.56570531
-Custo: 12.59
-Peso: 3.22
+Confiabilidade: 0.36925232
+Custo: 12.2
+Peso: 14.47
 
 Componente 6:
-Confiabilidade: 0.71273159
-Custo: 17.36
-Peso: 25.44
+Confiabilidade: 0.4655464
+Custo: 11.48
+Peso: 15.04
 
 Componente 7:
-Confiabilidade: 0.71321137
-Custo: 2.64
-Peso: 4.6
+Confiabilidade: 0.63566438
+Custo: 14.87
+Peso: 11.71
 
 Componente 8:
-Confiabilidade: 0.38505855
-Custo: 17.17
-Peso: 18.5
+Confiabilidade: 0.58759928
+Custo: 9.11
+Peso: 16.95
 
 Componente 9:
-Confiabilidade: 0.45392765
-Custo: 8.86
-Peso: 4.71
+Confiabilidade: 0.41906284
+Custo: 6.8
+Peso: 18.73
 
 Componente 10:
-Confiabilidade: 0.34832131
-Custo: 15.9
-Peso: 11.89
+Confiabilidade: 0.58521093
+Custo: 8.23
+Peso: 17.43
 
 Componente 11:
-Confiabilidade: 0.582521
-Custo: 18.05
-Peso: 14.31
+Confiabilidade: 0.66966594
+Custo: 14.85
+Peso: 10.83
 
 Componente 12:
-Confiabilidade: 0.69749251
-Custo: 18.89
-Peso: 21.02
+Confiabilidade: 0.62301706
+Custo: 14.65
+Peso: 10.49
 
 Componente 13:
-Confiabilidade: 0.56650633
-Custo: 15.28
-Peso: 7.68
+Confiabilidade: 0.52234428
+Custo: 7.82
+Peso: 17.15
 
 Componente 14:
-Confiabilidade: 0.72806764
-Custo: 3.52
-Peso: 9.87
+Confiabilidade: 0.43542406
+Custo: 11.63
+Peso: 13.09
 
 Componente 15:
-Confiabilidade: 0.38694677
-Custo: 6.33
-Peso: 14.87
+Confiabilidade: 0.53791304
+Custo: 13.85
+Peso: 10.91
 
 Componente 16:
-Confiabilidade: 0.58222053
-Custo: 2.87
-Peso: 17.34
+Confiabilidade: 0.53025873
+Custo: 6.98
+Peso: 17.56
 
 Componente 17:
-Confiabilidade: 0.4758542
-Custo: 18.36
-Peso: 19.02
+Confiabilidade: 0.62681067
+Custo: 4.83
+Peso: 19.59
 
 Componente 18:
-Confiabilidade: 0.43755815
-Custo: 12.46
-Peso: 24.62
+Confiabilidade: 0.51686114
+Custo: 5.2
+Peso: 18.81
 
 Componente 19:
-Confiabilidade: 0.58329713
-Custo: 14.16
-Peso: 14.6
+Confiabilidade: 0.74812815
+Custo: 14.01
+Peso: 10.2
 
 Componente 20:
-Confiabilidade: 0.63144148
-Custo: 11.84
-Peso: 27.78
+Confiabilidade: 0.57797416
+Custo: 12.56
+Peso: 11.25
 
 Componente 21:
-Confiabilidade: 0.549979
-Custo: 15.96
-Peso: 15.85
+Confiabilidade: 0.30614961
+Custo: 4.13
+Peso: 19.36
 
 Componente 22:
-Confiabilidade: 0.32502507
-Custo: 8.68
-Peso: 2.45
+Confiabilidade: 0.44007022
+Custo: 6.24
+Peso: 17.03
 
 Componente 23:
-Confiabilidade: 0.66373238
-Custo: 11.31
-Peso: 22.99
+Confiabilidade: 0.63299136
+Custo: 6.03
+Peso: 17.37
 
 Componente 24:
-Confiabilidade: 0.44837912
-Custo: 6.6
-Peso: 22.45
+Confiabilidade: 0.63710104
+Custo: 9.23
+Peso: 14.17
 
 Componente 25:
-Confiabilidade: 0.56902958
-Custo: 14.92
-Peso: 28.37
+Confiabilidade: 0.51778926
+Custo: 12.26
+Peso: 10.14
 
 Componente 26:
-Confiabilidade: 0.33437102
-Custo: 15.75
-Peso: 22.61
+Confiabilidade: 0.71151948
+Custo: 9.97
+Peso: 12.59
 
 Componente 27:
-Confiabilidade: 0.35502927
-Custo: 14.2
-Peso: 28.36
+Confiabilidade: 0.39064575
+Custo: 9.15
+Peso: 12.93
 
 Componente 28:
-Confiabilidade: 0.70923002
-Custo: 5.44
-Peso: 2.75
+Confiabilidade: 0.43515142
+Custo: 11.39
+Peso: 10.7
 
 Componente 29:
-Confiabilidade: 0.48340335
-Custo: 9.0
-Peso: 17.27
+Confiabilidade: 0.68413524
+Custo: 11.61
+Peso: 10.65
 
 Componente 30:
-Confiabilidade: 0.39838343
-Custo: 12.18
-Peso: 14.8
+Confiabilidade: 0.64876643
+Custo: 2.24
+Peso: 19.66
 
 Componente 31:
-Confiabilidade: 0.51305047
-Custo: 11.15
-Peso: 22.94
+Confiabilidade: 0.51141236
+Custo: 8.84
+Peso: 12.92
 
 Componente 32:
-Confiabilidade: 0.39933671
-Custo: 18.11
-Peso: 4.02
+Confiabilidade: 0.6428694
+Custo: 2.86
+Peso: 18.77
 
 Componente 33:
-Confiabilidade: 0.59775404
-Custo: 19.42
-Peso: 14.24
+Confiabilidade: 0.69332596
+Custo: 13.93
+Peso: 7.6
 
 Componente 34:
-Confiabilidade: 0.35962081
-Custo: 15.25
-Peso: 23.62
+Confiabilidade: 0.70604037
+Custo: 7.98
+Peso: 13.27
 
 Componente 35:
-Confiabilidade: 0.55259998
-Custo: 19.94
-Peso: 25.63
+Confiabilidade: 0.74324213
+Custo: 9.35
+Peso: 11.88
 
 Componente 36:
-Confiabilidade: 0.59419436
-Custo: 13.32
-Peso: 19.7
+Confiabilidade: 0.60334763
+Custo: 3.31
+Peso: 17.61
 
 Componente 37:
-Confiabilidade: 0.63001696
-Custo: 12.59
-Peso: 19.3
+Confiabilidade: 0.73354431
+Custo: 3.14
+Peso: 17.45
 
 Componente 38:
-Confiabilidade: 0.42492252
-Custo: 16.63
-Peso: 19.94
+Confiabilidade: 0.54479382
+Custo: 3.11
+Peso: 17.21
 
 Componente 39:
-Confiabilidade: 0.35296714
-Custo: 3.02
-Peso: 19.63
+Confiabilidade: 0.440853
+Custo: 9.35
+Peso: 10.82
 
 Componente 40:
-Confiabilidade: 0.61912082
-Custo: 16.6
-Peso: 7.82
+Confiabilidade: 0.33150902
+Custo: 11.07
+Peso: 8.96
 
 Componente 41:
-Confiabilidade: 0.4113041
-Custo: 10.21
-Peso: 15.47
+Confiabilidade: 0.4510922
+Custo: 3.18
+Peso: 16.84
 
 Componente 42:
-Confiabilidade: 0.4999761
-Custo: 11.72
-Peso: 13.12
+Confiabilidade: 0.42875374
+Custo: 1.0
+Peso: 18.83
 
 Componente 43:
-Confiabilidade: 0.38013123
-Custo: 6.43
-Peso: 12.67
+Confiabilidade: 0.3969856
+Custo: 12.97
+Peso: 6.75
 
 Componente 44:
-Confiabilidade: 0.30029091
-Custo: 5.51
-Peso: 2.45
+Confiabilidade: 0.49018265
+Custo: 14.71
+Peso: 4.91
 
 Componente 45:
-Confiabilidade: 0.6559067
-Custo: 7.89
-Peso: 13.22
+Confiabilidade: 0.44867087
+Custo: 1.48
+Peso: 17.7
 
 Componente 46:
-Confiabilidade: 0.3536905
-Custo: 1.45
-Peso: 11.12
+Confiabilidade: 0.67759918
+Custo: 12.22
+Peso: 6.98
 
 Componente 47:
-Confiabilidade: 0.57351789
-Custo: 18.18
-Peso: 1.73
+Confiabilidade: 0.56823831
+Custo: 1.6
+Peso: 17.49
 
 Componente 48:
-Confiabilidade: 0.34446863
-Custo: 10.11
-Peso: 23.66
+Confiabilidade: 0.38853564
+Custo: 14.9
+Peso: 3.91
 
 Componente 49:
-Confiabilidade: 0.35540807
-Custo: 18.59
-Peso: 26.22
-
-Componente 50:
-Confiabilidade: 0.70520795
-Custo: 1.16
-Peso: 27.89
-
-Componente 51:
-Confiabilidade: 0.37710978
-Custo: 8.72
-Peso: 7.95
-
-Componente 52:
-Confiabilidade: 0.7368901
-Custo: 3.52
-Peso: 12.85
-
-Componente 53:
-Confiabilidade: 0.60973631
-Custo: 14.62
-Peso: 5.13
-
-Componente 54:
-Confiabilidade: 0.37234424
-Custo: 6.42
-Peso: 11.94
-
-Componente 55:
-Confiabilidade: 0.64545475
-Custo: 1.11
-Peso: 23.67
-
-Componente 56:
-Confiabilidade: 0.3616248
-Custo: 9.02
-Peso: 1.03
-
-Componente 57:
-Confiabilidade: 0.73413417
-Custo: 3.93
-Peso: 6.05
-
-Componente 58:
-Confiabilidade: 0.7365803
-Custo: 11.92
-Peso: 25.54
-
-Componente 59:
-Confiabilidade: 0.34791639
-Custo: 1.58
-Peso: 7.93
-
-Componente 60:
-Confiabilidade: 0.69424314
-Custo: 9.9
-Peso: 26.34
-
-Componente 61:
-Confiabilidade: 0.39762634
-Custo: 18.55
-Peso: 4.26
-
-Componente 62:
-Confiabilidade: 0.43600361
-Custo: 12.61
-Peso: 17.28
-
-Componente 63:
-Confiabilidade: 0.53946825
-Custo: 13.37
-Peso: 22.31
-
-Componente 64:
-Confiabilidade: 0.54018064
-Custo: 13.04
-Peso: 8.45
-
-Componente 65:
-Confiabilidade: 0.43268114
-Custo: 18.08
-Peso: 6.78
-
-Componente 66:
-Confiabilidade: 0.54302968
-Custo: 3.04
-Peso: 4.97
-
-Componente 67:
-Confiabilidade: 0.31434198
-Custo: 20.08
-Peso: 29.9
-
-Componente 68:
-Confiabilidade: 0.49662383
-Custo: 12.92
-Peso: 3.67
-
-Componente 69:
-Confiabilidade: 0.63145919
-Custo: 19.68
-Peso: 11.5
-
-Componente 70:
-Confiabilidade: 0.46536943
-Custo: 3.55
-Peso: 23.82
-
-Componente 71:
-Confiabilidade: 0.66935069
-Custo: 16.76
-Peso: 11.49
-
-Componente 72:
-Confiabilidade: 0.36601583
-Custo: 7.79
-Peso: 21.01
-
-Componente 73:
-Confiabilidade: 0.53725726
-Custo: 7.81
-Peso: 14.03
-
-Componente 74:
-Confiabilidade: 0.38571904
-Custo: 7.13
-Peso: 6.28
-
-Componente 75:
-Confiabilidade: 0.60013971
-Custo: 12.17
-Peso: 22.88
-
-Componente 76:
-Confiabilidade: 0.33057635
-Custo: 8.75
-Peso: 24.47
-
-Componente 77:
-Confiabilidade: 0.73224211
-Custo: 11.0
-Peso: 27.36
-
-Componente 78:
-Confiabilidade: 0.34391874
-Custo: 10.78
-Peso: 22.78
-
-Componente 79:
-Confiabilidade: 0.74888286
-Custo: 5.3
-Peso: 13.56
-
-Componente 80:
-Confiabilidade: 0.70834027
-Custo: 5.16
-Peso: 9.47
-
-Componente 81:
-Confiabilidade: 0.54094515
-Custo: 19.64
-Peso: 2.07
-
-Componente 82:
-Confiabilidade: 0.61117921
-Custo: 13.13
-Peso: 29.1
-
-Componente 83:
-Confiabilidade: 0.41583218
-Custo: 1.61
-Peso: 16.79
-
-Componente 84:
-Confiabilidade: 0.47676677
-Custo: 5.42
-Peso: 28.05
-
-Componente 85:
-Confiabilidade: 0.42838221
-Custo: 8.1
+Confiabilidade: 0.73518958
+Custo: 12.94
 Peso: 5.94
 
+Componente 50:
+Confiabilidade: 0.52349979
+Custo: 3.32
+Peso: 15.2
+
+Componente 51:
+Confiabilidade: 0.68281664
+Custo: 6.27
+Peso: 12.19
+
+Componente 52:
+Confiabilidade: 0.40311243
+Custo: 6.53
+Peso: 11.64
+
+Componente 53:
+Confiabilidade: 0.74777887
+Custo: 10.77
+Peso: 7.73
+
+Componente 54:
+Confiabilidade: 0.50229605
+Custo: 11.93
+Peso: 6.07
+
+Componente 55:
+Confiabilidade: 0.42970307
+Custo: 7.98
+Peso: 9.91
+
+Componente 56:
+Confiabilidade: 0.69002437
+Custo: 8.64
+Peso: 8.74
+
+Componente 57:
+Confiabilidade: 0.40489662
+Custo: 5.32
+Peso: 11.72
+
+Componente 58:
+Confiabilidade: 0.33400703
+Custo: 9.39
+Peso: 7.3
+
+Componente 59:
+Confiabilidade: 0.72171946
+Custo: 6.69
+Peso: 10.24
+
+Componente 60:
+Confiabilidade: 0.51205563
+Custo: 10.9
+Peso: 5.5
+
+Componente 61:
+Confiabilidade: 0.63773202
+Custo: 5.43
+Peso: 11.08
+
+Componente 62:
+Confiabilidade: 0.48713267
+Custo: 8.77
+Peso: 7.5
+
+Componente 63:
+Confiabilidade: 0.38194392
+Custo: 3.74
+Peso: 12.3
+
+Componente 64:
+Confiabilidade: 0.73209463
+Custo: 9.4
+Peso: 6.35
+
+Componente 65:
+Confiabilidade: 0.54905681
+Custo: 3.25
+Peso: 12.1
+
+Componente 66:
+Confiabilidade: 0.57001719
+Custo: 10.32
+Peso: 4.67
+
+Componente 67:
+Confiabilidade: 0.4318801
+Custo: 9.4
+Peso: 5.39
+
+Componente 68:
+Confiabilidade: 0.57080576
+Custo: 7.3
+Peso: 7.55
+
+Componente 69:
+Confiabilidade: 0.43536362
+Custo: 5.28
+Peso: 9.37
+
+Componente 70:
+Confiabilidade: 0.31963457
+Custo: 9.03
+Peso: 4.96
+
+Componente 71:
+Confiabilidade: 0.50275967
+Custo: 5.19
+Peso: 8.95
+
+Componente 72:
+Confiabilidade: 0.40209638
+Custo: 10.81
+Peso: 3.15
+
+Componente 73:
+Confiabilidade: 0.36500819
+Custo: 6.93
+Peso: 6.94
+
+Componente 74:
+Confiabilidade: 0.66158002
+Custo: 5.41
+Peso: 8.12
+
+Componente 75:
+Confiabilidade: 0.59809401
+Custo: 1.0
+Peso: 12.24
+
+Componente 76:
+Confiabilidade: 0.64058904
+Custo: 7.89
+Peso: 5.17
+
+Componente 77:
+Confiabilidade: 0.55118014
+Custo: 9.06
+Peso: 3.77
+
+Componente 78:
+Confiabilidade: 0.65667566
+Custo: 11.79
+Peso: 1.09
+
+Componente 79:
+Confiabilidade: 0.51233085
+Custo: 1.89
+Peso: 10.72
+
+Componente 80:
+Confiabilidade: 0.31210155
+Custo: 7.85
+Peso: 4.45
+
+Componente 81:
+Confiabilidade: 0.74010714
+Custo: 2.41
+Peso: 10.3
+
+Componente 82:
+Confiabilidade: 0.72269473
+Custo: 2.35
+Peso: 10.07
+
+Componente 83:
+Confiabilidade: 0.62393074
+Custo: 5.43
+Peso: 6.87
+
+Componente 84:
+Confiabilidade: 0.60809142
+Custo: 1.97
+Peso: 10.24
+
+Componente 85:
+Confiabilidade: 0.60574141
+Custo: 7.64
+Peso: 4.47
+
 Componente 86:
-Confiabilidade: 0.71690435
-Custo: 1.7
-Peso: 5.23
+Confiabilidade: 0.60595052
+Custo: 9.47
+Peso: 2.48
 
 Componente 87:
-Confiabilidade: 0.65790935
-Custo: 2.3
-Peso: 30.09
+Confiabilidade: 0.34656179
+Custo: 1.96
+Peso: 8.9
 
 Componente 88:
-Confiabilidade: 0.3035231
-Custo: 3.88
-Peso: 26.88
+Confiabilidade: 0.71411479
+Custo: 2.19
+Peso: 9.01
 
 Componente 89:
-Confiabilidade: 0.44956471
-Custo: 16.98
-Peso: 16.32
+Confiabilidade: 0.62932552
+Custo: 3.7
+Peso: 6.93
 
 Componente 90:
-Confiabilidade: 0.32368103
-Custo: 1.24
-Peso: 1.87
+Confiabilidade: 0.6282481
+Custo: 8.04
+Peso: 2.53
 
 Componente 91:
-Confiabilidade: 0.74751274
-Custo: 17.31
-Peso: 20.31
+Confiabilidade: 0.54606743
+Custo: 5.42
+Peso: 4.21
 
 Componente 92:
-Confiabilidade: 0.37801379
-Custo: 11.64
-Peso: 16.47
+Confiabilidade: 0.67374467
+Custo: 3.36
+Peso: 5.59
 
 Componente 93:
-Confiabilidade: 0.39162456
-Custo: 19.99
-Peso: 21.97
+Confiabilidade: 0.74509617
+Custo: 2.78
+Peso: 6.05
 
 Componente 94:
-Confiabilidade: 0.32484479
-Custo: 17.84
-Peso: 9.47
+Confiabilidade: 0.54161859
+Custo: 4.5
+Peso: 4.04
 
 Componente 95:
-Confiabilidade: 0.70897561
-Custo: 9.59
-Peso: 15.89
+Confiabilidade: 0.42637718
+Custo: 6.97
+Peso: 1.38
 
 Componente 96:
-Confiabilidade: 0.35519705
-Custo: 5.37
-Peso: 7.28
+Confiabilidade: 0.48949906
+Custo: 4.99
+Peso: 2.91
 
 Componente 97:
-Confiabilidade: 0.4673795
-Custo: 2.34
-Peso: 4.48
+Confiabilidade: 0.71493399
+Custo: 1.59
+Peso: 6.51
 
 Componente 98:
-Confiabilidade: 0.4427097
-Custo: 18.31
-Peso: 1.64
+Confiabilidade: 0.50708841
+Custo: 2.33
+Peso: 4.76
 
 Componente 99:
-Confiabilidade: 0.6277042
-Custo: 6.34
-Peso: 19.88
+Confiabilidade: 0.54459349
+Custo: 1.94
+Peso: 3.32
 

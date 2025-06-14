@@ -35,34 +35,6 @@ class GeneticAlgorithm:
         for i in range(self.num_individuos):
             self.individuos.append(individuos[i])
         self.individuos = sorted(self.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
-        
-    def confiabilidade_paralelo(self, tipo, quantidade):
-        getcontext().prec = 50
-        confiabilidade = Decimal(1)
-
-        for i in range(quantidade):
-            conf_componente = Decimal(self.componentes[0][tipo])
-            confiabilidade = confiabilidade*(1 - conf_componente)
-
-        confiabilidade = 1 - confiabilidade
-        return confiabilidade
-
-    def confiabilidade_ponte(self, individuo):
-        getcontext().prec = 50
-        #considerando a confiabilidade do sistema em ponte
-        r_1 = Decimal(self.confiabilidade_paralelo(individuo[0][0], individuo[1][0]))
-        r_2 = Decimal(self.confiabilidade_paralelo(individuo[0][1], individuo[1][1]))
-        r_3 = Decimal(self.confiabilidade_paralelo(individuo[0][2], individuo[1][2]))
-        r_4 = Decimal(self.confiabilidade_paralelo(individuo[0][3], individuo[1][3]))
-        r_5 = Decimal(self.confiabilidade_paralelo(individuo[0][4], individuo[1][4]))
-
-        confiabilidade_sistema = Decimal(
-            r_1*r_2 + r_3*r_4 + r_1*r_4*r_5 + r_2*r_3*r_5
-            - r_1*r_2*r_3*r_4 - r_1*r_2*r_3*r_5 - r_1*r_2*r_4*r_5 - r_1*r_3*r_4*r_5 - r_2*r_3*r_4*r_5 
-            + 2*r_1*r_2*r_3*r_4*r_5 
-        )
-
-        return confiabilidade_sistema
 
     def seleciona_pais(self, populacao):
         #selecionando os pais de forma simples, apenas pelos mais fortes
@@ -78,8 +50,6 @@ class GeneticAlgorithm:
         return pais
     
     def crossover_linha(self, individuo1, individuo2):
-        print("Individuo 1: ", individuo1)
-        print("Individuo 2: ", individuo2)
         tamanho_cromossomo = random.randint(1, self.num_variaveis) #numero de genes que serão trocados entre os pais
         posicoes = [] #posicoes variadas do genes, nao necessariamente sequenciais
         filho1 = [] 
@@ -97,30 +67,25 @@ class GeneticAlgorithm:
 
         for i in range(self.num_variaveis):
             if i in posicoes:
-                filho1.append(individuo2.cromossomo[linha1][i])
-                filho2.append(individuo1.cromossomo[linha1][i])
+                filho1.append(individuo2.solucao[linha1][i])
+                filho2.append(individuo1.solucao[linha1][i])
             else:
-                filho1.append(individuo1.cromossomo[linha1][i])
-                filho2.append(individuo2.cromossomo[linha1][i])
+                filho1.append(individuo1.solucao[linha1][i])
+                filho2.append(individuo2.solucao[linha1][i])
 
         if(linha1 == 0):
-            filho1 = [np.array(filho1), individuo1.cromossomo[linha2].copy()]
-            filho2 = [np.array(filho2), individuo2.cromossomo[linha2].copy()]
+            filho1 = [np.array(filho1), individuo1.solucao[linha2].copy()]
+            filho2 = [np.array(filho2), individuo2.solucao[linha2].copy()]
         else:
-            filho1 = [individuo1.cromossomo[linha2].copy(), np.array(filho1)]
-            filho2 = [individuo2.cromossomo[linha2].copy(), np.array(filho2)]
+            filho1 = [individuo1.solucao[linha2].copy(), np.array(filho1)]
+            filho2 = [individuo2.solucao[linha2].copy(), np.array(filho2)]
         
         filho1 = IndividuoGA(filho1, self.componentes, self.peso_max, self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
         filho2 = IndividuoGA(filho2, self.componentes, self.peso_max, self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
 
-        print("Filho1: ", filho1)
-        print("Filho2: ", filho2)
-        
         return filho1, filho2
 
     def crossover_coluna(self, individuo1, individuo2):
-        print("Individuo CrossColuna 1: ", individuo1)
-        print("Individuo CrossColuna 2: ", individuo2)
         n_colunas = random.randint(1, self.num_variaveis) #numero de colunas que serão trocados entre os pais
         posicoes = [] #posicoes variadas do genes, nao necessariamente sequenciais
         filho1 = [[],[]]
@@ -137,15 +102,15 @@ class GeneticAlgorithm:
         print("Posicoes: ", posicoes)
         for i in range(self.num_variaveis):
             if i in posicoes:
-                filho1[0].append(individuo2.cromossomo[0][i])
-                filho1[1].append(individuo2.cromossomo[1][i])
-                filho2[0].append(individuo1.cromossomo[0][i])
-                filho2[1].append(individuo1.cromossomo[1][i])
+                filho1[0].append(individuo2.solucao[0][i])
+                filho1[1].append(individuo2.solucao[1][i])
+                filho2[0].append(individuo1.solucao[0][i])
+                filho2[1].append(individuo1.solucao[1][i])
             else:
-                filho1[0].append(individuo1.cromossomo[0][i])
-                filho2[0].append(individuo2.cromossomo[0][i])
-                filho1[1].append(individuo1.cromossomo[1][i])
-                filho2[1].append(individuo2.cromossomo[1][i])
+                filho1[0].append(individuo1.solucao[0][i])
+                filho2[0].append(individuo2.solucao[0][i])
+                filho1[1].append(individuo1.solucao[1][i])
+                filho2[1].append(individuo2.solucao[1][i])
 
         filho1 = [np.array(filho1[0]), np.array(filho1[1])]
         filho2 = [np.array(filho2[0]), np.array(filho2[1])]
@@ -153,8 +118,6 @@ class GeneticAlgorithm:
         filho1 = IndividuoGA(filho1, self.componentes, self.peso_max, self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
         filho2 = IndividuoGA(filho2, self.componentes, self.peso_max, self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
 
-        print("Filho1 CrossCOluna FINAL: ", filho1)
-        print("Filho2 CrossCOluna FINAL: ", filho2)
         return filho1, filho2
     
     def crossover(self, pais):
@@ -219,7 +182,7 @@ class GeneticAlgorithm:
                     return novo_individuo
 
         for i in range(len(ind_para_mutacao)):
-            cromossomo_original = ind_para_mutacao[i].cromossomo
+            cromossomo_original = ind_para_mutacao[i].solucao
             mutante_valido = gerar_mutante_valido(cromossomo_original)
             mutantes.append(mutante_valido)
 
@@ -329,8 +292,8 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", alg.individuos[0].valor_funcao_objetivo)
     print("Com os seguintes valores para cada variavel de decisao:")
     for z in range(alg.num_variaveis):
-        print("T{}: {}".format(z+1, populacao[0].cromossomo[0][z]))
-        print("Q{}: {}".format(z+1, populacao[0].cromossomo[1][z]))
+        print("T{}: {}".format(z+1, populacao[0].solucao[0][z]))
+        print("Q{}: {}".format(z+1, populacao[0].solucao[1][z]))
     print("\n")
 
     # Plotando o gráfico

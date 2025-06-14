@@ -22,4 +22,6 @@ class GeradorComponentes:
 def main(num_tipos_componentes, confiabilidade_maxima, confiabilidade_minima,lim_inf_custo,lim_sup_custo,lim_inf_peso,lim_sup_peso):
     generator = GeradorComponentes(num_tipos_componentes, confiabilidade_maxima, confiabilidade_minima, lim_inf_custo,lim_sup_custo,lim_inf_peso,lim_sup_peso)
     componentes = generator.cria_componentes()
+    #ordena os componentes por uma chave = confiabilidade - (custo - lim_inf_custo) - (peso - lim_inf_peso)
+    componentes = componentes[:, np.argsort(componentes[0] - (componentes[1] - lim_inf_custo) - (componentes[2] - lim_inf_peso))]
     return componentes

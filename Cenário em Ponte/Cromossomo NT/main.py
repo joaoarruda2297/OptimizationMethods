@@ -12,22 +12,22 @@ def main():
     # Variáveis para geração de componentes e individuos
     confiabilidade_minima = 0.3
     confiabilidade_maxima = 0.75
-    lim_sup_peso = 30
+    lim_sup_peso = 20
     lim_inf_peso = 1
-    lim_sup_custo = 20
+    lim_sup_custo = 15
     lim_inf_custo = 1
-    num_tipos_componentes = 100
+    num_tipos_componentes = 100 #se colocar pouco aqui, revise a funcao de gerar velocidade para o PSO
     num_individuos = 50
     num_variaveis = 5
-    num_max_componentes_subsistema = 2
+    num_max_componentes_subsistema = 4
     num_min_componentes_subsistema = 1
     coeficiente_custo = 1.1
     coeficiente_peso = 1.05
 
     # Variáveis para execução do algoritmo
     num_geracoes = 80
-    peso_max = 40
-    custo_max = 25
+    peso_max = 50
+    custo_max = 30
 
     componentes = GeradorComponentes(
         num_tipos_componentes,
@@ -70,15 +70,15 @@ def main():
         try:
             solucoes_GA, melhor_valor_GA = GA(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso)
         finally:
-            sys.stdout = sys.__stdout__    
+            sys.stdout = sys.__stdout__
 
     # Executa PSO e captura os resultados
-    #with open('./PSO/output.txt', 'w') as f:
-    #    sys.stdout = f
-    #    try:
-    #        solucoes_PSO, melhor_valor_PSO = PSO(componentes, individuos, peso_max, custo_max, num_geracoes)
-    #    finally:
-    #        sys.stdout = sys.__stdout__
+    with open('./PSO/output.txt', 'w') as f:
+        sys.stdout = f
+        try:
+            solucoes_PSO, melhor_valor_PSO = PSO(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+        finally:
+            sys.stdout = sys.__stdout__
 
     # Executa DE e captura os resultados
     #with open('./DE/output.txt', 'w') as f:
@@ -90,7 +90,7 @@ def main():
 
     # Gerando o gráfico comparativo
     #plt.axhline(y=0, color='red', linestyle='-', linewidth=0.4)
-    #plt.plot(range(1, len(solucoes_PSO) + 1), solucoes_PSO, label='PSO ({})'.format(melhor_valor_PSO), color='purple')
+    plt.plot(range(1, len(solucoes_PSO) + 1), solucoes_PSO, label='PSO ({})'.format(melhor_valor_PSO), color='purple')
     #plt.plot(range(1, len(solucoes_DE) + 1), solucoes_DE, label='DE ({})'.format(melhor_valor_DE), color='green')
     plt.plot(range(1, len(solucoes_GA) + 1), solucoes_GA, label='GA ({})'.format(melhor_valor_GA), color='orange')
 
