@@ -11,22 +11,22 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from GeradorIndividuos import Individuo as IndividuoGA
     
 class GeneticAlgorithm:
-    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso):
+    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
         #variáveis para execução do algoritmo genético
         self.num_individuos = len(individuos) #quantidade de individuos
-        self.num_variaveis = 5 #5 subsistemas
+        self.num_variaveis = num_variaveis
         self.num_geracoes = num_geracoes
         self.taxa_cruzamento = 0.6 #quantidade de pais que gerarão individuos (pais/2)
         self.taxa_mutacao = 0.3 #quantidade de individuos que vão receber mutação
 
-        self.num_tipos_componentes = componentes.shape[1]
+        self.num_tipos_componentes = num_tipos_componentes
 
         self.componentes = componentes
         self.peso_max = peso_max
         self.custo_max = custo_max
 
-        self.num_max_componentes_subsistema = 10
-        self.num_min_componentes_subsistema = 3
+        self.num_max_componentes_subsistema = num_max_componentes_subsistema
+        self.num_min_componentes_subsistema = num_min_componentes_subsistema
 
         self.coeficiente_custo = coeficiente_custo
         self.coeficiente_peso = coeficiente_peso
@@ -35,6 +35,21 @@ class GeneticAlgorithm:
         for i in range(self.num_individuos):
             self.individuos.append(individuos[i])
         self.individuos = sorted(self.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
+
+    def verifica_duplicados(self, populacao):
+        # Verifica se existem indivíduos duplicados na população com base na solução
+        solucoes_unicas = set()
+        populacao_filtrada = []
+        
+        for individuo in populacao:
+            # Convertemos a solução (duas linhas) para tupla de tuplas, que é hashable
+            chave_solucao = (tuple(individuo.solucao[0]), tuple(individuo.solucao[1]))
+            
+            if chave_solucao not in solucoes_unicas:
+                solucoes_unicas.add(chave_solucao)
+                populacao_filtrada.append(individuo)
+
+        return populacao_filtrada
 
     def seleciona_pais(self, populacao):
         #selecionando os pais de forma simples, apenas pelos mais fortes
@@ -98,8 +113,6 @@ class GeneticAlgorithm:
                     posicoes.append(posicao)
                     break
         posicoes.sort()
-        print("Numero de colunas: ", n_colunas)
-        print("Posicoes: ", posicoes)
         for i in range(self.num_variaveis):
             if i in posicoes:
                 filho1[0].append(individuo2.solucao[0][i])
@@ -192,8 +205,8 @@ class GeneticAlgorithm:
         factor = 10 ** decimals
         return math.trunc(number * factor) / factor
 
-def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso):
-    alg = GeneticAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso)
+def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    alg = GeneticAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
 
     print("POPULAÇÃO INICIAL:")
     for l in range(len(alg.individuos)):
@@ -207,26 +220,19 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     melhor_solucao_log = -10000
     melhor_solucao = -10000
     geracao = -1
-    geracao_log = -1
 
     for i in range(alg.num_geracoes):
         print("GERACAO {}".format(i+1))
 
         if i == 0:
             for j in range(len(alg.individuos)):
-                print("AQUI:", alg.individuos[j].confiabilidade_total)
-                log_individuo = math.log(alg.individuos[j].confiabilidade_total)
-
-                if log_individuo > melhor_solucao_log:
+                if(alg.individuos[j].valor_funcao_objetivo > melhor_solucao):
+                    log_individuo = math.log(alg.individuos[j].valor_funcao_objetivo)
                     melhor_solucao_log = log_individuo
-                    print("MELHOR:", melhor_solucao_log)
+                    melhor_solucao = alg.individuos[j].valor_funcao_objetivo
+                    geracao = i + 1
             solucoes_log.append(melhor_solucao_log)
-            geracao_log = 0
-
-        if alg.individuos[0].valor_funcao_objetivo > melhor_solucao and i == 0:
-            melhor_solucao = alg.individuos[0].valor_funcao_objetivo
-            geracao = i
-            solucoes.append(alg.individuos[0].valor_funcao_objetivo)
+            solucoes.append(melhor_solucao)
 
         pais = alg.seleciona_pais(alg.individuos)
         filhos = alg.crossover(pais)
@@ -260,10 +266,11 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
 
         populacao = alg.individuos + mutantes + filhos
         populacao = sorted(populacao, key=lambda x: x.valor_funcao_objetivo, reverse=True)
+        
+        # Limitando a população ao número máximo de indivíduos
+        populacao = alg.verifica_duplicados(populacao)
+        alg.individuos = populacao[:alg.num_individuos]
 
-        populacao = populacao[:alg.num_individuos]
-
-        alg.individuos = populacao
         print("Populacao final da era:")
         for l in range(len(alg.individuos)):
             print("Individuo {}:".format(l+1))
@@ -275,19 +282,14 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
         print("-----------------------------------------")
         print("-----------------------------------------")
 
-        solucoes.append(alg.individuos[0].valor_funcao_objetivo)
-
-        if alg.individuos[0].valor_funcao_objetivo > melhor_solucao:
-            melhor_solucao = alg.individuos[0].valor_funcao_objetivo
-            geracao = i
-        
         for j in range(len(alg.individuos)):
-            log_individuo = math.log(alg.individuos[0].confiabilidade_total)
-
-            if log_individuo > melhor_solucao_log:
+            if(alg.individuos[j].valor_funcao_objetivo > melhor_solucao):
+                log_individuo = math.log(alg.individuos[j].valor_funcao_objetivo)
                 melhor_solucao_log = log_individuo
-                geracao_log = i
+                melhor_solucao = alg.individuos[j].valor_funcao_objetivo
+                geracao = i + 1
         solucoes_log.append(melhor_solucao_log)
+        solucoes.append(melhor_solucao)
         
     print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", alg.individuos[0].valor_funcao_objetivo)
     print("Com os seguintes valores para cada variavel de decisao:")
@@ -322,7 +324,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     plt.grid(True)
     # Texto adicional no gráfico
     valor_final_log = alg.truncate(melhor_solucao_log, 4)
-    texto = "Valor final: " + str(valor_final_log) + "\nAlcançado na geração: " + str(geracao_log)
+    texto = "Valor final: " + str(valor_final_log) + "\nAlcançado na geração: " + str(geracao)
     plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
     # Ajustes finais e salvamento
     plt.tight_layout()

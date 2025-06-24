@@ -88,7 +88,6 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     solucoes = []
     solucoes_log = []
     geracao = -1
-    geracao_log = -1
 
     global_best = None
     melhor_solucao = -10000
@@ -144,8 +143,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
         if melhor_solucao < fit_global:
             melhor_solucao_log = math.log(fit_global)
             melhor_solucao = fit_global
-            geracao = i
-            geracao_log = i
+            geracao = i + 1
             
     print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", melhor_solucao)
     print("Com os seguintes valores para cada variavel de decisao:")
@@ -180,7 +178,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     plt.grid(True)
     # Texto adicional no gráfico
     valor_final_log = alg.truncate(melhor_solucao_log, 4)
-    texto = "Valor final: " + str(valor_final_log) + "\nAlcançado na geração: " + str(geracao_log)
+    texto = "Valor final: " + str(valor_final_log) + "\nAlcançado na geração: " + str(geracao)
     plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
     # Ajustes finais e salvamento
     plt.tight_layout()

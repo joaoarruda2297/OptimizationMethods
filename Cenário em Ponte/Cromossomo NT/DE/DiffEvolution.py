@@ -4,104 +4,60 @@ from copy import deepcopy
 import matplotlib.pyplot as plt
 from decimal import Decimal, getcontext
 import math
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from GeradorIndividuos import Individuo
 
 class DifferentialEvolution:
-    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes):
-        self.num_individuos = 50
-        self.num_variaveis = 5 #5 subsistemas
+    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+        self.num_individuos = len(individuos)
+        self.num_variaveis = num_variaveis
         self.num_geracoes = num_geracoes
         self.passo = 1
         self.CR = 0.6
 
         self.num_tipos_componentes = componentes.shape[1]
         self.componentes = componentes
-        self.individuos = individuos
         self.peso_max = peso_max
         self.custo_max = custo_max
 
-        self.num_max_componentes_subsistema = 10
-        self.num_min_componentes_subsistema = 3
+        self.num_max_componentes_subsistema = num_max_componentes_subsistema
+        self.num_min_componentes_subsistema = num_min_componentes_subsistema
 
-        self.coeficiente_custo = 1.1
-        self.coeficiente_peso = 1.05
+        self.coeficiente_custo = coeficiente_custo
+        self.coeficiente_peso = coeficiente_peso
 
-    def confiabilidade_paralelo(self, subsistema):
-        getcontext().prec = 50
-        confiabilidade = Decimal(1)
+        self.individuos = []
+        for i in range(self.num_individuos):
+            self.individuos.append(individuos[i])
+        self.individuos = sorted(self.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
 
-        for componente in subsistema:
-            if componente != -1:
-                conf_componente = Decimal(self.componentes[0][componente])
-                confiabilidade = confiabilidade*(1 - conf_componente)
+    def verifica_duplicados(self, populacao):
+        # Verifica se existem indivíduos duplicados na população com base na solução
+        solucoes_unicas = set()
+        populacao_filtrada = []
+        
+        for individuo in populacao:
+            # Convertemos a solução (duas linhas) para tupla de tuplas, que é hashable
+            chave_solucao = (tuple(individuo.solucao[0]), tuple(individuo.solucao[1]))
+            
+            if chave_solucao not in solucoes_unicas:
+                solucoes_unicas.add(chave_solucao)
+                populacao_filtrada.append(individuo)
 
-        confiabilidade = 1 - confiabilidade
-        return confiabilidade
-
-    def confiabilidade_ponte(self, individuo):
-        getcontext().prec = 50
-        #considerando a confiabilidade do sistema em ponte
-        r_1 = Decimal(self.confiabilidade_paralelo(individuo[0]))
-        r_2 = Decimal(self.confiabilidade_paralelo(individuo[1]))
-        r_3 = Decimal(self.confiabilidade_paralelo(individuo[2]))
-        r_4 = Decimal(self.confiabilidade_paralelo(individuo[3]))
-        r_5 = Decimal(self.confiabilidade_paralelo(individuo[4]))
-
-        confiabilidade_sistema = Decimal(
-            r_1*r_2 + r_3*r_4 + r_1*r_4*r_5 + r_2*r_3*r_5
-            - r_1*r_2*r_3*r_4 - r_1*r_2*r_3*r_5 - r_1*r_2*r_4*r_5 - r_1*r_3*r_4*r_5 - r_2*r_3*r_4*r_5 
-            + 2*r_1*r_2*r_3*r_4*r_5 
-        )
-
-        return confiabilidade_sistema
-
-    def somatoria_custos(self, individuo):
-        custo_total = 0
-        for subsistema in individuo:
-            for componente in subsistema:
-                if componente != -1:
-                    custo_total += self.componentes[1][componente]
-        return custo_total
-
-    def somatoria_pesos(self, individuo):
-        peso_total = 0
-        for subsistema in individuo:
-            for componente in subsistema:
-                if componente != -1:
-                    peso_total += self.componentes[2][componente]
-        return peso_total
-
-    def funcao_objetivo(self, individuo):
-        confiabilidade = self.confiabilidade_ponte(individuo)
-
-        soma_pesos = self.somatoria_pesos(individuo)
-        soma_custos = self.somatoria_custos(individuo)
-
-        f_custo = soma_custos - self.custo_max
-        f_peso =  soma_pesos - self.peso_max
-
-        f_obj = confiabilidade - Decimal(self.coeficiente_peso*max(0, f_peso)) - Decimal(self.coeficiente_custo*max(0, f_custo))
-        return f_obj
-
-    def avaliacao_populacao(self, populacao):
-        getcontext().prec = 50
-        pop_avaliada = [(Decimal(self.funcao_objetivo(individuo)), Decimal(self.confiabilidade_ponte(individuo)), individuo) for individuo in populacao]
-        return pop_avaliada
-
-    def inicia_populacao(self):
-        pop_inicial = self.individuos
-        print(self.individuos)
-        return pop_inicial
+        return populacao_filtrada
 
     def crossover(self, populacao, mutantes):
         novos_candidatos = []
         for i in range(len(populacao)):
-            trial_matrix = np.zeros((self.num_variaveis, self.num_max_componentes_subsistema), dtype=int)
-            for k in range(self.num_variaveis):
+            trial_matrix = np.zeros((2, self.num_variaveis), dtype=int)
+            for k in range(2):
                 l = np.random.randint(0, self.num_variaveis)
-                for j in range(self.num_max_componentes_subsistema):
+                for j in range(self.num_variaveis):
                     r = np.random.rand()
                     if r > self.CR and j != l:
-                        trial_matrix[k][j] = populacao[i][k][j]
+                        trial_matrix[k][j] = populacao[i].solucao[k][j]
                     elif r <= self.CR or j == l:
                         trial_matrix[k][j] = mutantes[i][k][j]
             novos_candidatos.append(trial_matrix)
@@ -116,7 +72,7 @@ class DifferentialEvolution:
             #gerando 3 indices aleatórios
             idx = [i]
             while len(idx) < 4:
-                random_index = np.random.randint(0, self.num_variaveis)
+                random_index = np.random.randint(0, len(populacao))
                 alreadyExists = False
                 for j in range(len(idx)):
                     if idx[j] == random_index:
@@ -127,16 +83,21 @@ class DifferentialEvolution:
 
             #gerando mutante
             mutante = (
-                populacao[idx[1]] + 
-                self.passo*(populacao[idx[3]] - populacao[idx[2]])
+                deepcopy(populacao[idx[1]].solucao) + 
+                self.passo*(deepcopy(populacao[idx[3]].solucao) - deepcopy(populacao[idx[2]].solucao))
                 )
-            
+
+            #correção de parâmetros
             for j in range(self.num_variaveis):
-                for k in range(self.num_max_componentes_subsistema):
-                    if mutante[j][k] < -1:
-                        mutante[j][k] = -1
-                    elif mutante[j][k] >= self.num_tipos_componentes:
-                        mutante[j][k] = self.num_tipos_componentes - 1
+                if mutante[0][j] < 0:
+                    mutante[0][j] = 0
+                elif mutante[0][j] >= self.num_tipos_componentes:
+                    mutante[0][j] = self.num_tipos_componentes - 1
+                
+                if mutante[1][j] <= 0:
+                    mutante[1][j] = 1
+                elif mutante[1][j] > self.num_max_componentes_subsistema:
+                    mutante[1][j] = self.num_max_componentes_subsistema
 
             mutantes.append(mutante)
         
@@ -147,84 +108,94 @@ class DifferentialEvolution:
         return math.trunc(number * factor) / factor
 
 
-def main(componentes, individuos, peso_max, custo_max, num_geracoes):
-    alg = DifferentialEvolution(componentes, individuos, peso_max, custo_max, num_geracoes)
-    populacao = alg.inicia_populacao()
+def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    alg = DifferentialEvolution(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+
+    print("POPULAÇÃO INICIAL:")
+    for l in range(len(alg.individuos)):
+        print("Individuo {}:".format(l+1))
+        print(alg.individuos[l])
+        print(" ")
+    print(" ")
 
     solucoes = []
     solucoes_log = []
     melhor_solucao = -10000
     melhor_solucao_log = -10000
-    idx_melhor_solucao = -1
-    idx_melhor_solucao_log = -1
     geracao = -1
-    geracao_log = -1
 
     for i in range(alg.num_geracoes):
         print("GERACAO {}".format(i+1))
 
         if i == 0:
             for j in range(alg.num_individuos):
-                fit_individuo = alg.funcao_objetivo(populacao[j])
+                fit_individuo = alg.individuos[j].valor_funcao_objetivo
                 fit_vetor = fit_individuo
                 
                 if fit_vetor > melhor_solucao:
                     melhor_solucao = fit_vetor
                     melhor_solucao_log = math.log(fit_vetor)
-                    idx_melhor_solucao = j
-                    idx_melhor_solucao_log = j
+                    
             solucoes.append(melhor_solucao)
             solucoes_log.append(melhor_solucao_log)
             geracao = 0
-            geracao_log = 0
 
-        mutantes = alg.mutacao(populacao)
+        mutantes = alg.mutacao(alg.individuos)
 
         for l in range(len(mutantes)):
             print("Mutante {}:".format(l+1))
-            print("FuncObj: {}".format(alg.funcao_objetivo(mutantes[l])))
-            print("Cromossomo: \n{}".format(mutantes[l]))
+            print(mutantes[l])
             print(" ")
         print("-----------------------------------------")
 
-        evoluidos = alg.crossover(populacao, mutantes)
+        evoluidos = alg.crossover(alg.individuos, mutantes)
 
         for l in range(len(evoluidos)):
             print("Evoluido {}:".format(l+1))
-            print("FuncObj: {}".format(alg.funcao_objetivo(evoluidos[l])))
-            print("Cromossomo: {}".format(evoluidos[l]))
+            print(evoluidos[l])
             print(" ")
         print("-----------------------------------------")
 
-        for j in range(alg.num_individuos):
-            fit_evoluido = alg.funcao_objetivo(evoluidos[j])
-            fit_individuo = alg.funcao_objetivo(populacao[j])
+        #vetor de rejeitados para reciclagem caso ocorra duplicação
+        evoluidos_rejeitados = []
 
-            fit_vetor = fit_individuo
+        for j in range(alg.num_individuos):
+            individuo_evoluido = Individuo(evoluidos[j], alg.componentes, alg.peso_max, alg.custo_max, alg.coeficiente_peso, alg.coeficiente_custo)
+            fit_evoluido = individuo_evoluido.valor_funcao_objetivo
+            fit_individuo = alg.individuos[j].valor_funcao_objetivo
+
             if fit_evoluido > fit_individuo:
-                populacao[j] = evoluidos[j]
-                fit_vetor = fit_evoluido
+                alg.individuos[j].solucao = deepcopy(individuo_evoluido.solucao)
+            else:
+                evoluidos_rejeitados.append(deepcopy(individuo_evoluido))
             
-            if fit_vetor > melhor_solucao:
-                melhor_solucao = fit_vetor
-                melhor_solucao_log = math.log(fit_vetor)
-                idx_melhor_solucao = j
-                idx_melhor_solucao_log = j
+            if fit_evoluido > melhor_solucao:
+                melhor_solucao = fit_evoluido
+                melhor_solucao_log = math.log(fit_evoluido)
+                geracao = i + 1
 
         solucoes.append(melhor_solucao)
         solucoes_log.append(melhor_solucao_log)
-        
-        for l in range(len(populacao)):
+
+        alg.individuos = alg.verifica_duplicados(alg.individuos)
+        if(len(alg.individuos) < alg.num_individuos):
+            #significa que precisamos completar a população
+            evoluidos_rejeitados = sorted(evoluidos_rejeitados, key=lambda x: x.valor_funcao_objetivo, reverse=True)
+            for k in range(alg.num_individuos - len(alg.individuos)):
+                alg.individuos.append(evoluidos_rejeitados[k])
+
+        for l in range(len(alg.individuos)):
             print("Individuo {}:".format(l+1))
-            print("FuncObj: {}".format(alg.funcao_objetivo(populacao[l])))
-            print("Cromossomo: {}".format(populacao[l]))
+            print(alg.individuos[l])
             print(" ")
         print("-----------------------------------------")
 
-    print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", melhor_solucao)
+    print("O algoritmo de evolução diferencial obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", melhor_solucao)
     print("Com os seguintes valores para cada variavel de decisao:")
     for z in range(alg.num_variaveis):
-        print("x{}: {}".format(z+1, populacao[idx_melhor_solucao][z]))
+        print("T{}: {}".format(z+1, alg.individuos[0].solucao[0][z]))
+        print("Q{}: {}".format(z+1, alg.individuos[0].solucao[1][z]))
+    print("\n")
 
 
     # Plotando o gráfico
@@ -253,7 +224,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes):
     plt.grid(True)
     # Texto adicional no gráfico
     valor_final_log = alg.truncate(melhor_solucao_log, 4)
-    texto = "Valor final: " + str(valor_final_log) + "\nAlcançado na geração: " + str(geracao_log)
+    texto = "Valor final: " + str(valor_final_log) + "\nAlcançado na geração: " + str(geracao)
     plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
     # Ajustes finais e salvamento
     plt.tight_layout()

@@ -1,851 +1,851 @@
 Individuo 0:
 {
-  "solucao": [74 97 98 98 47]
-                [1 2 1 1 1],
-  "funcao_objetivo": 0.76045935615044073564008402891721802770436654948335,
-  "confiabilidade_total": 0.76045935615044073564008402891721802770436654948335
+  "solucao": [99 82 96 63 98]
+                [2 1 1 1 1],
+  "funcao_objetivo": 0.55794063853244407177503259650176631118220669799796,
+  "confiabilidade_total": 0.55794063853244407177503259650176631118220669799796
 }
 Individuo 1:
 {
-  "solucao": [23 97 98 72 69]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.61437656704321568453755020684850138942368268242677,
-  "confiabilidade_total": 0.61437656704321568453755020684850138942368268242677
+  "solucao": [98 40 91 88 68]
+                [1 2 1 1 1],
+  "funcao_objetivo": 0.43956031895043963824386264589851878124007763980456,
+  "confiabilidade_total": 0.70356031895043792983267235270763437735566678165026
 }
 Individuo 2:
 {
-  "solucao": [53 63 71 94 61]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.57367693004888363363141550210205870512812966729799,
-  "confiabilidade_total": 0.57367693004888363363141550210205870512812966729799
+  "solucao": [55 93 74 91 95]
+                [1 2 2 1 2],
+  "funcao_objetivo": 0.64650700194359504413275110663485322229185149446918,
+  "confiabilidade_total": 0.64650700194359504413275110663485322229185149446918
 }
 Individuo 3:
 {
-  "solucao": [99 94 66 93 75]
-                [1 1 1 2 1],
-  "funcao_objetivo": 0.73622334136356536966212020270948319992359458892406,
-  "confiabilidade_total": 0.73622334136356536966212020270948319992359458892406
+  "solucao": [90 94 57 91 98]
+                [2 1 1 2 3],
+  "funcao_objetivo": 0.27738455369153313669455242698830023168198239961814,
+  "confiabilidade_total": 0.84938455369152875975130014477115526555649411836814
 }
 Individuo 4:
 {
-  "solucao": [88 93 99 98 34]
-                [1 1 2 1 1],
-  "funcao_objetivo": 0.79242248163038397156309280823626972081685432458742,
-  "confiabilidade_total": 0.79242248163038397156309280823626972081685432458742
+  "solucao": [34 80 96 89 40]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.35843599329827912350057049303757188190359761996247,
+  "confiabilidade_total": 0.35843599329827912350057049303757188190359761996247
 }
 Individuo 5:
 {
-  "solucao": [76 70 82 74 75]
-                [1 1 2 1 1],
-  "funcao_objetivo": 0.063641301114765990424533474635991476315818964823141,
-  "confiabilidade_total": 0.72514130111476874288945612532408649458345049558486
+  "solucao": [70 91 89 40 99]
+                [1 2 2 1 1],
+  "funcao_objetivo": 0.58241197903726642061220270464183773732188772149531,
+  "confiabilidade_total": 0.58241197903726642061220270464183773732188772149531
 }
 Individuo 6:
 {
-  "solucao": [97 62 79 20 87]
+  "solucao": [11 64 93 83 61]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.58747693822518949629174602579169029769540563036050,
-  "confiabilidade_total": 0.58747693822518949629174602579169029769540563036050
+  "funcao_objetivo": 0.55752275051561681368757378642913653022236117676264,
+  "confiabilidade_total": 0.55752275051561681368757378642913653022236117676264
 }
 Individuo 7:
 {
-  "solucao": [93 92 69 31 96]
-                [1 1 2 1 1],
-  "funcao_objetivo": 0.13986991274885730633539839450242518836236504325537,
-  "confiabilidade_total": 0.72286991274885860129953431728501393848634270438818
+  "solucao": [93 78 95 23 98]
+                [2 1 1 1 1],
+  "funcao_objetivo": 0.77440256281364358940362617931673816160228511565781,
+  "confiabilidade_total": 0.77440256281364358940362617931673816160228511565781
 }
 Individuo 8:
 {
-  "solucao": [75 48 87 98 92]
-                [1 1 1 2 2],
-  "funcao_objetivo": 0.60717627177801885398714013068269026610293728839415,
-  "confiabilidade_total": 0.60717627177801885398714013068269026610293728839415
+  "solucao": [95 28 89 85 45]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.076617795501214275270254495863306535620711142324118,
+  "confiabilidade_total": 0.37361779550121775870601655975446776880743294408193
 }
 Individuo 9:
 {
-  "solucao": [58 93 94 99 84]
-                [1 2 1 1 1],
-  "funcao_objetivo": 0.61184453753954240157245674313574017337165184842411,
-  "confiabilidade_total": 0.61184453753954240157245674313574017337165184842411
+  "solucao": [30 65 57 92 79]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.49012982531833016326555083840756314325892090107548,
+  "confiabilidade_total": 0.49012982531833016326555083840756314325892090107548
 }
 Individuo 10:
 {
-  "solucao": [61 99 16 97 95]
-                [1 1 1 2 1],
-  "funcao_objetivo": 0.72234387885361155600657657047233494291696239052065,
-  "confiabilidade_total": 0.72234387885361155600657657047233494291696239052065
+  "solucao": [97 35 72 83 54]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.40836652219670250676491903362878714258140219122844,
+  "confiabilidade_total": 0.40836652219670250676491903362878714258140219122844
 }
 Individuo 11:
 {
-  "solucao": [31 96 47 97 87]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.59624441668829154147913881125375142437174569174586,
-  "confiabilidade_total": 0.59624441668829154147913881125375142437174569174586
+  "solucao": [93 34 98 99 34]
+                [2 1 1 1 1],
+  "funcao_objetivo": 0.034680317844750007155661130916960219063647463441421,
+  "confiabilidade_total": 0.49668031784475191629517427633614713154066391241603
 }
 Individuo 12:
 {
-  "solucao": [50 53 97 80 50]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.62513278693879166421742299698638225243002702318574,
-  "confiabilidade_total": 0.62513278693879166421742299698638225243002702318574
+  "solucao": [97 83 90 34 60]
+                [2 1 1 1 1],
+  "funcao_objetivo": 0.55692395966501527484938196736414965584169434511761,
+  "confiabilidade_total": 0.55692395966501527484938196736414965584169434511761
 }
 Individuo 13:
 {
-  "solucao": [99 65 77 34 93]
-                [1 2 1 1 1],
-  "funcao_objetivo": 0.08361679347055943770845281151541143893733598854887,
-  "confiabilidade_total": 0.72411679347055884085255477303125530719295122292387
+  "solucao": [93 65 85 90 97]
+                [1 1 2 2 2],
+  "funcao_objetivo": 0.81308379940843132332155024779189746752382719636670,
+  "confiabilidade_total": 0.81308379940843132332155024779189746752382719636670
 }
 Individuo 14:
 {
-  "solucao": [59 96 66 99 22]
+  "solucao": [76 98 30 93 42]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.40956905316746017946208861327978937315460826079640,
-  "confiabilidade_total": 0.60756905316745988347663024821305569621440554778370
+  "funcao_objetivo": 0.49022399717428669374965094866137221212589330873637,
+  "confiabilidade_total": 0.49022399717428669374965094866137221212589330873637
 }
 Individuo 15:
 {
-  "solucao": [99 70 98 89 32]
-                [1 1 1 2 1],
-  "funcao_objetivo": 0.64314261298605394386937624633632458925446798044202,
-  "confiabilidade_total": 0.64314261298605394386937624633632458925446798044202
+  "solucao": [99 62 90 97 94]
+                [2 1 1 1 2],
+  "funcao_objetivo": 0.54760521191587695200795877431466130842032473569019,
+  "confiabilidade_total": 0.54760521191587695200795877431466130842032473569019
 }
 Individuo 16:
 {
-  "solucao": [74 23 71 97 60]
+  "solucao": [43 80 62 87 35]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.68760957606173070494614220853976613899502298364324,
-  "confiabilidade_total": 0.68760957606173070494614220853976613899502298364324
+  "funcao_objetivo": 0.54637661010698973031740795134708833587805308999088,
+  "confiabilidade_total": 0.54637661010698973031740795134708833587805308999088
 }
 Individuo 17:
 {
-  "solucao": [38 35 99 90 63]
-                [1 1 2 1 1],
-  "funcao_objetivo": 0.15827536640468528400530925540699092243419109219211,
-  "confiabilidade_total": 0.74627536640468769363336190184674625788436351650852
+  "solucao": [97 96 55 19 78]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.39112234032504954320935996929118814413645020956334,
+  "confiabilidade_total": 0.39112234032504954320935996929118814413645020956334
 }
 Individuo 18:
 {
-  "solucao": [99 23 94 93 60]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.66449894579529699674270652920818274555620166342630,
-  "confiabilidade_total": 0.66449894579529699674270652920818274555620166342630
+  "solucao": [85 93 96 79 95]
+                [3 1 2 1 1],
+  "funcao_objetivo": 0.73749040207857564303012105367529081986503425797676,
+  "confiabilidade_total": 0.73749040207857564303012105367529081986503425797676
 }
 Individuo 19:
 {
-  "solucao": [97 62 97 89 81]
-                [2 1 1 1 1],
-  "funcao_objetivo": 0.76643634756268130339592084182624404500697252854883,
-  "confiabilidade_total": 0.76643634756268130339592084182624404500697252854883
+  "solucao": [40 73 93 99 74]
+                [1 1 2 2 1],
+  "funcao_objetivo": 0.74958968199733568493938433504791453337880638279164,
+  "confiabilidade_total": 0.74958968199733568493938433504791453337880638279164
 }
 Individuo 20:
 {
-  "solucao": [32 99 98 10 98]
+  "solucao": [64 92 95 70 97]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.60653003828464476971157057232143544875860822998076,
-  "confiabilidade_total": 0.60653003828464476971157057232143544875860822998076
+  "funcao_objetivo": 0.48278784566616585495336698530587103653067667875622,
+  "confiabilidade_total": 0.48278784566616585495336698530587103653067667875622
 }
 Individuo 21:
 {
-  "solucao": [94 35 90 81 98]
-                [1 1 1 2 1],
-  "funcao_objetivo": 0.78432137551119682522681349641054543907157720957124,
-  "confiabilidade_total": 0.78432137551119682522681349641054543907157720957124
+  "solucao": [99 99 59 87 92]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.60100376187256295503051581761702712073832940276879,
+  "confiabilidade_total": 0.60100376187256295503051581761702712073832940276879
 }
 Individuo 22:
 {
-  "solucao": [55 95 83 97 41]
-                [1 1 2 1 1],
-  "funcao_objetivo": 0.08466467252976017844755833604837687062937773940136,
-  "confiabilidade_total": 0.72266467252975830261473592938388617086131133315136
+  "solucao": [99 66 86 96 52]
+                [1 1 1 2 1],
+  "funcao_objetivo": 0.48242685823797754774913848370666686500894877188419,
+  "confiabilidade_total": 0.48242685823797754774913848370666686500894877188419
 }
 Individuo 23:
 {
-  "solucao": [75 33 79 77 81]
+  "solucao": [97 30 36 53 98]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.66387303180547875839266640862611504889427250333924,
-  "confiabilidade_total": 0.66387303180547875839266640862611504889427250333924
+  "funcao_objetivo": 0.42690904502328598099720182980742350531867648201158,
+  "confiabilidade_total": 0.42690904502328598099720182980742350531867648201158
 }
 Individuo 24:
 {
-  "solucao": [52 86 98 93 32]
-                [1 1 2 1 1],
-  "funcao_objetivo": 0.73390543919692868984262760741354374602717090361609,
-  "confiabilidade_total": 0.73390543919692868984262760741354374602717090361609
+  "solucao": [93 94 62 99 61]
+                [2 1 1 2 1],
+  "funcao_objetivo": 0.73076467783496669518746892334451339150103302509078,
+  "confiabilidade_total": 0.73076467783496669518746892334451339150103302509078
 }
 Individuo 25:
 {
-  "solucao": [98 94 34 94 92]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.63517224070686147721581320060802417221885472078955,
-  "confiabilidade_total": 0.63517224070686147721581320060802417221885472078955
+  "solucao": [77 94 25 98 41]
+                [1 1 1 2 1],
+  "funcao_objetivo": 0.58475127605430421021921676713292942299631237518480,
+  "confiabilidade_total": 0.58475127605430421021921676713292942299631237518480
 }
 Individuo 26:
 {
-  "solucao": [97 61 69 77 97]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.66951514438667726877900700780771722761240825775492,
-  "confiabilidade_total": 0.66951514438667726877900700780771722761240825775492
+  "solucao": [79 80 44 91 86]
+                [1 1 1 3 1],
+  "funcao_objetivo": 0.75024221733738215538250799629071720680021754016150,
+  "confiabilidade_total": 0.75024221733738215538250799629071720680021754016150
 }
 Individuo 27:
 {
-  "solucao": [91 12 82 38 97]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.68873130165054270840553911900838549639348190358930,
-  "confiabilidade_total": 0.68873130165054270840553911900838549639348190358930
+  "solucao": [89 86 57 92 54]
+                [1 1 1 2 1],
+  "funcao_objetivo": 0.43897420140494343256783689620294456307891674083641,
+  "confiabilidade_total": 0.43897420140494343256783689620294456307891674083641
 }
 Individuo 28:
 {
-  "solucao": [66 99 87 98 13]
-                [1 1 1 2 1],
-  "funcao_objetivo": 0.56871916703883780264949326838987307072898164536046,
-  "confiabilidade_total": 0.56871916703883780264949326838987307072898164536046
+  "solucao": [97 57 71 46 84]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.47086580468827791902402600047724392942607501146852,
+  "confiabilidade_total": 0.47086580468827791902402600047724392942607501146852
 }
 Individuo 29:
 {
-  "solucao": [76 89 57 75 99]
-                [2 1 1 1 2],
-  "funcao_objetivo": 0.75903138558470867469225643697317276623490378803271,
-  "confiabilidade_total": 0.75903138558470867469225643697317276623490378803271
+  "solucao": [35 83 57 92 72]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.51413070525959309629283345855834458192507514983315,
+  "confiabilidade_total": 0.51413070525959309629283345855834458192507514983315
 }
 Individuo 30:
 {
-  "solucao": [99 88 97 79 71]
-                [1 1 1 2 1],
-  "funcao_objetivo": 0.76670095231289191740456933960504108972210953316423,
-  "confiabilidade_total": 0.76670095231289191740456933960504108972210953316423
+  "solucao": [38 78 62 82 91]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.60953546237750045631509739652627578752483101930852,
+  "confiabilidade_total": 0.60953546237750045631509739652627578752483101930852
 }
 Individuo 31:
 {
-  "solucao": [89 67 92 83 91]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.63980159339202275650546203456629818965528360753121,
-  "confiabilidade_total": 0.63980159339202275650546203456629818965528360753121
+  "solucao": [91 97 74 88 95]
+                [1 3 2 1 1],
+  "funcao_objetivo": 0.67008792456301693976546065528607190550925909206075,
+  "confiabilidade_total": 0.67008792456301693976546065528607190550925909206075
 }
 Individuo 32:
 {
-  "solucao": [97 87 98 96 64]
-                [1 1 3 2 1],
-  "funcao_objetivo": 0.78422726990649147901046213255738302497346163088413,
-  "confiabilidade_total": 0.78422726990649147901046213255738302497346163088413
+  "solucao": [90 60 71 93 88]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.64653112536861242874014873158818836883574251454674,
+  "confiabilidade_total": 0.64653112536861242874014873158818836883574251454674
 }
 Individuo 33:
 {
-  "solucao": [49 82 32 76 94]
+  "solucao": [95 88 94 93 30]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.17953907950962305648780932801846991804879448270771,
-  "confiabilidade_total": 0.77353907950962214077585861718935537663739464139912
+  "funcao_objetivo": 0.49953961056437027910517980028081762865421372189796,
+  "confiabilidade_total": 0.49953961056437027910517980028081762865421372189796
 }
 Individuo 34:
 {
-  "solucao": [20 98 81 99 91]
-                [1 1 2 2 1],
-  "funcao_objetivo": 0.84647155975879900120814552575946081923513538752915,
-  "confiabilidade_total": 0.84647155975879900120814552575946081923513538752915
+  "solucao": [92 72 80 99 80]
+                [2 1 1 2 2],
+  "funcao_objetivo": 0.58258939713151189887003429240443931732835050177030,
+  "confiabilidade_total": 0.58258939713151189887003429240443931732835050177030
 }
 Individuo 35:
 {
-  "solucao": [93 88 51 28 63]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.44665986581106717229810457945074771994644409914384,
-  "confiabilidade_total": 0.70915986581106718340033482570231312418276078005204
+  "solucao": [11 98 33 92 90]
+                [1 3 1 1 1],
+  "funcao_objetivo": 0.30948496675289743158157985183067746031928723505673,
+  "confiabilidade_total": 0.65998496675289768737696472546674437392402356318173
 }
 Individuo 36:
 {
-  "solucao": [77 98 97 55 82]
-                [1 1 1 1 2],
-  "funcao_objetivo": 0.61722149646876748137084998008645794343168127033893,
-  "confiabilidade_total": 0.61722149646876748137084998008645794343168127033893
+  "solucao": [87 53 95 62 84]
+                [2 1 1 1 1],
+  "funcao_objetivo": 0.21367649890293612138266826046213146489767488836519,
+  "confiabilidade_total": 0.69767649890293755046174555796363029819635805486910
 }
 Individuo 37:
 {
-  "solucao": [93 69 97 50 76]
+  "solucao": [96 59 12 96 87]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.64168379832141939331558094035449844832300164763713,
-  "confiabilidade_total": 0.64168379832141939331558094035449844832300164763713
+  "funcao_objetivo": 0.52645162638776185174221829370290743638224130828894,
+  "confiabilidade_total": 0.52645162638776185174221829370290743638224130828894
 }
 Individuo 38:
 {
-  "solucao": [87 92 97 67 83]
-                [1 1 2 1 1],
-  "funcao_objetivo": 0.68348067131051141327382027920369259641083152028425,
-  "confiabilidade_total": 0.68348067131051141327382027920369259641083152028425
+  "solucao": [61 90 87 91 92]
+                [2 1 2 1 1],
+  "funcao_objetivo": 0.52221291227531932141231672367545002098972580254371,
+  "confiabilidade_total": 0.84121291227531838349590552034320467110569259941871
 }
 Individuo 39:
 {
-  "solucao": [91 94 69 35 89]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.60704124673180355040943057113908083778589226328788,
-  "confiabilidade_total": 0.60704124673180355040943057113908083778589226328788
+  "solucao": [98 85 93 16 99]
+                [2 2 1 1 2],
+  "funcao_objetivo": 0.77907068551098269742347999994598120973448430966144,
+  "confiabilidade_total": 0.77907068551098269742347999994598120973448430966144
 }
 Individuo 40:
 {
-  "solucao": [32 78 64 82 97]
-                [1 1 1 1 2],
-  "funcao_objetivo": 0.81088459829426399951035431891656163992540214390803,
-  "confiabilidade_total": 0.81088459829426399951035431891656163992540214390803
+  "solucao": [93 85 74 94 98]
+                [2 2 1 1 2],
+  "funcao_objetivo": 0.79035192588286773936293931511510639163847670297202,
+  "confiabilidade_total": 0.79035192588286773936293931511510639163847670297202
 }
 Individuo 41:
 {
-  "solucao": [62 91 99 91 92]
-                [1 1 2 1 2],
-  "funcao_objetivo": 0.46510526248221149584192161497148544908681571784475,
-  "confiabilidade_total": 0.69610526248221245041167818768107890532532394233205
+  "solucao": [89 40 96 23 74]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.52704586026816626944873594550125893463822370867106,
+  "confiabilidade_total": 0.52704586026816626944873594550125893463822370867106
 }
 Individuo 42:
 {
-  "solucao": [73 64 83 84 69]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.60446696514004336002385918872661295733493611157458,
-  "confiabilidade_total": 0.60446696514004336002385918872661295733493611157458
+  "solucao": [21 89 92 99 88]
+                [1 1 3 1 1],
+  "funcao_objetivo": 0.47865077008950524682689914927460243353676207879245,
+  "confiabilidade_total": 0.47865077008950524682689914927460243353676207879245
 }
 Individuo 43:
 {
-  "solucao": [22 89 78 68 75]
-                [1 1 1 1 1],
-  "funcao_objetivo": 0.59349136591280161947914784340370957777703414949850,
-  "confiabilidade_total": 0.62649136591280287003436278118003671095574508699850
+  "solucao": [94 91 89 56 53]
+                [1 1 1 1 2],
+  "funcao_objetivo": 0.62973619348209764063655280701606553127154335283161,
+  "confiabilidade_total": 0.62973619348209764063655280701606553127154335283161
 }
 Individuo 44:
 {
-  "solucao": [61 95 76 97 37]
-                [1 1 1 2 1],
-  "funcao_objetivo": 0.79492323027935207656477332824695147315009870021731,
-  "confiabilidade_total": 0.79492323027935207656477332824695147315009870021731
+  "solucao": [91 57 70 41 88]
+                [1 1 1 1 1],
+  "funcao_objetivo": 0.38425174615253289867960258784165732032055919551892,
+  "confiabilidade_total": 0.38425174615253289867960258784165732032055919551892
 }
 Individuo 45:
 {
-  "solucao": [96 63 82 71 77]
-                [1 2 1 1 1],
-  "funcao_objetivo": 0.31779750594113057753206494094756334182131566474066,
-  "confiabilidade_total": 0.63279750594113507615576072208186513837683476874457
+  "solucao": [93 32 95 67 83]
+                [2 1 2 1 1],
+  "funcao_objetivo": 0.73498201486497942643787773548681762557159078689152,
+  "confiabilidade_total": 0.73498201486497942643787773548681762557159078689152
 }
 Individuo 46:
 {
-  "solucao": [99 94 90 21 69]
-                [4 1 1 1 1],
-  "funcao_objetivo": 0.63712384399660058908596502831924579338633890057725,
-  "confiabilidade_total": 0.63712384399660058908596502831924579338633890057725
+  "solucao": [96 92 95 57 94]
+                [2 1 1 1 1],
+  "funcao_objetivo": 0.58323730392531795298638667534814910577505278915349,
+  "confiabilidade_total": 0.58323730392531795298638667534814910577505278915349
 }
 Individuo 47:
 {
-  "solucao": [82 96 18 62 85]
+  "solucao": [98 96 97 38 24]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.59086166814506469471747045496803571496599939709489,
-  "confiabilidade_total": 0.59086166814506469471747045496803571496599939709489
+  "funcao_objetivo": 0.50921286437566092358804902093272738666042008615601,
+  "confiabilidade_total": 0.50921286437566092358804902093272738666042008615601
 }
 Individuo 48:
 {
-  "solucao": [97 99 83 84 77]
-                [2 2 2 1 1],
-  "funcao_objetivo": 0.89107962653281677190101854121544888741421207663612,
-  "confiabilidade_total": 0.89107962653281677190101854121544888741421207663612
+  "solucao": [93 99 91 99 76]
+                [2 1 3 1 1],
+  "funcao_objetivo": 0.58818086184386947724057720449939366314587507024067,
+  "confiabilidade_total": 0.58818086184386947724057720449939366314587507024067
 }
 Individuo 49:
 {
-  "solucao": [76 96 17 98 52]
+  "solucao": [98 35 89 70 54]
                 [1 1 1 1 1],
-  "funcao_objetivo": 0.57860760037161351217347203101527057475498082643843,
-  "confiabilidade_total": 0.57860760037161351217347203101527057475498082643843
+  "funcao_objetivo": 0.49717074203665845517534468917981168966514035488433,
+  "confiabilidade_total": 0.49717074203665845517534468917981168966514035488433
 }
 
 Componente 0:
-Confiabilidade: 0.46616633
-Custo: 13.73
-Peso: 19.48
-
-Componente 1:
-Confiabilidade: 0.64671169
-Custo: 11.58
-Peso: 18.15
-
-Componente 2:
-Confiabilidade: 0.72963395
-Custo: 12.78
-Peso: 15.26
-
-Componente 3:
-Confiabilidade: 0.45681344
-Custo: 13.06
-Peso: 14.7
-
-Componente 4:
-Confiabilidade: 0.30757842
-Custo: 7.16
-Peso: 19.89
-
-Componente 5:
-Confiabilidade: 0.36925232
-Custo: 12.2
-Peso: 14.47
-
-Componente 6:
-Confiabilidade: 0.4655464
-Custo: 11.48
-Peso: 15.04
-
-Componente 7:
-Confiabilidade: 0.63566438
-Custo: 14.87
-Peso: 11.71
-
-Componente 8:
-Confiabilidade: 0.58759928
-Custo: 9.11
-Peso: 16.95
-
-Componente 9:
-Confiabilidade: 0.41906284
-Custo: 6.8
-Peso: 18.73
-
-Componente 10:
-Confiabilidade: 0.58521093
-Custo: 8.23
-Peso: 17.43
-
-Componente 11:
-Confiabilidade: 0.66966594
-Custo: 14.85
-Peso: 10.83
-
-Componente 12:
-Confiabilidade: 0.62301706
-Custo: 14.65
-Peso: 10.49
-
-Componente 13:
-Confiabilidade: 0.52234428
-Custo: 7.82
-Peso: 17.15
-
-Componente 14:
-Confiabilidade: 0.43542406
-Custo: 11.63
-Peso: 13.09
-
-Componente 15:
-Confiabilidade: 0.53791304
-Custo: 13.85
-Peso: 10.91
-
-Componente 16:
-Confiabilidade: 0.53025873
-Custo: 6.98
-Peso: 17.56
-
-Componente 17:
-Confiabilidade: 0.62681067
-Custo: 4.83
+Confiabilidade: 0.54810256
+Custo: 13.65
 Peso: 19.59
 
+Componente 1:
+Confiabilidade: 0.66587082
+Custo: 11.98
+Peso: 19.16
+
+Componente 2:
+Confiabilidade: 0.37992849
+Custo: 12.38
+Peso: 18.25
+
+Componente 3:
+Confiabilidade: 0.34774453
+Custo: 10.69
+Peso: 19.08
+
+Componente 4:
+Confiabilidade: 0.53187631
+Custo: 14.37
+Peso: 15.08
+
+Componente 5:
+Confiabilidade: 0.56183771
+Custo: 9.83
+Peso: 19.5
+
+Componente 6:
+Confiabilidade: 0.32948364
+Custo: 11.15
+Peso: 17.87
+
+Componente 7:
+Confiabilidade: 0.58919541
+Custo: 10.65
+Peso: 18.39
+
+Componente 8:
+Confiabilidade: 0.59674102
+Custo: 13.13
+Peso: 15.28
+
+Componente 9:
+Confiabilidade: 0.46775773
+Custo: 10.05
+Peso: 18.15
+
+Componente 10:
+Confiabilidade: 0.52191839
+Custo: 10.52
+Peso: 17.19
+
+Componente 11:
+Confiabilidade: 0.32347819
+Custo: 6.63
+Peso: 19.69
+
+Componente 12:
+Confiabilidade: 0.31530992
+Custo: 12.27
+Peso: 13.82
+
+Componente 13:
+Confiabilidade: 0.69726043
+Custo: 9.65
+Peso: 16.59
+
+Componente 14:
+Confiabilidade: 0.30120029
+Custo: 7.73
+Peso: 17.24
+
+Componente 15:
+Confiabilidade: 0.65202577
+Custo: 12.32
+Peso: 12.66
+
+Componente 16:
+Confiabilidade: 0.46637937
+Custo: 12.51
+Peso: 11.74
+
+Componente 17:
+Confiabilidade: 0.35773986
+Custo: 10.31
+Peso: 13.55
+
 Componente 18:
-Confiabilidade: 0.51686114
-Custo: 5.2
-Peso: 18.81
+Confiabilidade: 0.43594086
+Custo: 5.83
+Peso: 18.09
 
 Componente 19:
-Confiabilidade: 0.74812815
-Custo: 14.01
-Peso: 10.2
+Confiabilidade: 0.45975018
+Custo: 7.69
+Peso: 16.01
 
 Componente 20:
-Confiabilidade: 0.57797416
-Custo: 12.56
-Peso: 11.25
+Confiabilidade: 0.56591032
+Custo: 3.84
+Peso: 19.63
 
 Componente 21:
-Confiabilidade: 0.30614961
-Custo: 4.13
-Peso: 19.36
+Confiabilidade: 0.31298149
+Custo: 7.76
+Peso: 14.96
 
 Componente 22:
-Confiabilidade: 0.44007022
-Custo: 6.24
-Peso: 17.03
+Confiabilidade: 0.45434792
+Custo: 11.24
+Peso: 11.31
 
 Componente 23:
-Confiabilidade: 0.63299136
-Custo: 6.03
-Peso: 17.37
+Confiabilidade: 0.72033037
+Custo: 11.41
+Peso: 10.98
 
 Componente 24:
-Confiabilidade: 0.63710104
-Custo: 9.23
-Peso: 14.17
+Confiabilidade: 0.37661025
+Custo: 13.74
+Peso: 8.23
 
 Componente 25:
-Confiabilidade: 0.51778926
-Custo: 12.26
-Peso: 10.14
+Confiabilidade: 0.44359893
+Custo: 7.22
+Peso: 14.59
 
 Componente 26:
-Confiabilidade: 0.71151948
-Custo: 9.97
-Peso: 12.59
+Confiabilidade: 0.52070125
+Custo: 9.17
+Peso: 12.7
 
 Componente 27:
-Confiabilidade: 0.39064575
-Custo: 9.15
-Peso: 12.93
+Confiabilidade: 0.63319115
+Custo: 14.17
+Peso: 7.64
 
 Componente 28:
-Confiabilidade: 0.43515142
-Custo: 11.39
-Peso: 10.7
+Confiabilidade: 0.55275112
+Custo: 8.49
+Peso: 13.11
 
 Componente 29:
-Confiabilidade: 0.68413524
-Custo: 11.61
-Peso: 10.65
+Confiabilidade: 0.57962546
+Custo: 13.3
+Peso: 8.3
 
 Componente 30:
-Confiabilidade: 0.64876643
-Custo: 2.24
-Peso: 19.66
+Confiabilidade: 0.42435922
+Custo: 5.38
+Peso: 15.97
 
 Componente 31:
-Confiabilidade: 0.51141236
-Custo: 8.84
-Peso: 12.92
+Confiabilidade: 0.57600595
+Custo: 6.28
+Peso: 15.17
 
 Componente 32:
-Confiabilidade: 0.6428694
-Custo: 2.86
-Peso: 18.77
+Confiabilidade: 0.51799509
+Custo: 5.16
+Peso: 16.2
 
 Componente 33:
-Confiabilidade: 0.69332596
-Custo: 13.93
-Peso: 7.6
+Confiabilidade: 0.6230662
+Custo: 7.71
+Peso: 13.59
 
 Componente 34:
-Confiabilidade: 0.70604037
-Custo: 7.98
-Peso: 13.27
+Confiabilidade: 0.35092845
+Custo: 10.35
+Peso: 10.4
 
 Componente 35:
-Confiabilidade: 0.74324213
-Custo: 9.35
-Peso: 11.88
+Confiabilidade: 0.58804938
+Custo: 6.46
+Peso: 14.27
 
 Componente 36:
-Confiabilidade: 0.60334763
-Custo: 3.31
-Peso: 17.61
+Confiabilidade: 0.37070596
+Custo: 14.83
+Peso: 5.48
 
 Componente 37:
-Confiabilidade: 0.73354431
-Custo: 3.14
-Peso: 17.45
+Confiabilidade: 0.67100285
+Custo: 12.01
+Peso: 8.38
 
 Componente 38:
-Confiabilidade: 0.54479382
-Custo: 3.11
-Peso: 17.21
+Confiabilidade: 0.51948915
+Custo: 5.65
+Peso: 14.51
 
 Componente 39:
-Confiabilidade: 0.440853
-Custo: 9.35
-Peso: 10.82
+Confiabilidade: 0.42633271
+Custo: 14.94
+Peso: 5.1
 
 Componente 40:
-Confiabilidade: 0.33150902
-Custo: 11.07
-Peso: 8.96
+Confiabilidade: 0.50389678
+Custo: 3.13
+Peso: 16.53
 
 Componente 41:
-Confiabilidade: 0.4510922
-Custo: 3.18
-Peso: 16.84
+Confiabilidade: 0.33434535
+Custo: 6.38
+Peso: 13.03
 
 Componente 42:
-Confiabilidade: 0.42875374
-Custo: 1.0
-Peso: 18.83
+Confiabilidade: 0.31931572
+Custo: 6.25
+Peso: 12.95
 
 Componente 43:
-Confiabilidade: 0.3969856
-Custo: 12.97
-Peso: 6.75
+Confiabilidade: 0.46745982
+Custo: 9.93
+Peso: 9.34
 
 Componente 44:
-Confiabilidade: 0.49018265
-Custo: 14.71
-Peso: 4.91
+Confiabilidade: 0.66357197
+Custo: 3.91
+Peso: 15.37
 
 Componente 45:
-Confiabilidade: 0.44867087
-Custo: 1.48
-Peso: 17.7
+Confiabilidade: 0.40975255
+Custo: 9.42
+Peso: 9.32
 
 Componente 46:
-Confiabilidade: 0.67759918
-Custo: 12.22
-Peso: 6.98
+Confiabilidade: 0.50537302
+Custo: 4.77
+Peso: 13.9
 
 Componente 47:
-Confiabilidade: 0.56823831
-Custo: 1.6
-Peso: 17.49
+Confiabilidade: 0.38856259
+Custo: 12.0
+Peso: 5.98
 
 Componente 48:
-Confiabilidade: 0.38853564
-Custo: 14.9
-Peso: 3.91
+Confiabilidade: 0.56454669
+Custo: 14.38
+Peso: 3.54
 
 Componente 49:
-Confiabilidade: 0.73518958
-Custo: 12.94
-Peso: 5.94
+Confiabilidade: 0.49558052
+Custo: 11.77
+Peso: 6.04
 
 Componente 50:
-Confiabilidade: 0.52349979
-Custo: 3.32
-Peso: 15.2
+Confiabilidade: 0.70049978
+Custo: 7.27
+Peso: 10.61
 
 Componente 51:
-Confiabilidade: 0.68281664
-Custo: 6.27
-Peso: 12.19
+Confiabilidade: 0.58374204
+Custo: 9.79
+Peso: 7.93
 
 Componente 52:
-Confiabilidade: 0.40311243
-Custo: 6.53
-Peso: 11.64
+Confiabilidade: 0.59692539
+Custo: 3.58
+Peso: 14.08
 
 Componente 53:
-Confiabilidade: 0.74777887
-Custo: 10.77
-Peso: 7.73
+Confiabilidade: 0.61466512
+Custo: 1.56
+Peso: 15.86
 
 Componente 54:
-Confiabilidade: 0.50229605
-Custo: 11.93
-Peso: 6.07
+Confiabilidade: 0.45079132
+Custo: 4.85
+Peso: 12.35
 
 Componente 55:
-Confiabilidade: 0.42970307
-Custo: 7.98
-Peso: 9.91
+Confiabilidade: 0.30950998
+Custo: 8.95
+Peso: 8.05
 
 Componente 56:
-Confiabilidade: 0.69002437
-Custo: 8.64
-Peso: 8.74
+Confiabilidade: 0.63622362
+Custo: 9.79
+Peso: 7.53
 
 Componente 57:
-Confiabilidade: 0.40489662
-Custo: 5.32
-Peso: 11.72
+Confiabilidade: 0.3671351
+Custo: 1.23
+Peso: 15.63
 
 Componente 58:
-Confiabilidade: 0.33400703
-Custo: 9.39
+Confiabilidade: 0.31439157
+Custo: 9.14
 Peso: 7.3
 
 Componente 59:
-Confiabilidade: 0.72171946
-Custo: 6.69
-Peso: 10.24
+Confiabilidade: 0.63021558
+Custo: 3.01
+Peso: 13.6
 
 Componente 60:
-Confiabilidade: 0.51205563
-Custo: 10.9
-Peso: 5.5
+Confiabilidade: 0.59240371
+Custo: 4.17
+Peso: 12.2
 
 Componente 61:
-Confiabilidade: 0.63773202
-Custo: 5.43
-Peso: 11.08
+Confiabilidade: 0.65855612
+Custo: 4.52
+Peso: 11.8
 
 Componente 62:
-Confiabilidade: 0.48713267
-Custo: 8.77
-Peso: 7.5
+Confiabilidade: 0.46537784
+Custo: 3.75
+Peso: 12.28
 
 Componente 63:
-Confiabilidade: 0.38194392
-Custo: 3.74
-Peso: 12.3
+Confiabilidade: 0.400277
+Custo: 6.93
+Peso: 9.03
 
 Componente 64:
-Confiabilidade: 0.73209463
-Custo: 9.4
-Peso: 6.35
+Confiabilidade: 0.61784707
+Custo: 13.8
+Peso: 2.37
 
 Componente 65:
-Confiabilidade: 0.54905681
-Custo: 3.25
-Peso: 12.1
+Confiabilidade: 0.65457613
+Custo: 7.09
+Peso: 8.94
 
 Componente 66:
-Confiabilidade: 0.57001719
-Custo: 10.32
-Peso: 4.67
+Confiabilidade: 0.56593649
+Custo: 9.09
+Peso: 6.62
 
 Componente 67:
-Confiabilidade: 0.4318801
-Custo: 9.4
-Peso: 5.39
+Confiabilidade: 0.69172027
+Custo: 8.28
+Peso: 7.53
 
 Componente 68:
-Confiabilidade: 0.57080576
-Custo: 7.3
-Peso: 7.55
+Confiabilidade: 0.68815548
+Custo: 12.75
+Peso: 2.9
 
 Componente 69:
-Confiabilidade: 0.43536362
-Custo: 5.28
-Peso: 9.37
+Confiabilidade: 0.30161643
+Custo: 11.87
+Peso: 2.72
 
 Componente 70:
-Confiabilidade: 0.31963457
-Custo: 9.03
-Peso: 4.96
+Confiabilidade: 0.37229605
+Custo: 4.13
+Peso: 10.53
 
 Componente 71:
-Confiabilidade: 0.50275967
-Custo: 5.19
-Peso: 8.95
+Confiabilidade: 0.63599664
+Custo: 9.78
+Peso: 4.9
 
 Componente 72:
-Confiabilidade: 0.40209638
-Custo: 10.81
-Peso: 3.15
+Confiabilidade: 0.31295526
+Custo: 9.44
+Peso: 4.72
 
 Componente 73:
-Confiabilidade: 0.36500819
-Custo: 6.93
-Peso: 6.94
+Confiabilidade: 0.74711184
+Custo: 13.25
+Peso: 1.22
 
 Componente 74:
-Confiabilidade: 0.66158002
-Custo: 5.41
-Peso: 8.12
+Confiabilidade: 0.39378442
+Custo: 2.7
+Peso: 11.13
 
 Componente 75:
-Confiabilidade: 0.59809401
-Custo: 1.0
-Peso: 12.24
+Confiabilidade: 0.59168847
+Custo: 9.87
+Peso: 3.78
 
 Componente 76:
-Confiabilidade: 0.64058904
-Custo: 7.89
-Peso: 5.17
+Confiabilidade: 0.4308342
+Custo: 12.03
+Peso: 1.27
 
 Componente 77:
-Confiabilidade: 0.55118014
-Custo: 9.06
-Peso: 3.77
+Confiabilidade: 0.44919727
+Custo: 5.42
+Peso: 7.55
 
 Componente 78:
-Confiabilidade: 0.65667566
-Custo: 11.79
-Peso: 1.09
+Confiabilidade: 0.71204717
+Custo: 6.4
+Peso: 6.43
 
 Componente 79:
-Confiabilidade: 0.51233085
-Custo: 1.89
-Peso: 10.72
+Confiabilidade: 0.53117315
+Custo: 9.09
+Peso: 3.2
 
 Componente 80:
-Confiabilidade: 0.31210155
-Custo: 7.85
-Peso: 4.45
+Confiabilidade: 0.40532944
+Custo: 3.7
+Peso: 8.44
 
 Componente 81:
-Confiabilidade: 0.74010714
-Custo: 2.41
-Peso: 10.3
+Confiabilidade: 0.67313065
+Custo: 10.55
+Peso: 1.6
 
 Componente 82:
-Confiabilidade: 0.72269473
-Custo: 2.35
-Peso: 10.07
+Confiabilidade: 0.55950952
+Custo: 7.33
+Peso: 4.5
 
 Componente 83:
-Confiabilidade: 0.62393074
-Custo: 5.43
-Peso: 6.87
+Confiabilidade: 0.56513235
+Custo: 2.97
+Peso: 8.82
 
 Componente 84:
-Confiabilidade: 0.60809142
-Custo: 1.97
-Peso: 10.24
+Confiabilidade: 0.48198025
+Custo: 8.89
+Peso: 2.47
 
 Componente 85:
-Confiabilidade: 0.60574141
-Custo: 7.64
-Peso: 4.47
+Confiabilidade: 0.48295582
+Custo: 1.21
+Peso: 10.02
 
 Componente 86:
-Confiabilidade: 0.60595052
-Custo: 9.47
-Peso: 2.48
+Confiabilidade: 0.32791936
+Custo: 5.74
+Peso: 4.34
 
 Componente 87:
-Confiabilidade: 0.34656179
-Custo: 1.96
-Peso: 8.9
+Confiabilidade: 0.7344343
+Custo: 5.83
+Peso: 4.55
 
 Componente 88:
-Confiabilidade: 0.71411479
-Custo: 2.19
-Peso: 9.01
+Confiabilidade: 0.40796858
+Custo: 6.39
+Peso: 3.63
 
 Componente 89:
-Confiabilidade: 0.62932552
-Custo: 3.7
-Peso: 6.93
+Confiabilidade: 0.33974336
+Custo: 6.57
+Peso: 3.14
 
 Componente 90:
-Confiabilidade: 0.6282481
-Custo: 8.04
-Peso: 2.53
+Confiabilidade: 0.60460825
+Custo: 6.0
+Peso: 3.09
 
 Componente 91:
-Confiabilidade: 0.54606743
-Custo: 5.42
-Peso: 4.21
+Confiabilidade: 0.65777127
+Custo: 2.04
+Peso: 5.84
 
 Componente 92:
-Confiabilidade: 0.67374467
-Custo: 3.36
-Peso: 5.59
+Confiabilidade: 0.57636122
+Custo: 1.55
+Peso: 6.07
 
 Componente 93:
-Confiabilidade: 0.74509617
-Custo: 2.78
-Peso: 6.05
+Confiabilidade: 0.59263296
+Custo: 1.94
+Peso: 4.75
 
 Componente 94:
-Confiabilidade: 0.54161859
-Custo: 4.5
-Peso: 4.04
+Confiabilidade: 0.60543282
+Custo: 4.81
+Peso: 1.75
 
 Componente 95:
-Confiabilidade: 0.42637718
-Custo: 6.97
-Peso: 1.38
+Confiabilidade: 0.35312765
+Custo: 4.58
+Peso: 1.48
 
 Componente 96:
-Confiabilidade: 0.48949906
-Custo: 4.99
-Peso: 2.91
+Confiabilidade: 0.52580716
+Custo: 3.76
+Peso: 2.26
 
 Componente 97:
-Confiabilidade: 0.71493399
-Custo: 1.59
-Peso: 6.51
+Confiabilidade: 0.37577143
+Custo: 2.67
+Peso: 2.73
 
 Componente 98:
-Confiabilidade: 0.50708841
-Custo: 2.33
-Peso: 4.76
+Confiabilidade: 0.62482577
+Custo: 2.8
+Peso: 2.53
 
 Componente 99:
-Confiabilidade: 0.54459349
-Custo: 1.94
-Peso: 3.32
+Confiabilidade: 0.38209321
+Custo: 3.04
+Peso: 1.96
 
