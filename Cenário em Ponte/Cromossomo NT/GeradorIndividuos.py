@@ -54,10 +54,13 @@ class Individuo:
         soma_pesos = self.somatoria_pesos(individuo)
         soma_custos = self.somatoria_custos(individuo)
 
-        f_custo = soma_custos - self.custo_max
-        f_peso =  soma_pesos - self.peso_max
+        #f_custo = soma_custos - self.custo_max
+        #f_peso =  soma_pesos - self.peso_max
 
-        f_obj = confiabilidade - Decimal(self.coeficiente_peso*max(0, f_peso)) - Decimal(self.coeficiente_custo*max(0, f_custo))
+        f_custo = -0.1 + (self.custo_max - soma_custos)/self.custo_max
+        f_peso = -0.1 + (self.peso_max - soma_pesos)/self.peso_max
+
+        f_obj = confiabilidade - Decimal(max(0, f_peso)) - Decimal(max(0, f_custo))
         return f_obj
 
     def confiabilidade_paralelo(self, tipo, quantidade):
