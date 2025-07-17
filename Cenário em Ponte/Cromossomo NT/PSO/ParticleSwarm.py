@@ -145,7 +145,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
             melhor_solucao = fit_global
             geracao = i + 1
             
-    print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", melhor_solucao)
+    print("O algoritmo PSO obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", melhor_solucao)
     print("Com os seguintes valores para cada variavel de decisao:")
     for z in range(alg.num_variaveis):
         print("T{}: {}".format(z+1, alg.individuos[0].solucao[0][z]))

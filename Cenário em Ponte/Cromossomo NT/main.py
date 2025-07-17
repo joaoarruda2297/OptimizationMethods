@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from DE.DiffEvolution import main as DE
 from GA.Genetic import main as GA
 from PSO.ParticleSwarm import main as PSO
+from AC.AntColony import main as AC
 from GeradorComponentes import main as GeradorComponentes
 from GeradorIndividuos import main as GeradorIndividuos
 
@@ -88,11 +89,19 @@ def main():
         finally:
             sys.stdout = sys.__stdout__
 
+    # Executa AntColony e captura os resultados
+    with open('./AC/output.txt', 'w') as f:
+        sys.stdout = f
+        try:
+            solucoes_AC, melhor_valor_AC = AC(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+        finally:
+            sys.stdout = sys.__stdout__
+
     # Gerando o gráfico comparativo
-    #plt.axhline(y=0, color='red', linestyle='-', linewidth=0.4)
     plt.plot(range(1, len(solucoes_PSO) + 1), solucoes_PSO, label='PSO ({})'.format(melhor_valor_PSO), color='purple')
     plt.plot(range(1, len(solucoes_DE) + 1), solucoes_DE, label='DE ({})'.format(melhor_valor_DE), color='green')
     plt.plot(range(1, len(solucoes_GA) + 1), solucoes_GA, label='GA ({})'.format(melhor_valor_GA), color='orange')
+    plt.plot(range(1, len(solucoes_AC) + 1), solucoes_AC, label='ACO ({})'.format(melhor_valor_AC), color='blue')
 
     plt.xlabel('Geração')
     plt.ylabel('log(confiabilidade)')
