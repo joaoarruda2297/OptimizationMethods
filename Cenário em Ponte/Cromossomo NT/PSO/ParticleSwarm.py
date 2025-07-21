@@ -14,17 +14,18 @@ class ParticleSwarmOptimization:
         self.num_particulas = len(individuos)
         self.num_variaveis = 5 #5 subsistemas
         self.num_geracoes = num_geracoes
-        self.exploracao_global = 0.6 #C2
-        self.auto_exploracao = 0.3 #C1
-        self.taxa_inercia = 0.2 #w
+        self.exploracao_global = 1.49 #C2
+        self.auto_exploracao = 1.49 #C1
+        self.taxa_inercia = 1 #w
+        self.damp_inercia = 0.99
 
         self.num_tipos_componentes = componentes.shape[1]
         self.componentes = componentes
         self.peso_max = peso_max
         self.custo_max = custo_max
 
-        self.num_max_componentes_subsistema = 10
-        self.num_min_componentes_subsistema = 3
+        self.num_max_componentes_subsistema = num_max_componentes_subsistema
+        self.num_min_componentes_subsistema = num_min_componentes_subsistema
 
         self.coeficiente_custo = coeficiente_custo
         self.coeficiente_peso = coeficiente_peso
@@ -46,6 +47,22 @@ class ParticleSwarmOptimization:
             inercia + auto_exploracao + exploracao_global
         )
 
+        #tratativa de espelho para ver quais dimensões irão fugir da solução viável
+        #de forma simples, se a posicao atual da partícula já estiver numa borda e a velocidade ainda aponta para fora, invertemos a velocidade
+
+        for i in range(len(velocidade_final[0])):
+            #primeira linha, que se refere aos tipos de componentes
+            if velocidade_final[0][i] < 0 and deepcopy(individuo.solucao[0][i]) == 0:
+                velocidade_final[0][i] *= -1
+            if velocidade_final[0][i] > 0 and deepcopy(individuo.solucao[1][i]) == self.num_tipos_componentes - 1:
+                velocidade_final[0][i] *= -1
+
+            #segunda linha, que se refere às quantidades de componentes
+            if velocidade_final[1][i] < 0 and deepcopy(individuo.solucao[1][i]) == self.num_min_componentes_subsistema:
+                velocidade_final[1][i] *= -1
+            if velocidade_final[1][i] > 0 and deepcopy(individuo.solucao[1][i]) == self.num_max_componentes_subsistema:
+                velocidade_final[1][i] *= -1
+
         return velocidade_final
 
     def atualiza_posicao(self, individuo):
@@ -55,19 +72,14 @@ class ParticleSwarmOptimization:
 
         posicao_final_inteira = np.round(posicao_final,0)
         posicao_final_inteira[posicao_final_inteira == -0.0] = 0
-        posicao_final_inteira[posicao_final_inteira >= 100] = 99  
 
-        '''#tratativa para caso ultrapasse os limites
-        #considerando os tipos de componente como um circulo fechado,
-        #logicamente, se algum indice da posicao final possui um numero maior que num_tipos_componentes, ele volta ao 0 e vai somando
-        #para encontrar o valor sobressalente.
-        for i, subsistema in enumerate(posicao_final_inteira):
-            for j, componente in enumerate(subsistema):
-                if posicao_final_inteira[i][j] >= self.num_tipos_componentes:
-                    while posicao_final_inteira[i][j] >= self.num_tipos_componentes:
-                        posicao_final_inteira[i][j] -= self.num_tipos_componentes
-                elif posicao_final_inteira[i][j] <= -1:
-                    posicao_final_inteira[i][j] = -1'''
+        #olhando para todos os valores da segunda linha da posicao final, caso fique maior que 3, volta pra 3, caso menor que 1, volta para 1
+        posicao_final_inteira[1][posicao_final_inteira[1] > self.num_max_componentes_subsistema] = self.num_max_componentes_subsistema
+        posicao_final_inteira[1][posicao_final_inteira[1] < self.num_min_componentes_subsistema] = self.num_min_componentes_subsistema
+
+        #tratativa casa fique negativo tambem
+        posicao_final_inteira[0][posicao_final_inteira[0] < 0] = 0
+        posicao_final_inteira[0][posicao_final_inteira[0] >= self.num_tipos_componentes] = self.num_tipos_componentes - 1
 
         return posicao_final_inteira
     
@@ -121,7 +133,8 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
             print(" ")
         print("-----------------------------------------")
 
-        for k in range(alg.num_particulas):
+        for k in range(alg.num_particulas):#isso está errado, deveria comecar com velocidade zero e a primeira iteração deveria calcular
+            #a velocidade com base na melhor posicao global
             if i != 0:
                 alg.individuos[k].velocidade = alg.atualiza_velocidade(alg.individuos[k], global_best)
             alg.individuos[k].solucao = alg.atualiza_posicao(alg.individuos[k])
@@ -144,6 +157,9 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
             melhor_solucao_log = math.log(fit_global)
             melhor_solucao = fit_global
             geracao = i + 1
+
+        #atualizacao da inercia
+        alg.taxa_inercia = alg.taxa_inercia * alg.damp_inercia
             
     print("O algoritmo PSO obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", melhor_solucao)
     print("Com os seguintes valores para cada variavel de decisao:")

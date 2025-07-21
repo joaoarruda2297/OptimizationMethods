@@ -57,10 +57,10 @@ class Individuo:
         #f_custo = soma_custos - self.custo_max
         #f_peso =  soma_pesos - self.peso_max
 
-        f_custo = -0.1 + (self.custo_max - soma_custos)/self.custo_max
-        f_peso = -0.1 + (self.peso_max - soma_pesos)/self.peso_max
+        f_custo = (self.custo_max - soma_custos)/self.custo_max
+        f_peso = (self.peso_max - soma_pesos)/self.peso_max
 
-        f_obj = confiabilidade - Decimal(max(0, f_peso)) - Decimal(max(0, f_custo))
+        f_obj = confiabilidade + Decimal(min(0, f_peso)) + Decimal(min(0, f_custo))
         return f_obj
 
     def confiabilidade_paralelo(self, tipo, quantidade):
@@ -131,33 +131,9 @@ class IndividuoPSO(Individuo):
             "}"
         )
 
-    #verificar depois se há algum jeito de melhorar!!!!!!
     def gera_velocidade(self):
-        #existe um problema pra gerar a velocidade, pois se voce gera valores aletórios dentro da região viável inteira, fica muito fácil do vetor ultrapassar os limites, entao a melhor forma de resolver isso é gerar um aleatório e dividir sempre por 2 ou 3 ou até 4
-        while True:
-            linha_tipos = np.random.randint(-self.num_tipos_componentes//4, (self.num_tipos_componentes//4) + 1, self.num_variaveis)
-            linha_quantidades = np.random.randint(-self.num_max_componentes_subsistema//4,(self.num_max_componentes_subsistema//4) + 1,self.num_variaveis)
-            velocidade = np.vstack((linha_tipos, linha_quantidades))
-
-            posicao_seguinte = self.solucao + velocidade
-
-            # Verifica se há algum valor <= 0  na segunda linha (quantidades), caso sim, ele quebra o codigo e reinicia o loop
-            if np.any(posicao_seguinte[1] <= 0):
-                continue
-            # Verifica se a quantidade de componentes é maior que o máximo permitido
-            if np.any(posicao_seguinte[1] > self.num_max_componentes_subsistema):
-                continue
-            # verifica se o tipo do componente é maior que o número de tipos de componentes ou menor que 0
-            if np.any((posicao_seguinte[0] >= self.num_tipos_componentes) | (posicao_seguinte[0] < 0)):
-                continue
-
-            individuo = Individuo(posicao_seguinte, self.componentes, self.peso_max, self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
-
-            # Retorna apenas indivíduos viáveis
-            if individuo.valor_funcao_objetivo >= 0:
-                return velocidade
-
-    
+        velocidade = np.zeros((2, self.num_variaveis))
+        return velocidade
     
 class GeradorIndividuos:
     def __init__(self, num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes, coeficiente_custo, coeficiente_peso):

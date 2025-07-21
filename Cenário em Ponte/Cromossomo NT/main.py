@@ -11,13 +11,13 @@ from GeradorIndividuos import main as GeradorIndividuos
 
 def main():
     # Variáveis para geração de componentes e individuos
-    confiabilidade_minima = 0.3
-    confiabilidade_maxima = 0.75
+    confiabilidade_minima = 0.8
+    confiabilidade_maxima = 0.9
     lim_sup_peso = 20
     lim_inf_peso = 1
     lim_sup_custo = 15
     lim_inf_custo = 1
-    num_tipos_componentes = 100 #se colocar pouco aqui, revise a funcao de gerar velocidade para o PSO
+    num_tipos_componentes = 20
     num_individuos = 50
     num_variaveis = 5
     num_max_componentes_subsistema = 3
@@ -90,18 +90,18 @@ def main():
             sys.stdout = sys.__stdout__
 
     # Executa AntColony e captura os resultados
-    with open('./AC/output.txt', 'w') as f:
+    '''with open('./AC/output.txt', 'w') as f:
         sys.stdout = f
         try:
             solucoes_AC, melhor_valor_AC = AC(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
-            sys.stdout = sys.__stdout__
+            sys.stdout = sys.__stdout__'''
 
     # Gerando o gráfico comparativo
     plt.plot(range(1, len(solucoes_PSO) + 1), solucoes_PSO, label='PSO ({})'.format(melhor_valor_PSO), color='purple')
     plt.plot(range(1, len(solucoes_DE) + 1), solucoes_DE, label='DE ({})'.format(melhor_valor_DE), color='green')
     plt.plot(range(1, len(solucoes_GA) + 1), solucoes_GA, label='GA ({})'.format(melhor_valor_GA), color='orange')
-    plt.plot(range(1, len(solucoes_AC) + 1), solucoes_AC, label='ACO ({})'.format(melhor_valor_AC), color='blue')
+    #plt.plot(range(1, len(solucoes_AC) + 1), solucoes_AC, label='ACO ({})'.format(melhor_valor_AC), color='blue')
 
     plt.xlabel('Geração')
     plt.ylabel('log(confiabilidade)')
