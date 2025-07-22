@@ -190,6 +190,9 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
             print(" ")
         print("-----------------------------------------")
 
+    alg.individuos = sorted(alg.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
+    melhor_individuo = alg.individuos[0]
+
     print("O algoritmo de evolução diferencial obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", melhor_solucao)
     print("Com os seguintes valores para cada variavel de decisao:")
     for z in range(alg.num_variaveis):
@@ -219,7 +222,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     plt.plot(range(0, alg.num_geracoes+1), solucoes_log, color='green')  # Linha verde plotada depois
     # Configurações do gráfico
     plt.xlabel('Geração')
-    plt.ylabel('log(confiabilidade)')
+    plt.ylabel('log(Função Objetivo)')
     plt.title('Evolução da Melhor Solução ao Longo das Gerações (DE)')
     plt.grid(True)
     # Texto adicional no gráfico
@@ -231,7 +234,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     plt.savefig('./DE/img/SolutionEvolutionDELog.png')
     plt.show()
 
-    return solucoes_log, valor_final_log
+    return solucoes_log, valor_final_log, melhor_individuo, geracao
     
 
 if __name__ == "__main__":

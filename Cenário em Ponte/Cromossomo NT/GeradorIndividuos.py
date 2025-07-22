@@ -14,14 +14,14 @@ class Individuo:
         self.coeficiente_custo = coeficiente_custo
 
         self._solucao = None
-        self.valor_funcao_objetivo = None
-        self.confiabilidade_total = None
+        self.valor_funcao_objetivo = self.funcao_objetivo(solucao) if solucao is not None else None
+        self.confiabilidade_total = self.confiabilidade_ponte(solucao) if solucao is not None else None
 
         self.solucao = solucao
 
-        self.peso = None
-        self.custo = None
-    
+        self.peso = self.somatoria_pesos(solucao) if solucao is not None else None
+        self.custo = self.somatoria_custos(solucao) if solucao is not None else None
+
     def __str__(self):
         return (
             "{\n"
@@ -29,6 +29,8 @@ class Individuo:
             f"                {self.solucao[1]},\n"
             f"  \"funcao_objetivo\": {self.valor_funcao_objetivo},\n"
             f"  \"confiabilidade_total\": {self.confiabilidade_total}\n"
+            f"  \"peso\": {self.peso},\n"
+            f"  \"custo\": {self.custo}\n"
             "}"
         )
 

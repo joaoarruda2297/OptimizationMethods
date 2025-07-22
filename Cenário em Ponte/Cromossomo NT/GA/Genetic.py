@@ -218,21 +218,20 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     solucoes = []
     solucoes_log = []
     melhor_solucao_log = -10000
-    melhor_solucao = -10000
     geracao = -1
+    melhor_individuo: IndividuoGA = alg.individuos[1] #qualquer só para inicializar
+
+    for j in range(len(alg.individuos)):
+        if(alg.individuos[j].valor_funcao_objetivo > melhor_individuo.valor_funcao_objetivo):
+            log_individuo = math.log(alg.individuos[j].valor_funcao_objetivo)
+            melhor_solucao_log = log_individuo
+            melhor_individuo = alg.individuos[j]
+            geracao = 1
+    solucoes_log.append(melhor_solucao_log)
+    solucoes.append(melhor_individuo.valor_funcao_objetivo)
 
     for i in range(alg.num_geracoes):
         print("GERACAO {}".format(i+1))
-
-        if i == 0:
-            for j in range(len(alg.individuos)):
-                if(alg.individuos[j].valor_funcao_objetivo > melhor_solucao):
-                    log_individuo = math.log(alg.individuos[j].valor_funcao_objetivo)
-                    melhor_solucao_log = log_individuo
-                    melhor_solucao = alg.individuos[j].valor_funcao_objetivo
-                    geracao = i + 1
-            solucoes_log.append(melhor_solucao_log)
-            solucoes.append(melhor_solucao)
 
         pais = alg.seleciona_pais(alg.individuos)
         filhos = alg.crossover(pais)
@@ -283,14 +282,14 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
         print("-----------------------------------------")
 
         for j in range(len(alg.individuos)):
-            if(alg.individuos[j].valor_funcao_objetivo > melhor_solucao):
+            if(alg.individuos[j].valor_funcao_objetivo > melhor_individuo.valor_funcao_objetivo):
                 log_individuo = math.log(alg.individuos[j].valor_funcao_objetivo)
                 melhor_solucao_log = log_individuo
-                melhor_solucao = alg.individuos[j].valor_funcao_objetivo
+                melhor_individuo = alg.individuos[j]
                 geracao = i + 1
         solucoes_log.append(melhor_solucao_log)
-        solucoes.append(melhor_solucao)
-        
+        solucoes.append(melhor_individuo.valor_funcao_objetivo)
+
     print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", alg.individuos[0].valor_funcao_objetivo)
     print("Com os seguintes valores para cada variavel de decisao:")
     for z in range(alg.num_variaveis):
@@ -319,7 +318,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     plt.plot(range(0, alg.num_geracoes+1), solucoes_log, color='orange')  # Linha laranja plotada depois
     # Configurações do gráfico
     plt.xlabel('Geração')
-    plt.ylabel('log(confiabilidade)')
+    plt.ylabel('log(Função Objetivo)')
     plt.title('Evolução da Melhor Solução ao Longo das Gerações (GA)')
     plt.grid(True)
     # Texto adicional no gráfico
@@ -331,7 +330,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     plt.savefig('./GA/img/SolutionEvolutionGALog.png')
     plt.show()
 
-    return solucoes_log, valor_final_log
+    return solucoes_log, valor_final_log, melhor_individuo, geracao
 
 
 if __name__ == "__main__":

@@ -133,10 +133,8 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
             print(" ")
         print("-----------------------------------------")
 
-        for k in range(alg.num_particulas):#isso está errado, deveria comecar com velocidade zero e a primeira iteração deveria calcular
-            #a velocidade com base na melhor posicao global
-            if i != 0:
-                alg.individuos[k].velocidade = alg.atualiza_velocidade(alg.individuos[k], global_best)
+        for k in range(alg.num_particulas):
+            alg.individuos[k].velocidade = alg.atualiza_velocidade(alg.individuos[k], global_best)
             alg.individuos[k].solucao = alg.atualiza_posicao(alg.individuos[k])
 
         print("Populacao final da era:")
@@ -189,7 +187,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     plt.plot(range(0, alg.num_geracoes+1), solucoes_log, color='purple')  # Linha roxa plotada depois
     # Configurações do gráfico
     plt.xlabel('Geração')
-    plt.ylabel('log(confiabilidade)')
+    plt.ylabel('log(Função Objetivo)')
     plt.title('Evolução da Melhor Solução ao Longo das Gerações (PSO)')
     plt.grid(True)
     # Texto adicional no gráfico
@@ -201,7 +199,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     plt.savefig('./PSO/img/SolutionEvolutionPSOLog.png')
     plt.show()
 
-    return solucoes_log, valor_final_log
+    return solucoes_log, valor_final_log, global_best, geracao
         
 
 if __name__ == "__main__":
