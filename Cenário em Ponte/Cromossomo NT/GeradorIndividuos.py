@@ -103,6 +103,22 @@ class Individuo:
         for i in range(len(individuo[0])):
             peso_total += self.componentes[2][int(individuo[0][i])] * int(individuo[1][i])
         return peso_total
+    
+class IndividuoABC(Individuo):
+    def __init__(self, solucao=None, componentes=None, peso_max=0, custo_max=0, coeficiente_peso=1, coeficiente_custo=1):
+        super().__init__(solucao, componentes, peso_max, custo_max, coeficiente_peso, coeficiente_custo)
+        self.estagnacao = 0
+
+    def __str__(self):
+        return (
+            "{\n"
+            f"  \"solucao\": {self.solucao[0]}\n"
+            f"                {self.solucao[1]},\n"
+            f"  \"funcao_objetivo\": {self.valor_funcao_objetivo},\n"
+            f"  \"confiabilidade_total\": {self.confiabilidade_total}\n"
+            f"  \"estagnacao\": {self.estagnacao},\n"
+            "}"
+        )
 
 class IndividuoPSO(Individuo):
     def __init__(self, solucao=None, componentes=None, velocidade=None, peso_max=0, custo_max=0, coeficiente_peso=1, coeficiente_custo=1, num_tipos_componentes=0, num_variaveis=0, num_max_componentes_subsistema=0, num_min_componentes_subsistema=0):

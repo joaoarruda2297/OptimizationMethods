@@ -48,10 +48,19 @@ class AntColonyOptimization:
                         fer = self.feromonio[linha][coluna][tipo] ** self.alpha
                         heu = self.heuristica(linha, coluna, tipo) ** self.beta
                         probabilidades.append(fer * heu)
+                        print("fer: ", fer)
+                        print(self.feromonio[linha][coluna][tipo])
+                        print("l: ", linha)
+                        print("c: ", coluna)
+                        print("t: ", tipo)
+                        print("alpha: ", self.alpha)
+                        print("beta: ", self.beta)
+                        print("heu: ", heu)
                     probabilidades = np.array(probabilidades)
                     probabilidades /= probabilidades.sum()
                     escolhido = np.random.choice(range(self.num_tipos_componentes), p=probabilidades)
                     solucao[linha].append(escolhido)
+                print("PROBA: ", probabilidades)
             # Quantidade de componentes (linha 1) deve respeitar limites
             for i in range(self.num_variaveis):
                 if solucao[1][i] < self.num_min_componentes_subsistema:
@@ -113,7 +122,6 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
             geracao = i + 1
             solucoes_log.append(melhor_solucao_log)
             solucoes.append(melhor_solucao)
-            # Atualiza feromônio apenas com os melhores da população inicial
         
         # Demais gerações: constrói novas soluções
         novas_solucoes = aco.construir_solucao()
@@ -138,6 +146,9 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
         geracao = i + 1
         solucoes_log.append(melhor_solucao_log)
         solucoes.append(melhor_solucao)
+
+    aco.individuos = sorted(aco.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
+    melhor_individuo = aco.individuos[0]
 
     print("O algoritmo ACO obteve em", aco.num_geracoes, "geracoes o resultado para a funcao objetivo de", aco.individuos[0].valor_funcao_objetivo)
     print("Com os seguintes valores para cada variavel de decisao:")

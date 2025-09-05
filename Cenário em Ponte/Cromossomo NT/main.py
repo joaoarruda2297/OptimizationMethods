@@ -7,6 +7,7 @@ from DE.DiffEvolution import main as DE
 from GA.Genetic import main as GA
 from PSO.ParticleSwarm import main as PSO
 from AC.AntColony import main as AC
+from ABC.BeeColony import main as ABC
 from GeradorComponentes import main as GeradorComponentes
 from GeradorIndividuos import main as GeradorIndividuos
 
@@ -18,9 +19,9 @@ def main():
     # Variáveis para geração de componentes e individuos
     confiabilidade_minima = 0.8
     confiabilidade_maxima = 0.9
-    lim_sup_peso = 25
+    lim_sup_peso = 20
     lim_inf_peso = 5
-    lim_sup_custo = 20
+    lim_sup_custo = 15
     lim_inf_custo = 4
     num_tipos_componentes = 10
     num_individuos = 50
@@ -31,7 +32,7 @@ def main():
     coeficiente_peso = 1.05
 
     # Variáveis para execução do algoritmo
-    num_geracoes = 50
+    num_geracoes = 100
     peso_max = 50
     custo_max = 30
 
@@ -101,12 +102,22 @@ def main():
             solucoes_AC, melhor_valor_AC = AC(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__'''
+    
+    # Executa Artificial Bee Colony e captura os resultados
+    with open('./ABC/output.txt', 'w') as f:
+        sys.stdout = f
+        try:
+            solucoes_ABC, melhor_valor_ABC, melhor_individuo_ABC, geracao_ABC = ABC(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+        finally:
+            sys.stdout = sys.__stdout__
+
 
     # Gerando o gráfico comparativo
     plt.plot(range(1, len(solucoes_PSO) + 1), solucoes_PSO, label='PSO ({})'.format(melhor_valor_PSO), color='purple')
     plt.plot(range(1, len(solucoes_DE) + 1), solucoes_DE, label='DE ({})'.format(melhor_valor_DE), color='green')
     plt.plot(range(1, len(solucoes_GA) + 1), solucoes_GA, label='GA ({})'.format(melhor_valor_GA), color='orange')
     #plt.plot(range(1, len(solucoes_AC) + 1), solucoes_AC, label='ACO ({})'.format(melhor_valor_AC), color='blue')
+    plt.plot(range(1, len(solucoes_ABC) + 1), solucoes_ABC, label='ABC ({})'.format(melhor_valor_ABC), color='red')
 
     plt.xlabel('Geração')
     plt.ylabel('log(Função Objetivo)')
@@ -120,11 +131,19 @@ def main():
 
     penalidade_PSO = truncate(melhor_individuo_PSO.valor_funcao_objetivo - melhor_individuo_PSO.confiabilidade_total, 8)
     textoPSO = "PSO\nAlcançado na geração: " + str(geracao_PSO) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_PSO.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_PSO.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_PSO) + "\nCusto: " + str(melhor_individuo_PSO.custo) + "\nPeso: " + str(melhor_individuo_PSO.peso)
-    plt.figtext(0.45, 0.029, textoPSO, wrap=True, horizontalalignment='center', fontsize=8)
+    plt.figtext(0.4, 0.029, textoPSO, wrap=True, horizontalalignment='center', fontsize=8)
 
     penalidade_DE = truncate(melhor_individuo_DE.valor_funcao_objetivo - melhor_individuo_DE.confiabilidade_total, 8)
     textoDE = "DE\nAlcançado na geração: " + str(geracao_DE) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_DE.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_DE.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_DE) + "\nCusto: " + str(melhor_individuo_DE.custo) + "\nPeso: " + str(melhor_individuo_DE.peso)
-    plt.figtext(0.78, 0.029, textoDE, wrap=True, horizontalalignment='center', fontsize=8)
+    plt.figtext(0.68, 0.029, textoDE, wrap=True, horizontalalignment='center', fontsize=8)
+
+    '''penalidade_AC = truncate(melhor_valor_AC - melhor_valor_AC, 8)
+    textoAC = "ACO\nAlcançado na geração: " + str(num_geracoes) + "\nFunção Objetivo: " + str(truncate(melhor_valor_AC, 8)) + "\nConfiabilidade: " + str(truncate(melhor_valor_AC, 8)) + "\nPenalidade: " + str(penalidade_AC) + "\nCusto: " + str(melhor_valor_AC) + "\nPeso: " + str(melhor_valor_AC)
+    plt.figtext(0.87, 0.029, textoAC, wrap=True, horizontalalignment='center', fontsize=8)'''
+
+    penalidade_ABC = truncate(melhor_valor_ABC - melhor_valor_ABC, 8)
+    textoAC = "ACO\nAlcançado na geração: " + str(num_geracoes) + "\nFunção Objetivo: " + str(truncate(melhor_valor_ABC, 8)) + "\nConfiabilidade: " + str(truncate(melhor_valor_ABC, 8)) + "\nPenalidade: " + str(penalidade_ABC) + "\nCusto: " + str(melhor_valor_ABC) + "\nPeso: " + str(melhor_valor_ABC)
+    plt.figtext(0.87, 0.029, textoAC, wrap=True, horizontalalignment='center', fontsize=8)
 
     # Ajustes finais e salvamento
     plt.subplots_adjust(bottom=0.2)
