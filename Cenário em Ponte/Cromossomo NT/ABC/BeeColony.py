@@ -54,26 +54,22 @@ class BeeColonyAlgorithm:
         valor_nova_solucao = nova_solucao[linha][coluna]
         valor_solucao_diferente = solucao_diferente[linha][coluna]
 
-        respeita_limite = False
-        while(not respeita_limite):
-            phi = random.uniform(-1,1)
-            valor_final_nova_solucao = valor_nova_solucao + phi*(valor_nova_solucao - valor_solucao_diferente)
-            if(linha == 0): #linha tipos
-                if(valor_final_nova_solucao >= 0 and valor_final_nova_solucao < self.num_tipos_componentes):
-                    respeita_limite = True
-            else: #linha quantidades
-                if(valor_final_nova_solucao >= self.num_min_componentes_subsistema and valor_final_nova_solucao <= self.num_max_componentes_subsistema):
-                    respeita_limite = True
+        phi = random.uniform(-1,1)
+        valor_final_nova_solucao = valor_nova_solucao + phi*(valor_nova_solucao - valor_solucao_diferente)
 
         #arredondando o valor final da nova solução
         valor_final_nova_solucao_inteira = int(round(valor_final_nova_solucao))
-        #corrigindo possíveis erros de arredondamento
-        if(linha == 0 and valor_final_nova_solucao_inteira == self.num_tipos_componentes):
-            valor_final_nova_solucao_inteira -= 1
-        if(linha == 1 and valor_final_nova_solucao_inteira > self.num_max_componentes_subsistema):
-            valor_final_nova_solucao_inteira = self.num_max_componentes_subsistema
-        if(linha == 1 and valor_final_nova_solucao_inteira < self.num_min_componentes_subsistema):
-            valor_final_nova_solucao_inteira = self.num_min_componentes_subsistema
+        #corrigindo possíveis erros de extrapolação de limites
+        if(linha == 0):
+            if(valor_final_nova_solucao_inteira < 0):
+                valor_final_nova_solucao_inteira = 0
+            elif(valor_final_nova_solucao_inteira > self.num_tipos_componentes - 1):
+                valor_final_nova_solucao_inteira = self.num_tipos_componentes - 1
+        elif(linha == 1):
+            if(valor_final_nova_solucao_inteira < self.num_min_componentes_subsistema):
+                valor_final_nova_solucao_inteira = self.num_min_componentes_subsistema
+            elif(valor_final_nova_solucao_inteira > self.num_max_componentes_subsistema):
+                valor_final_nova_solucao_inteira = self.num_max_componentes_subsistema
                 
         nova_solucao[linha][coluna] = valor_final_nova_solucao_inteira
         
