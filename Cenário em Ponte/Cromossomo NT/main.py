@@ -23,7 +23,7 @@ def main():
     lim_inf_peso = 5
     lim_sup_custo = 15
     lim_inf_custo = 4
-    num_tipos_componentes = 10
+    num_tipos_componentes = 15
     num_individuos = 50
     num_variaveis = 5
     num_max_componentes_subsistema = 3
