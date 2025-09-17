@@ -10,14 +10,14 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from GeradorIndividuos import Individuo
 
 class DifferentialEvolution:
-    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    def __init__(self, componentes, num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
         self.num_individuos = len(individuos)
         self.num_variaveis = num_variaveis
         self.num_geracoes = num_geracoes
         self.passo = 1
         self.CR = 0.6
 
-        self.num_tipos_componentes = componentes.shape[1]
+        self.num_tipos_componentes = num_tipos_componentes
         self.componentes = componentes
         self.peso_max = peso_max
         self.custo_max = custo_max
@@ -108,8 +108,8 @@ class DifferentialEvolution:
         return math.trunc(number * factor) / factor
 
 
-def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
-    alg = DifferentialEvolution(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    alg = DifferentialEvolution(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
 
     print("POPULAÇÃO INICIAL:")
     for l in range(len(alg.individuos)):

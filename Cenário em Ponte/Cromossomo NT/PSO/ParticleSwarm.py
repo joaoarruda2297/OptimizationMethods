@@ -19,7 +19,7 @@ class ParticleSwarmOptimization:
         self.taxa_inercia = 1 #w
         self.damp_inercia = 0.99
 
-        self.num_tipos_componentes = componentes.shape[1]
+        self.num_tipos_componentes = num_tipos_componentes
         self.componentes = componentes
         self.peso_max = peso_max
         self.custo_max = custo_max

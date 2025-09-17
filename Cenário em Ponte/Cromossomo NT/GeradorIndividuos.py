@@ -56,9 +56,6 @@ class Individuo:
         soma_pesos = self.somatoria_pesos(individuo)
         soma_custos = self.somatoria_custos(individuo)
 
-        #f_custo = soma_custos - self.custo_max
-        #f_peso =  soma_pesos - self.peso_max
-
         f_custo = (self.custo_max - soma_custos)/self.custo_max
         f_peso = (self.peso_max - soma_pesos)/self.peso_max
 
@@ -68,8 +65,8 @@ class Individuo:
     def confiabilidade_paralelo(self, tipo, quantidade):
         getcontext().prec = 50
         confiabilidade = Decimal(1)
-        for i in range(int(quantidade)):
-            conf_componente = Decimal(self.componentes[0][int(tipo)])
+        for _ in range(int(quantidade)):
+            conf_componente = Decimal(self.componentes[int(tipo)].confiabilidade)
             confiabilidade = confiabilidade*(1 - conf_componente)
 
         confiabilidade = 1 - confiabilidade
@@ -95,13 +92,13 @@ class Individuo:
     def somatoria_custos(self, individuo):
         custo_total = 0
         for i in range(len(individuo[0])):
-            custo_total += self.componentes[1][int(individuo[0][i])] * int(individuo[1][i])
+            custo_total += self.componentes[int(individuo[0][i])].custo * int(individuo[1][i])
         return custo_total
 
     def somatoria_pesos(self, individuo):
         peso_total = 0
         for i in range(len(individuo[0])):
-            peso_total += self.componentes[2][int(individuo[0][i])] * int(individuo[1][i])
+            peso_total += self.componentes[int(individuo[0][i])].peso * int(individuo[1][i])
         return peso_total
     
 class IndividuoABC(Individuo):
@@ -188,7 +185,7 @@ class GeradorIndividuos:
     def cria_individuos(self):
         pop_inicial = []
 
-        for i in range(self.num_individuos):
+        for _ in range(self.num_individuos):
             pop_inicial.append(self.gera_individuo())
 
         return pop_inicial
