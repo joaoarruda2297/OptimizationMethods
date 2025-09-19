@@ -92,16 +92,21 @@ class BeeColonyAlgorithm:
         #primeiro saber a soma de probabilidades
         total_aptidao = sum(abelha.valor_funcao_objetivo for abelha in populacao)
         probabilidade_minima = random.uniform(0, 1)*0.1 #multiplico por 0.1 para garantir que seja um valor pequeno
-
+        cont_avaliacao = 0
         for i in range(len(populacao)):
             probabilidade = populacao[i].valor_funcao_objetivo / total_aptidao
             if(probabilidade > probabilidade_minima):
                 self.atualiza_solucao(populacao, i)
+                cont_avaliacao += 1
+        return cont_avaliacao
 
     def abelhas_observadoras(self, populacao):
+        cont_avaliacao = 0
         for i in range(len(populacao)):
             if(populacao[i].estagnacao >= self.estagnacao_max):
                 populacao[i] = self.gera_nova_abelha()
+                cont_avaliacao += 1
+        return cont_avaliacao
                 
     
     def gera_nova_abelha(self):
@@ -147,6 +152,8 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
         print(" ")
     print(" ")
 
+    numero_avaliacoes = 0
+    solucoes_avaliacoes = []
     melhores_abelhas = []
     solucoes = []
     solucoes_log = []
@@ -163,6 +170,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     solucoes_log.append(melhor_solucao_log)
     solucoes.append(melhor_individuo.valor_funcao_objetivo)
     melhores_abelhas.append(melhor_individuo)
+    solucoes_avaliacoes.append(melhor_individuo.valor_funcao_objetivo)
 
     for i in range(alg.num_geracoes):
         print("GERACAO {}".format(i+1))
@@ -170,7 +178,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
         alg.abelhas_empregadas(alg.individuos)
 
         #Fase das abelhas exploradoras
-        alg.abelhas_exploradoras(alg.individuos)
+        cont_avaliacao_exploradoras = alg.abelhas_exploradoras(alg.individuos)
 
         #memoriza melhor solucao do momento
         for j in range(len(alg.individuos)):
@@ -184,7 +192,10 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
         melhores_abelhas.append(melhor_individuo)
 
         #Fase das abelhas observadoras
-        alg.abelhas_observadoras(alg.individuos)
+        cont_avaliacao_observadoras = alg.abelhas_observadoras(alg.individuos)
+
+        numero_avaliacoes += cont_avaliacao_exploradoras + cont_avaliacao_observadoras + len(alg.individuos) 
+        solucoes_avaliacoes.extend([melhor_individuo.valor_funcao_objetivo] * (cont_avaliacao_exploradoras + cont_avaliacao_observadoras + len(alg.individuos)))
 
         print("Populacao final da era:")
         for l in range(len(alg.individuos)):
@@ -238,8 +249,23 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     plt.savefig('./ABC/img/SolutionEvolutionABCLog.png')
     plt.show()
 
+    # Plotando o gráfico com o número de avaliações
+    plt.plot(range(0, numero_avaliacoes+1), solucoes_avaliacoes, color='red')  # Linha vermelha plotada depois
+    # Configurações do gráfico
+    plt.xlabel('Número de Avaliações')
+    plt.ylabel('Valor da Função Objetivo')
+    plt.title('Evolução da Melhor Solução ao Longo das Avaliações (ABC)')
+    plt.grid(True)
+    # Texto adicional no gráfico
+    valor_final = alg.truncate(alg.individuos[0].confiabilidade_total, 4)
+    texto = "Valor final: " + str(valor_final) + "\nAlcançado na geração: " + str(geracao) + "\nNúmero de avaliações: " + str(numero_avaliacoes)
+    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    # Ajustes finais e salvamento
+    plt.tight_layout()
+    plt.savefig('./ABC/img/SolutionEvolutionABCAvaliacoes.png')
+    plt.show()
 
-    return solucoes_log, valor_final_log, melhor_individuo, geracao
+    return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes
 
 
 if __name__ == "__main__":

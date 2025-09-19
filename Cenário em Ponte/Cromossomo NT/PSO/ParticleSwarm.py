@@ -97,6 +97,8 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
         print(" ")
     print(" ")
 
+    numero_avaliacoes = 0
+    solucoes_avaliacoes = []
     solucoes = []
     solucoes_log = []
     geracao = -1
@@ -124,7 +126,9 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
                 global_best = deepcopy(alg.individuos[j].melhor_posicao)
                 fit_global = fit_best_pos
 
-        if i == 0: solucoes_log.append(math.log(fit_global))
+        if i == 0: 
+            solucoes_log.append(math.log(fit_global))
+            solucoes_avaliacoes.append(fit_global)
         
         print("Populacao antes da execucao:")
         for l in range(len(alg.individuos)):
@@ -150,6 +154,8 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
         fit_global = global_best.valor_funcao_objetivo
         solucoes.append(fit_global)
         solucoes_log.append(math.log(fit_global))
+        solucoes_avaliacoes.extend([fit_global] * alg.num_particulas)
+        numero_avaliacoes += alg.num_particulas
 
         if melhor_solucao < fit_global:
             melhor_solucao_log = math.log(fit_global)
@@ -199,7 +205,23 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     plt.savefig('./PSO/img/SolutionEvolutionPSOLog.png')
     plt.show()
 
-    return solucoes_log, valor_final_log, global_best, geracao
+    # Plotando o gráfico com o número de avaliações
+    plt.plot(range(0, numero_avaliacoes+1), solucoes_avaliacoes, color='purple')  # Linha roxa plotada depois
+    # Configurações do gráfico
+    plt.xlabel('Número de Avaliações')
+    plt.ylabel('Valor da Função Objetivo')
+    plt.title('Evolução da Melhor Solução ao Longo das Avaliações (PSO)')
+    plt.grid(True)
+    # Texto adicional no gráfico
+    valor_final = alg.truncate(melhor_solucao, 4)
+    texto = "Valor final: " + str(valor_final) + "\nAlcançado na geração: " + str(geracao) + "\nNúmero de avaliações: " + str(numero_avaliacoes)
+    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    # Ajustes finais e salvamento
+    plt.tight_layout()
+    plt.savefig('./PSO/img/SolutionEvolutionPSOAvaliacoes.png')
+    plt.show()
+
+    return solucoes_log, valor_final_log, global_best, geracao, numero_avaliacoes, solucoes_avaliacoes
         
 
 if __name__ == "__main__":

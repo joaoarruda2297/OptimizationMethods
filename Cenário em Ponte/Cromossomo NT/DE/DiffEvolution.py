@@ -118,6 +118,8 @@ def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num
         print(" ")
     print(" ")
 
+    numero_avaliacoes = 0
+    solucoes_avaliacoes = []
     solucoes = []
     solucoes_log = []
     melhor_solucao = -10000
@@ -138,6 +140,7 @@ def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num
                     
             solucoes.append(melhor_solucao)
             solucoes_log.append(melhor_solucao_log)
+            solucoes_avaliacoes.append(melhor_solucao)
             geracao = 0
 
         mutantes = alg.mutacao(alg.individuos)
@@ -149,6 +152,8 @@ def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num
         print("-----------------------------------------")
 
         evoluidos = alg.crossover(alg.individuos, mutantes)
+        numero_avaliacoes += len(evoluidos)
+        print("Número de avaliações até o momento:", numero_avaliacoes)
 
         for l in range(len(evoluidos)):
             print("Evoluido {}:".format(l+1))
@@ -164,9 +169,10 @@ def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num
             fit_evoluido = individuo_evoluido.valor_funcao_objetivo
             fit_individuo = alg.individuos[j].valor_funcao_objetivo
 
+            #comparacao do evoluido com o individuo original
             if fit_evoluido > fit_individuo:
                 alg.individuos[j].solucao = deepcopy(individuo_evoluido.solucao)
-            else:
+            else: #caso o evoluido seja pior, ele é guardado para possível reciclagem
                 evoluidos_rejeitados.append(deepcopy(individuo_evoluido))
             
             if fit_evoluido > melhor_solucao:
@@ -176,6 +182,7 @@ def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num
 
         solucoes.append(melhor_solucao)
         solucoes_log.append(melhor_solucao_log)
+        solucoes_avaliacoes.extend([melhor_solucao] * len(evoluidos))
 
         alg.individuos = alg.verifica_duplicados(alg.individuos)
         if(len(alg.individuos) < alg.num_individuos):
@@ -234,7 +241,23 @@ def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num
     plt.savefig('./DE/img/SolutionEvolutionDELog.png')
     plt.show()
 
-    return solucoes_log, valor_final_log, melhor_individuo, geracao
+    # Plotando o gráfico com o número de avaliações
+    plt.plot(range(0, numero_avaliacoes+1), solucoes_avaliacoes, color='green')  # Linha verde plotada depois
+    # Configurações do gráfico
+    plt.xlabel('Número de Avaliações')
+    plt.ylabel('Valor da Função Objetivo')
+    plt.title('Evolução da Melhor Solução ao Longo das Avaliações (DE)')
+    plt.grid(True)
+    # Texto adicional no gráfico
+    valor_final = alg.truncate(melhor_solucao, 4)
+    texto = "Valor final: " + str(valor_final) + "\nAlcançado na geração: " + str(geracao) + "\nNúmero de avaliações: " + str(numero_avaliacoes)
+    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    # Ajustes finais e salvamento
+    plt.tight_layout()
+    plt.savefig('./DE/img/SolutionEvolutionDEAvaliacoes.png')
+    plt.show()
+
+    return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes
     
 
 if __name__ == "__main__":

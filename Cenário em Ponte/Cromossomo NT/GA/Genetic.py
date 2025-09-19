@@ -215,6 +215,8 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
         print(" ")
     print(" ")
 
+    numero_avaliacoes = 0
+    solucoes_avaliacoes = []
     solucoes = []
     solucoes_log = []
     melhor_solucao_log = -10000
@@ -229,6 +231,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
             geracao = 1
     solucoes_log.append(melhor_solucao_log)
     solucoes.append(melhor_individuo.valor_funcao_objetivo)
+    solucoes_avaliacoes.append(melhor_individuo.valor_funcao_objetivo)
 
     for i in range(alg.num_geracoes):
         print("GERACAO {}".format(i+1))
@@ -265,6 +268,8 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
 
         populacao = alg.individuos + mutantes + filhos
         populacao = sorted(populacao, key=lambda x: x.valor_funcao_objetivo, reverse=True)
+        numero_avaliacoes += len(mutantes) + len(filhos)
+        print("Número de avaliações até o momento:", numero_avaliacoes)
         
         # Limitando a população ao número máximo de indivíduos
         populacao = alg.verifica_duplicados(populacao)
@@ -289,6 +294,8 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
                 geracao = i + 1
         solucoes_log.append(melhor_solucao_log)
         solucoes.append(melhor_individuo.valor_funcao_objetivo)
+        #devo adicionar a melhor solução atual ao vetor de soluções por avaliações
+        solucoes_avaliacoes.extend([melhor_individuo.valor_funcao_objetivo] * (len(mutantes) + len(filhos)))
 
     print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", alg.individuos[0].valor_funcao_objetivo)
     print("Com os seguintes valores para cada variavel de decisao:")
@@ -330,7 +337,23 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     plt.savefig('./GA/img/SolutionEvolutionGALog.png')
     plt.show()
 
-    return solucoes_log, valor_final_log, melhor_individuo, geracao
+    # Plotando o gráfico com o número de avaliações
+    plt.plot(range(0, numero_avaliacoes+1), solucoes_avaliacoes, color='orange')  # Linha laranja plotada depois
+    # Configurações do gráfico
+    plt.xlabel('Número de Avaliações')
+    plt.ylabel('Valor da Função Objetivo')
+    plt.title('Evolução da Melhor Solução ao Longo das Avaliações (GA)')
+    plt.grid(True)
+    # Texto adicional no gráfico
+    valor_final = alg.truncate(alg.individuos[0].confiabilidade_total, 4)
+    texto = "Valor final: " + str(valor_final) + "\nAlcançado na geração: " + str(geracao) + "\nNúmero de avaliações: " + str(numero_avaliacoes)
+    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    # Ajustes finais e salvamento
+    plt.tight_layout()
+    plt.savefig('./GA/img/SolutionEvolutionGAAvaliacoes.png')
+    plt.show()
+
+    return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes
 
 
 if __name__ == "__main__":

@@ -75,7 +75,7 @@ def main():
     with open('./GA/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_GA, melhor_valor_GA, melhor_individuo_GA, geracao_GA = GA(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_GA, melhor_valor_GA, melhor_individuo_GA, geracao_GA, numero_avaliacoes_GA, solucoes_avaliacoes_GA = GA(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -83,7 +83,7 @@ def main():
     with open('./PSO/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_PSO, melhor_valor_PSO, melhor_individuo_PSO, geracao_PSO = PSO(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_PSO, melhor_valor_PSO, melhor_individuo_PSO, geracao_PSO, numero_avaliacoes_PSO, solucoes_avaliacoes_PSO = PSO(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -91,7 +91,7 @@ def main():
     with open('./DE/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_DE, melhor_valor_DE, melhor_individuo_DE, geracao_DE = DE(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_DE, melhor_valor_DE, melhor_individuo_DE, geracao_DE, numero_avaliacoes_DE, solucoes_avaliacoes_DE = DE(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -99,7 +99,7 @@ def main():
     with open('./AC/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_AC, melhor_valor_AC, melor_individuo_AC, geracao_AC = AC(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_AC, melhor_valor_AC, melhor_individuo_AC, geracao_AC, numero_avaliacoes_AC, solucoes_avaliacoes_AC = AC(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
     
@@ -107,7 +107,7 @@ def main():
     with open('./ABC/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_ABC, melhor_valor_ABC, melhor_individuo_ABC, geracao_ABC = ABC(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_ABC, melhor_valor_ABC, melhor_individuo_ABC, geracao_ABC, numero_avaliacoes_ABC, solucoes_avaliacoes_ABC = ABC(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -137,17 +137,33 @@ def main():
     textoDE = "DE\nAlcançado na geração: " + str(geracao_DE) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_DE.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_DE.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_DE) + "\nCusto: " + str(melhor_individuo_DE.custo) + "\nPeso: " + str(melhor_individuo_DE.peso)
     plt.figtext(0.54, 0.029, textoDE, wrap=True, horizontalalignment='center', fontsize=8)
 
-    penalidade_AC = truncate(melhor_valor_AC - melhor_valor_AC, 8)
-    textoAC = "ACO\nAlcançado na geração: " + str(geracao_AC) + "\nFunção Objetivo: " + str(truncate(melhor_valor_AC, 8)) + "\nConfiabilidade: " + str(truncate(melhor_valor_AC, 8)) + "\nPenalidade: " + str(penalidade_AC) + "\nCusto: " + str(melhor_valor_AC) + "\nPeso: " + str(melhor_valor_AC)
+    penalidade_AC = truncate(melhor_individuo_AC.valor_funcao_objetivo - melhor_individuo_AC.confiabilidade_total, 8)
+    textoAC = "ACO\nAlcançado na geração: " + str(geracao_AC) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_AC.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_AC.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_AC) + "\nCusto: " + str(melhor_individuo_AC.custo) + "\nPeso: " + str(melhor_individuo_AC.peso)
     plt.figtext(0.73, 0.029, textoAC, wrap=True, horizontalalignment='center', fontsize=8)
 
-    penalidade_ABC = truncate(melhor_valor_ABC - melhor_valor_ABC, 8)
-    textoABC = "ACO\nAlcançado na geração: " + str(geracao_ABC) + "\nFunção Objetivo: " + str(truncate(melhor_valor_ABC, 8)) + "\nConfiabilidade: " + str(truncate(melhor_valor_ABC, 8)) + "\nPenalidade: " + str(penalidade_ABC) + "\nCusto: " + str(melhor_valor_ABC) + "\nPeso: " + str(melhor_valor_ABC)
+    penalidade_ABC = truncate(melhor_individuo_ABC.valor_funcao_objetivo - melhor_individuo_ABC.confiabilidade_total, 8)
+    textoABC = "ACO\nAlcançado na geração: " + str(geracao_ABC) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_ABC.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_ABC.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_ABC) + "\nCusto: " + str(melhor_individuo_ABC.custo) + "\nPeso: " + str(melhor_individuo_ABC.peso)
     plt.figtext(0.91, 0.029, textoABC, wrap=True, horizontalalignment='center', fontsize=8)
 
     # Ajustes finais e salvamento
     plt.subplots_adjust(bottom=0.2)
     plt.savefig('./comparativeMethods.png')
+    plt.show()
+
+    #Gerando o gráfico comparativo por numero de avaliacoes
+    plt.plot(range(1, len(solucoes_avaliacoes_PSO) + 1), solucoes_avaliacoes_PSO, label='PSO ({})'.format(melhor_valor_PSO), color='purple')
+    plt.plot(range(1, len(solucoes_avaliacoes_DE) + 1), solucoes_avaliacoes_DE, label='DE ({})'.format(melhor_valor_DE), color='green')
+    plt.plot(range(1, len(solucoes_avaliacoes_GA) + 1), solucoes_avaliacoes_GA, label='GA ({})'.format(melhor_valor_GA), color='orange')
+    plt.plot(range(1, len(solucoes_avaliacoes_AC) + 1), solucoes_avaliacoes_AC, label='ACO ({})'.format(melhor_valor_AC), color='blue')
+    plt.plot(range(1, len(solucoes_avaliacoes_ABC) + 1), solucoes_avaliacoes_ABC, label='ABC ({})'.format(melhor_valor_ABC), color='red')
+
+    plt.xlabel('Número de Avaliações')
+    plt.ylabel('Função Objetivo')
+    plt.title('Comparação dos Algoritmos por Número de Avaliações')
+    plt.legend()
+    plt.grid(True)
+    plt.subplots_adjust(bottom=0.2)
+    plt.savefig('./comparativeMethodsAvaliacoes.png')
     plt.show()
 
 if __name__ == "__main__":

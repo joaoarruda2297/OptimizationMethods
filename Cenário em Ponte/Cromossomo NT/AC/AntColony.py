@@ -119,6 +119,8 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
         print(" ")
     print(" ")
 
+    numero_avaliacoes = 0
+    solucoes_avaliacoes = []
     solucoes = []
     solucoes_log = []
     melhor_solucao_log = -10000
@@ -144,9 +146,11 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
             geracao = i + 1
             solucoes_log.append(melhor_solucao_log)
             solucoes.append(melhor_solucao)
+            solucoes_avaliacoes.append(melhor_solucao)
         
         # Demais gerações: constrói novas soluções para cada formiga
         novas_solucoes = aco.construir_solucao_por_mapa(mapa)
+        numero_avaliacoes += len(novas_solucoes)
         todas = aco.individuos + novas_solucoes
         todas = aco.verifica_duplicados(todas)
         todas = sorted(todas, key=lambda x: x.valor_funcao_objetivo, reverse=True)
@@ -169,6 +173,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
                 geracao = i + 1
         solucoes_log.append(melhor_solucao_log)
         solucoes.append(melhor_individuo.valor_funcao_objetivo)
+        solucoes_avaliacoes.extend([melhor_individuo.valor_funcao_objetivo] * len(novas_solucoes))
 
     aco.individuos = sorted(aco.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
     melhor_individuo = aco.individuos[0]
@@ -204,7 +209,23 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     plt.savefig('./AC/img/SolutionEvolutionACOLog.png')
     plt.show()
 
-    return solucoes_log, valor_final_log, aco.individuos[0], geracao
+    # Plotando o gráfico com o número de avaliações
+    plt.plot(range(0, numero_avaliacoes+1), solucoes_avaliacoes, color='blue')  # Linha azul plotada depois
+    # Configurações do gráfico
+    plt.xlabel('Número de Avaliações')
+    plt.ylabel('Valor da Função Objetivo')
+    plt.title('Evolução da Melhor Solução ao Longo das Avaliações (ACO)')
+    plt.grid(True)
+    # Texto adicional no gráfico
+    valor_final = aco.truncate(aco.individuos[0].confiabilidade_total, 4)
+    texto = "Valor final: " + str(valor_final) + "\nAlcançado na geração: " + str(geracao) + "\nNúmero de avaliações: " + str(numero_avaliacoes)
+    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    # Ajustes finais e salvamento
+    plt.tight_layout()
+    plt.savefig('./AC/img/SolutionEvolutionACAvaliacoes.png')
+    plt.show()
+
+    return solucoes_log, valor_final_log, aco.individuos[0], geracao, numero_avaliacoes, solucoes_avaliacoes
 
 if __name__ == "__main__":
     with open('output.txt', 'w') as f:
