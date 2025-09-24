@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from contextlib import redirect_stdout
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from GeradorIndividuos import Individuo
+from Geradores.GeradorIndividuos import Individuo
 
 class SolucaoMapa:
     def __init__(self, tipo_componente, quantidade_componente, ferormonio):
@@ -19,7 +19,7 @@ class SolucaoMapa:
         self.probabilidade = 0
 
 class AntColonyOptimization:
-    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
         self.num_formigas = len(individuos)
         self.num_variaveis = num_variaveis
         self.num_geracoes = num_geracoes
@@ -29,8 +29,6 @@ class AntColonyOptimization:
         self.custo_max = custo_max
         self.num_max_componentes_subsistema = num_max_componentes_subsistema
         self.num_min_componentes_subsistema = num_min_componentes_subsistema
-        self.coeficiente_custo = coeficiente_custo
-        self.coeficiente_peso = coeficiente_peso
         self.evaporation_rate = 0.2
 
         self.individuos = []
@@ -54,7 +52,7 @@ class AntColonyOptimization:
         novas_solucoes = []
         for _ in range(self.num_formigas):
             nova_solucao = self.construir_solucao_unica_por_mapa(mapa)
-            individuo = Individuo([np.array(nova_solucao[0]), np.array(nova_solucao[1])], self.componentes, self.peso_max, self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
+            individuo = Individuo([np.array(nova_solucao[0]), np.array(nova_solucao[1])], self.componentes, self.peso_max, self.custo_max)
             novas_solucoes.append(individuo)
         return novas_solucoes
 
@@ -109,8 +107,8 @@ class AntColonyOptimization:
         factor = 10 ** decimals
         return math.trunc(number * factor) / factor
 
-def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
-    aco = AntColonyOptimization(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    aco = AntColonyOptimization(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
 
     print("POPULAÇÃO INICIAL:")
     for l in range(len(aco.individuos)):
@@ -219,9 +217,9 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     # Texto adicional no gráfico
     valor_final = aco.truncate(aco.individuos[0].confiabilidade_total, 4)
     texto = "Valor final: " + str(valor_final) + "\nAlcançado na geração: " + str(geracao) + "\nNúmero de avaliações: " + str(numero_avaliacoes)
-    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    plt.figtext(0.8, 0.05, texto, wrap=True, horizontalalignment='center', fontsize=8)
     # Ajustes finais e salvamento
-    plt.tight_layout()
+    plt.subplots_adjust(bottom=0.2)
     plt.savefig('./AC/img/SolutionEvolutionACAvaliacoes.png')
     plt.show()
 

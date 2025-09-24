@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from contextlib import redirect_stdout
 import numpy as np
@@ -6,12 +7,10 @@ from contextlib import redirect_stdout
 from copy import deepcopy
 
 class Individuo:
-    def __init__(self, solucao=None, componentes=None, peso_max=0, custo_max=0, coeficiente_peso=1, coeficiente_custo=1):
+    def __init__(self, solucao=None, componentes=None, peso_max=0, custo_max=0):
         self.componentes = componentes
         self.peso_max = peso_max
         self.custo_max = custo_max
-        self.coeficiente_peso = coeficiente_peso
-        self.coeficiente_custo = coeficiente_custo
 
         self._solucao = None
         self.valor_funcao_objetivo = self.funcao_objetivo(solucao) if solucao is not None else None
@@ -102,8 +101,8 @@ class Individuo:
         return peso_total
     
 class IndividuoABC(Individuo):
-    def __init__(self, solucao=None, componentes=None, peso_max=0, custo_max=0, coeficiente_peso=1, coeficiente_custo=1):
-        super().__init__(solucao, componentes, peso_max, custo_max, coeficiente_peso, coeficiente_custo)
+    def __init__(self, solucao=None, componentes=None, peso_max=0, custo_max=0):
+        super().__init__(solucao, componentes, peso_max, custo_max)
         self.estagnacao = 0
 
     def __str__(self):
@@ -118,13 +117,10 @@ class IndividuoABC(Individuo):
         )
 
 class IndividuoPSO(Individuo):
-    def __init__(self, solucao=None, componentes=None, velocidade=None, peso_max=0, custo_max=0, coeficiente_peso=1, coeficiente_custo=1, num_tipos_componentes=0, num_variaveis=0, num_max_componentes_subsistema=0, num_min_componentes_subsistema=0):
-        super().__init__(solucao, componentes, peso_max, custo_max, coeficiente_peso, coeficiente_custo)
+    def __init__(self, solucao=None, componentes=None, velocidade=None, peso_max=0, custo_max=0, num_variaveis=0):
+        super().__init__(solucao, componentes, peso_max, custo_max)
 
-        self.num_tipos_componentes = num_tipos_componentes
         self.num_variaveis = num_variaveis
-        self.num_max_componentes_subsistema = num_max_componentes_subsistema
-        self.num_min_componentes_subsistema = num_min_componentes_subsistema
 
         self.velocidade = None
         if velocidade is None:
@@ -151,7 +147,7 @@ class IndividuoPSO(Individuo):
         return velocidade
     
 class GeradorIndividuos:
-    def __init__(self, num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes, coeficiente_custo, coeficiente_peso):
+    def __init__(self, num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes):
         self.num_tipos_componentes = num_tipos_componentes
         self.num_individuos = num_individuos
         self.num_variaveis = num_variaveis
@@ -160,8 +156,6 @@ class GeradorIndividuos:
         self.peso_max = peso_max
         self.custo_max = custo_max
         self.componentes = componentes
-        self.coeficiente_custo = coeficiente_custo
-        self.coeficiente_peso = coeficiente_peso
 
     def gera_individuo(self):
         while True:
@@ -175,8 +169,7 @@ class GeradorIndividuos:
             solucao = np.vstack((linha_tipos, linha_quantidades))
 
             # Cria o indivíduo
-            individuo = Individuo(solucao, self.componentes, self.peso_max,
-                                self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
+            individuo = Individuo(solucao, self.componentes, self.peso_max, self.custo_max)
 
             # Retorna apenas indivíduos viáveis
             if individuo.valor_funcao_objetivo >= 0:
@@ -190,12 +183,17 @@ class GeradorIndividuos:
 
         return pop_inicial
 
-def main(num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes, coeficiente_custo, coeficiente_peso):
-    generator = GeradorIndividuos(num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes, coeficiente_custo, coeficiente_peso)
+def main(num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes):
+    generator = GeradorIndividuos(num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes)
     individuos = generator.cria_individuos()
-    return individuos
 
-if __name__ == "__main__":
-    with open('individuos.txt', 'w') as f:
-        with redirect_stdout(f):
-            main()
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    txt_dir = os.path.join(base_dir, 'Txt')
+    os.makedirs(txt_dir, exist_ok=True)
+
+    with open(os.path.join(txt_dir, 'individuos.txt'), 'w') as f:
+        print("INDIVÍDUOS GERADOS:\n", file=f)
+        for i, individuo in enumerate(individuos):
+            print(f"Individuo {i}: {individuo}", file=f)
+
+    return individuos

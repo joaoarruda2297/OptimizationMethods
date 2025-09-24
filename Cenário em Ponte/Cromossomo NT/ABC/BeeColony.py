@@ -8,10 +8,10 @@ from contextlib import redirect_stdout
 from copy import deepcopy
 import matplotlib.pyplot as plt
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from GeradorIndividuos import IndividuoABC
+from Geradores.GeradorIndividuos import IndividuoABC
     
 class BeeColonyAlgorithm:
-    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
         #variáveis para execução do algoritmo de colônia de abelhas
         self.num_individuos = len(individuos) #quantidade de individuos
         self.num_variaveis = num_variaveis
@@ -26,15 +26,12 @@ class BeeColonyAlgorithm:
         self.num_max_componentes_subsistema = num_max_componentes_subsistema
         self.num_min_componentes_subsistema = num_min_componentes_subsistema
 
-        self.coeficiente_custo = coeficiente_custo
-        self.coeficiente_peso = coeficiente_peso
-
         # variaveis para controle do algoritmo
         self.estagnacao_max = 10
 
         self.individuos = []
         for i in range(len(individuos)):
-            self.individuos.append(IndividuoABC(individuos[i].solucao, componentes, peso_max, custo_max, coeficiente_peso, coeficiente_custo))
+            self.individuos.append(IndividuoABC(individuos[i].solucao, componentes, peso_max, custo_max))
         self.individuos = sorted(self.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
 
     def atualiza_solucao(self, populacao, i):
@@ -75,7 +72,7 @@ class BeeColonyAlgorithm:
         
         #cria novo indivíduo com a nova solução
         novo_individuo = IndividuoABC(nova_solucao, self.componentes, self.peso_max,
-                            self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
+                            self.custo_max)
 
         #se a função objetivo do novo indivíduo for melhor, substitui o antigo
         if(novo_individuo.valor_funcao_objetivo > populacao[i].valor_funcao_objetivo):
@@ -117,7 +114,7 @@ class BeeColonyAlgorithm:
 
             # Cria o indivíduo
             individuo = IndividuoABC(solucao, self.componentes, self.peso_max,
-                                self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
+                                self.custo_max)
 
             # Retorna apenas indivíduos viáveis
             if individuo.valor_funcao_objetivo >= 0:
@@ -142,8 +139,8 @@ class BeeColonyAlgorithm:
         factor = 10 ** decimals
         return math.trunc(number * factor) / factor
 
-def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
-    alg = BeeColonyAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    alg = BeeColonyAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
 
     print("POPULAÇÃO INICIAL:")
     for l in range(len(alg.individuos)):
@@ -259,9 +256,9 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     # Texto adicional no gráfico
     valor_final = alg.truncate(alg.individuos[0].confiabilidade_total, 4)
     texto = "Valor final: " + str(valor_final) + "\nAlcançado na geração: " + str(geracao) + "\nNúmero de avaliações: " + str(numero_avaliacoes)
-    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    plt.figtext(0.8, 0.05, texto, wrap=True, horizontalalignment='center', fontsize=8)
     # Ajustes finais e salvamento
-    plt.tight_layout()
+    plt.subplots_adjust(bottom=0.2)
     plt.savefig('./ABC/img/SolutionEvolutionABCAvaliacoes.png')
     plt.show()
 

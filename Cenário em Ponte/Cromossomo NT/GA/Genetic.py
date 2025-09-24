@@ -8,10 +8,10 @@ from contextlib import redirect_stdout
 from copy import deepcopy
 import matplotlib.pyplot as plt
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from GeradorIndividuos import Individuo as IndividuoGA
+from Geradores.GeradorIndividuos import Individuo as IndividuoGA
     
 class GeneticAlgorithm:
-    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
         #variáveis para execução do algoritmo genético
         self.num_individuos = len(individuos) #quantidade de individuos
         self.num_variaveis = num_variaveis
@@ -27,9 +27,6 @@ class GeneticAlgorithm:
 
         self.num_max_componentes_subsistema = num_max_componentes_subsistema
         self.num_min_componentes_subsistema = num_min_componentes_subsistema
-
-        self.coeficiente_custo = coeficiente_custo
-        self.coeficiente_peso = coeficiente_peso
 
         self.individuos = []
         for i in range(self.num_individuos):
@@ -94,9 +91,9 @@ class GeneticAlgorithm:
         else:
             filho1 = [individuo1.solucao[linha2].copy(), np.array(filho1)]
             filho2 = [individuo2.solucao[linha2].copy(), np.array(filho2)]
-        
-        filho1 = IndividuoGA(filho1, self.componentes, self.peso_max, self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
-        filho2 = IndividuoGA(filho2, self.componentes, self.peso_max, self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
+
+        filho1 = IndividuoGA(filho1, self.componentes, self.peso_max, self.custo_max)
+        filho2 = IndividuoGA(filho2, self.componentes, self.peso_max, self.custo_max)
 
         return filho1, filho2
 
@@ -128,8 +125,8 @@ class GeneticAlgorithm:
         filho1 = [np.array(filho1[0]), np.array(filho1[1])]
         filho2 = [np.array(filho2[0]), np.array(filho2[1])]
 
-        filho1 = IndividuoGA(filho1, self.componentes, self.peso_max, self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
-        filho2 = IndividuoGA(filho2, self.componentes, self.peso_max, self.custo_max, self.coeficiente_peso, self.coeficiente_custo)
+        filho1 = IndividuoGA(filho1, self.componentes, self.peso_max, self.custo_max)
+        filho2 = IndividuoGA(filho2, self.componentes, self.peso_max, self.custo_max)
 
         return filho1, filho2
     
@@ -188,7 +185,7 @@ class GeneticAlgorithm:
                 novo_cromossomo[linha][coluna] = valor_mutacao
 
                 novo_individuo = IndividuoGA(
-                    novo_cromossomo,self.componentes,self.peso_max,self.custo_max,self.coeficiente_peso,self.coeficiente_custo
+                    novo_cromossomo,self.componentes,self.peso_max,self.custo_max
                 )
 
                 if novo_individuo.valor_funcao_objetivo > 0:
@@ -205,8 +202,8 @@ class GeneticAlgorithm:
         factor = 10 ** decimals
         return math.trunc(number * factor) / factor
 
-def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
-    alg = GeneticAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    alg = GeneticAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
 
     print("POPULAÇÃO INICIAL:")
     for l in range(len(alg.individuos)):
@@ -338,6 +335,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     plt.show()
 
     # Plotando o gráfico com o número de avaliações
+    #plt.figure(figsize=(20, 7))  # largura=20, altura=10 polegadas
     plt.plot(range(0, numero_avaliacoes+1), solucoes_avaliacoes, color='orange')  # Linha laranja plotada depois
     # Configurações do gráfico
     plt.xlabel('Número de Avaliações')
@@ -347,9 +345,9 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     # Texto adicional no gráfico
     valor_final = alg.truncate(alg.individuos[0].confiabilidade_total, 4)
     texto = "Valor final: " + str(valor_final) + "\nAlcançado na geração: " + str(geracao) + "\nNúmero de avaliações: " + str(numero_avaliacoes)
-    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    plt.figtext(0.8, 0.05, texto, wrap=True, horizontalalignment='center', fontsize=8)
     # Ajustes finais e salvamento
-    plt.tight_layout()
+    plt.subplots_adjust(bottom=0.2)
     plt.savefig('./GA/img/SolutionEvolutionGAAvaliacoes.png')
     plt.show()
 

@@ -7,10 +7,10 @@ from copy import deepcopy
 import matplotlib.pyplot as plt
 from decimal import Decimal, getcontext
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from GeradorIndividuos import IndividuoPSO
+from Geradores.GeradorIndividuos import IndividuoPSO
 
 class ParticleSwarmOptimization:
-    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
         self.num_particulas = len(individuos)
         self.num_variaveis = 5 #5 subsistemas
         self.num_geracoes = num_geracoes
@@ -27,12 +27,9 @@ class ParticleSwarmOptimization:
         self.num_max_componentes_subsistema = num_max_componentes_subsistema
         self.num_min_componentes_subsistema = num_min_componentes_subsistema
 
-        self.coeficiente_custo = coeficiente_custo
-        self.coeficiente_peso = coeficiente_peso
-
         self.individuos = []
         for i in range(len(individuos)):
-            self.individuos.append(IndividuoPSO(individuos[i].solucao, componentes, None, peso_max, custo_max, coeficiente_peso, coeficiente_custo, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema))
+            self.individuos.append(IndividuoPSO(individuos[i].solucao, componentes, None, peso_max, custo_max, num_variaveis))
         self.individuos = sorted(self.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
     
     def atualiza_velocidade(self, individuo, globalBest):
@@ -87,8 +84,8 @@ class ParticleSwarmOptimization:
         factor = 10 ** decimals
         return math.trunc(number * factor) / factor
 
-def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
-    alg = ParticleSwarmOptimization(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    alg = ParticleSwarmOptimization(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
 
     print("POPULAÇÃO INICIAL:")
     for l in range(len(alg.individuos)):
@@ -215,9 +212,9 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente
     # Texto adicional no gráfico
     valor_final = alg.truncate(melhor_solucao, 4)
     texto = "Valor final: " + str(valor_final) + "\nAlcançado na geração: " + str(geracao) + "\nNúmero de avaliações: " + str(numero_avaliacoes)
-    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    plt.figtext(0.8, 0.05, texto, wrap=True, horizontalalignment='center', fontsize=8)
     # Ajustes finais e salvamento
-    plt.tight_layout()
+    plt.subplots_adjust(bottom=0.2)
     plt.savefig('./PSO/img/SolutionEvolutionPSOAvaliacoes.png')
     plt.show()
 

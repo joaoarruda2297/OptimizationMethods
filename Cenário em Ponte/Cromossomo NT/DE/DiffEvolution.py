@@ -7,10 +7,10 @@ import math
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from GeradorIndividuos import Individuo
+from Geradores.GeradorIndividuos import Individuo
 
 class DifferentialEvolution:
-    def __init__(self, componentes, num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    def __init__(self, componentes, num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
         self.num_individuos = len(individuos)
         self.num_variaveis = num_variaveis
         self.num_geracoes = num_geracoes
@@ -24,9 +24,6 @@ class DifferentialEvolution:
 
         self.num_max_componentes_subsistema = num_max_componentes_subsistema
         self.num_min_componentes_subsistema = num_min_componentes_subsistema
-
-        self.coeficiente_custo = coeficiente_custo
-        self.coeficiente_peso = coeficiente_peso
 
         self.individuos = []
         for i in range(self.num_individuos):
@@ -108,8 +105,8 @@ class DifferentialEvolution:
         return math.trunc(number * factor) / factor
 
 
-def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
-    alg = DifferentialEvolution(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    alg = DifferentialEvolution(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
 
     print("POPULAÇÃO INICIAL:")
     for l in range(len(alg.individuos)):
@@ -165,7 +162,7 @@ def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num
         evoluidos_rejeitados = []
 
         for j in range(alg.num_individuos):
-            individuo_evoluido = Individuo(evoluidos[j], alg.componentes, alg.peso_max, alg.custo_max, alg.coeficiente_peso, alg.coeficiente_custo)
+            individuo_evoluido = Individuo(evoluidos[j], alg.componentes, alg.peso_max, alg.custo_max)
             fit_evoluido = individuo_evoluido.valor_funcao_objetivo
             fit_individuo = alg.individuos[j].valor_funcao_objetivo
 
@@ -251,9 +248,9 @@ def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num
     # Texto adicional no gráfico
     valor_final = alg.truncate(melhor_solucao, 4)
     texto = "Valor final: " + str(valor_final) + "\nAlcançado na geração: " + str(geracao) + "\nNúmero de avaliações: " + str(numero_avaliacoes)
-    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    plt.figtext(0.8, 0.05, texto, wrap=True, horizontalalignment='center', fontsize=8)
     # Ajustes finais e salvamento
-    plt.tight_layout()
+    plt.subplots_adjust(bottom=0.2)
     plt.savefig('./DE/img/SolutionEvolutionDEAvaliacoes.png')
     plt.show()
 

@@ -1,15 +1,34 @@
 import math
 import sys
-from contextlib import redirect_stdout
 import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
 
 from DE.DiffEvolution import main as DE
 from GA.Genetic import main as GA
 from PSO.ParticleSwarm import main as PSO
 from AC.AntColony import main as AC
 from ABC.BeeColony import main as ABC
-from GeradorComponentes import main as GeradorComponentes
-from GeradorIndividuos import main as GeradorIndividuos
+from Geradores.GeradorComponentes import main as GeradorComponentes
+from Geradores.GeradorIndividuos import main as GeradorIndividuos
+from Geradores.GeradorComponentes import Componente
+from Geradores.GeradorIndividuos import Individuo
+from Geradores.main import main as GeradoresMain
+
+def ler_componentes_excel(caminho_excel):
+    df = pd.read_excel(caminho_excel)
+    return [Componente(row["confiabilidade"], row["custo"], row["peso"]) for _, row in df.iterrows()]
+
+def ler_individuos_excel(caminho_excel, componentes, custo_max, peso_max):
+    df = pd.read_excel(caminho_excel)
+    individuos = []
+    for _, row in df.iterrows():
+        tipos = eval(row["solucao_tipos"])
+        quantidades = eval(row["solucao_quantidades"])
+        solucao = np.vstack([tipos, quantidades])
+        individuo = Individuo(solucao, componentes, custo_max, peso_max)
+        individuos.append(individuo)
+    return individuos
 
 def main():
     def truncate(number, decimals=0):
@@ -28,54 +47,41 @@ def main():
     num_variaveis = 5
     num_max_componentes_subsistema = 3
     num_min_componentes_subsistema = 1
-    coeficiente_custo = 1.1
-    coeficiente_peso = 1.05
 
     # Variáveis para execução do algoritmo
-    num_geracoes = 100
+    num_geracoes = 200
     peso_max = 50
     custo_max = 30
 
-    componentes = GeradorComponentes(
-        num_tipos_componentes,
-        confiabilidade_maxima,
-        confiabilidade_minima,
-        lim_inf_custo,
-        lim_sup_custo,
-        lim_inf_peso,
-        lim_sup_peso
-    )
-
-    individuos = GeradorIndividuos(
-        num_tipos_componentes,
-        num_individuos,
-        num_variaveis,
-        num_max_componentes_subsistema,
-        num_min_componentes_subsistema,
-        peso_max,
-        custo_max,
-        componentes, 
-        coeficiente_custo, 
-        coeficiente_peso
-    )
-
-    for i in range(len(individuos)):
-        print("Individuo {}:".format(i))
-        print(individuos[i])
-
-    print("")
-
-    for i in range(len(componentes)):
-        print("Componente {}:".format(i))
-        print("Confiabilidade: {}".format(componentes[i].confiabilidade))
-        print("Custo: {}".format(componentes[i].custo))
-        print("Peso: {}\n".format(componentes[i].peso))
+    print("Deseja gerar indivíduos e componentes novamente? (S/N)")
+    resposta = input().strip().upper()
+    if resposta == "S":
+        print("Gerando novos componentes e indivíduos...")
+        componentes, individuos = GeradoresMain(
+            confiabilidade_maxima,
+            confiabilidade_minima,
+            num_tipos_componentes,
+            num_individuos,
+            num_variaveis,
+            num_max_componentes_subsistema,
+            num_min_componentes_subsistema,
+            peso_max,
+            custo_max,
+            lim_inf_custo,
+            lim_sup_custo,
+            lim_inf_peso,
+            lim_sup_peso
+        )
+    else:
+        print("Lendo componentes e indivíduos dos arquivos Excel...")
+        componentes = ler_componentes_excel("Geradores/Excel/componentes.xlsx")
+        individuos = ler_individuos_excel("Geradores/Excel/individuos.xlsx", componentes, custo_max, peso_max)
 
     # Executa GA e captura os resultados
     with open('./GA/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_GA, melhor_valor_GA, melhor_individuo_GA, geracao_GA, numero_avaliacoes_GA, solucoes_avaliacoes_GA = GA(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_GA, melhor_valor_GA, melhor_individuo_GA, geracao_GA, numero_avaliacoes_GA, solucoes_avaliacoes_GA = GA(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -83,7 +89,7 @@ def main():
     with open('./PSO/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_PSO, melhor_valor_PSO, melhor_individuo_PSO, geracao_PSO, numero_avaliacoes_PSO, solucoes_avaliacoes_PSO = PSO(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_PSO, melhor_valor_PSO, melhor_individuo_PSO, geracao_PSO, numero_avaliacoes_PSO, solucoes_avaliacoes_PSO = PSO(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -91,7 +97,7 @@ def main():
     with open('./DE/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_DE, melhor_valor_DE, melhor_individuo_DE, geracao_DE, numero_avaliacoes_DE, solucoes_avaliacoes_DE = DE(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_DE, melhor_valor_DE, melhor_individuo_DE, geracao_DE, numero_avaliacoes_DE, solucoes_avaliacoes_DE = DE(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -99,7 +105,7 @@ def main():
     with open('./AC/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_AC, melhor_valor_AC, melhor_individuo_AC, geracao_AC, numero_avaliacoes_AC, solucoes_avaliacoes_AC = AC(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_AC, melhor_valor_AC, melhor_individuo_AC, geracao_AC, numero_avaliacoes_AC, solucoes_avaliacoes_AC = AC(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
     
@@ -107,7 +113,7 @@ def main():
     with open('./ABC/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_ABC, melhor_valor_ABC, melhor_individuo_ABC, geracao_ABC, numero_avaliacoes_ABC, solucoes_avaliacoes_ABC = ABC(componentes, individuos, peso_max, custo_max, num_geracoes, coeficiente_custo, coeficiente_peso, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_ABC, melhor_valor_ABC, melhor_individuo_ABC, geracao_ABC, numero_avaliacoes_ABC, solucoes_avaliacoes_ABC = ABC(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -167,6 +173,4 @@ def main():
     plt.show()
 
 if __name__ == "__main__":
-    with open('components.txt', 'w') as f:
-        with redirect_stdout(f):
-            main()
+    main()
