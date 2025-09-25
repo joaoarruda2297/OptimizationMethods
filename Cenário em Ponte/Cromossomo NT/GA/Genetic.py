@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import time
 import sys
 import random
 import os
@@ -219,16 +220,21 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     melhor_solucao_log = -10000
     geracao = -1
     melhor_individuo: IndividuoGA = alg.individuos[1] #qualquer só para inicializar
+    melhor_tempo = 0
 
+    start_time = time.time()
+    tempos_melhor_solucao = []
     for j in range(len(alg.individuos)):
         if(alg.individuos[j].valor_funcao_objetivo > melhor_individuo.valor_funcao_objetivo):
             log_individuo = math.log(alg.individuos[j].valor_funcao_objetivo)
             melhor_solucao_log = log_individuo
             melhor_individuo = alg.individuos[j]
+            melhor_tempo = time.time() - start_time
             geracao = 1
     solucoes_log.append(melhor_solucao_log)
     solucoes.append(melhor_individuo.valor_funcao_objetivo)
     solucoes_avaliacoes.append(melhor_individuo.valor_funcao_objetivo)
+    tempos_melhor_solucao.append(time.time() - start_time)
 
     for i in range(alg.num_geracoes):
         print("GERACAO {}".format(i+1))
@@ -288,11 +294,13 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
                 log_individuo = math.log(alg.individuos[j].valor_funcao_objetivo)
                 melhor_solucao_log = log_individuo
                 melhor_individuo = alg.individuos[j]
+                melhor_tempo = time.time() - start_time
                 geracao = i + 1
         solucoes_log.append(melhor_solucao_log)
         solucoes.append(melhor_individuo.valor_funcao_objetivo)
         #devo adicionar a melhor solução atual ao vetor de soluções por avaliações
         solucoes_avaliacoes.extend([melhor_individuo.valor_funcao_objetivo] * (len(mutantes) + len(filhos)))
+        tempos_melhor_solucao.append(time.time() - start_time)
 
     print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", alg.individuos[0].valor_funcao_objetivo)
     print("Com os seguintes valores para cada variavel de decisao:")
@@ -349,6 +357,22 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     # Ajustes finais e salvamento
     plt.subplots_adjust(bottom=0.2)
     plt.savefig('./GA/img/SolutionEvolutionGAAvaliacoes.png')
+    plt.show()
+
+    #Plotando o gráfico com o tempo por funcao objetivo
+    plt.plot(tempos_melhor_solucao, solucoes, color='orange')  # Linha laranja plotada depois
+    # Configurações do gráfico
+    plt.xlabel('Tempo (s)')
+    plt.ylabel('Valor da Função Objetivo')
+    plt.title('Evolução do Tempo de Execução ao Longo das Gerações (GA)')
+    plt.grid(True)
+    # Texto adicional no gráfico
+    valor_final = alg.truncate(alg.individuos[0].confiabilidade_total, 4)
+    texto = "Valor final: " + str(valor_final) + "\nAlcançado no tempo: " + str(melhor_tempo)
+    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    # Ajustes finais e salvamento
+    plt.tight_layout()
+    plt.savefig('./GA/img/SolutionEvolutionGATempo.png')
     plt.show()
 
     return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes

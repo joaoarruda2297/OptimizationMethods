@@ -78,21 +78,6 @@ def main():
         componentes = ler_componentes_excel("Geradores/Excel/componentes.xlsx")
         individuos = ler_individuos_excel("Geradores/Excel/individuos.xlsx", componentes, custo_max, peso_max)
 
-    # Executa HS e captura os resultados
-    with open('./HS/output.txt', 'w') as f:
-        sys.stdout = f
-        try:
-            solucoes_HS, melhor_valor_HS, melhor_individuo_HS, geracao_HS, numero_avaliacoes_HS, solucoes_avaliacoes_HS = HS(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0)
-        finally:
-            sys.stdout = sys.__stdout__
-
-    # Executa HS melhorado e captura os resultados
-    with open('./HS/outputMelhorado.txt', 'w') as f:
-        sys.stdout = f
-        try:
-            solucoes_HS_melhorado, melhor_valor_HS_melhorado, melhor_individuo_HS_melhorado, geracao_HS_melhorado, numero_avaliacoes_HS_melhorado, solucoes_avaliacoes_HS_melhorado = HS(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0.1)
-        finally:
-            sys.stdout = sys.__stdout__
 
     # Executa GA e captura os resultados
     with open('./GA/output.txt', 'w') as f:
@@ -134,6 +119,21 @@ def main():
         finally:
             sys.stdout = sys.__stdout__
 
+    # Executa HS e captura os resultados
+    with open('./HS/output.txt', 'w') as f:
+        sys.stdout = f
+        try:
+            solucoes_HS, melhor_valor_HS, melhor_individuo_HS, geracao_HS, numero_avaliacoes_HS, solucoes_avaliacoes_HS = HS(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0)
+        finally:
+            sys.stdout = sys.__stdout__
+
+    # Executa HS melhorado e captura os resultados
+    with open('./HS/outputMelhorado.txt', 'w') as f:
+        sys.stdout = f
+        try:
+            solucoes_HS_melhorado, melhor_valor_HS_melhorado, melhor_individuo_HS_melhorado, geracao_HS_melhorado, numero_avaliacoes_HS_melhorado, solucoes_avaliacoes_HS_melhorado = HS(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0.1)
+        finally:
+            sys.stdout = sys.__stdout__
 
     # Gerando o gráfico comparativo
     plt.plot(range(1, len(solucoes_PSO) + 1), solucoes_PSO, label='PSO ({})'.format(melhor_valor_PSO), color='purple')
