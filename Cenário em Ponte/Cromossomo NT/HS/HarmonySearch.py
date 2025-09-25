@@ -89,7 +89,7 @@ class HarmonySearchAlgorithm:
         factor = 10 ** decimals
         return math.trunc(number * factor) / factor
 
-def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao):
     alg = HarmonySearchAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
 
     print("POPULAÇÃO INICIAL:")
@@ -98,6 +98,11 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
         print(alg.individuos[l])
         print(" ")
     print(" ")
+
+    if(porcentagem_criacao > 0):
+        numero_recalc = len(alg.individuos)*porcentagem_criacao
+    else:
+        numero_recalc = 1
 
     numero_avaliacoes = 0
     solucoes_avaliacoes = []
@@ -120,20 +125,23 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     for i in range(alg.num_geracoes):
         print("GERACAO {}".format(i+1))
 
-        pior_individuo_geracao = alg.individuos[-1]
+        for _ in range(int(numero_recalc)):
+            pior_individuo_geracao = alg.individuos[-1]
 
-        novo_individuo = alg.cria_harmonia(pior_individuo_geracao, alg.individuos)
-        print("-----------------------------------------")
-        print("Novo individuo gerado:")
-        print(novo_individuo)
-        print("-----------------------------------------")
-        if(novo_individuo.valor_funcao_objetivo > pior_individuo_geracao.valor_funcao_objetivo):
-            alg.individuos[-1] = novo_individuo
+            novo_individuo = alg.cria_harmonia(pior_individuo_geracao, alg.individuos)
+            print("-----------------------------------------")
+            print("Novo individuo gerado:")
+            print(novo_individuo)
+            print("-----------------------------------------")
+            if(novo_individuo.valor_funcao_objetivo > pior_individuo_geracao.valor_funcao_objetivo):
+                alg.individuos[-1] = novo_individuo
 
-        alg.individuos = sorted(alg.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
+            alg.individuos = sorted(alg.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
 
-        numero_avaliacoes += 1
-        print("Número de avaliações até o momento:", numero_avaliacoes)
+            numero_avaliacoes += 1
+            if(porcentagem_criacao > 0):
+                solucoes_avaliacoes.append(alg.individuos[0].valor_funcao_objetivo)
+            print("Número de avaliações até o momento:", numero_avaliacoes)
         
         # Limitando a população ao número máximo de indivíduos
         #populacao = alg.verifica_duplicados(populacao)
@@ -159,7 +167,8 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
         solucoes_log.append(melhor_solucao_log)
         solucoes.append(melhor_individuo.valor_funcao_objetivo)
         #devo adicionar a melhor solução atual ao vetor de soluções por avaliações
-        solucoes_avaliacoes.append(melhor_individuo.valor_funcao_objetivo)
+        if(porcentagem_criacao == 0):
+            solucoes_avaliacoes.append(melhor_individuo.valor_funcao_objetivo)
 
     populacao = alg.individuos
     print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", alg.individuos[0].valor_funcao_objetivo)
@@ -171,11 +180,18 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
 
     # Plotando o gráfico
     #plt.axhline(y=0, color='red', linestyle='-', linewidth=0.4)  # Linha vermelha mais fina e plotada primeiro
-    plt.plot(range(0, alg.num_geracoes+1), solucoes, color='brown')  # Linha laranja plotada depois
+    if(porcentagem_criacao == 0):
+        plt.plot(range(0, alg.num_geracoes+1), solucoes, color='brown')  # Linha marrom/rosa plotada depois
+    else:
+        plt.plot(range(0, alg.num_geracoes+1), solucoes, color='pink')  # Linha marrom/rosa plotada depois
     # Configurações do gráfico
     plt.xlabel('Geração')
     plt.ylabel('Valor da Função Objetivo')
-    plt.title('Evolução da Melhor Solução ao Longo das Gerações (HS)')
+
+    if(porcentagem_criacao == 0):
+        plt.title('Evolução da Melhor Solução ao Longo das Gerações (HS)')
+    else:
+        plt.title('Evolução da Melhor Solução ao Longo das Gerações (HS - Melhorado)')
     plt.grid(True)
     # Texto adicional no gráfico
     valor_final = alg.truncate(alg.individuos[0].confiabilidade_total, 4)
@@ -183,15 +199,26 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
     # Ajustes finais e salvamento
     plt.tight_layout()
-    plt.savefig('./GA/img/SolutionEvolutionHS.png')
+
+    if(porcentagem_criacao == 0):
+        plt.savefig('./HS/img/SolutionEvolutionHS.png')
+    else:
+        plt.savefig('./HS/img/SolutionEvolutionHSMelhorado.png')
     plt.show()
 
     # Plotando o gráfico em log
-    plt.plot(range(0, alg.num_geracoes+1), solucoes_log, color='brown')  # Linha preta plotada depois
+    if(porcentagem_criacao == 0):
+        plt.plot(range(0, alg.num_geracoes+1), solucoes_log, color='brown')  # Linha marrom/rosa plotada depois
+    else:
+        plt.plot(range(0, alg.num_geracoes+1), solucoes_log, color='pink')  # Linha marrom/rosa plotada depois
     # Configurações do gráfico
     plt.xlabel('Geração')
     plt.ylabel('log(Função Objetivo)')
-    plt.title('Evolução da Melhor Solução ao Longo das Gerações (HS)')
+
+    if(porcentagem_criacao == 0):
+        plt.title('Evolução da Melhor Solução ao Longo das Gerações (HS - Log)')
+    else:
+        plt.title('Evolução da Melhor Solução ao Longo das Gerações (HS - Log Melhorado)')
     plt.grid(True)
     # Texto adicional no gráfico
     valor_final_log = alg.truncate(melhor_solucao_log, 4)
@@ -199,16 +226,25 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
     # Ajustes finais e salvamento
     plt.tight_layout()
-    plt.savefig('./GA/img/SolutionEvolutionHSLog.png')
+    if(porcentagem_criacao == 0):
+        plt.savefig('./HS/img/SolutionEvolutionHSLog.png')
+    else:
+        plt.savefig('./HS/img/SolutionEvolutionHSMelhoradoLog.png')
     plt.show()
 
     # Plotando o gráfico com o número de avaliações
     #plt.figure(figsize=(20, 7))  # largura=20, altura=10 polegadas
-    plt.plot(range(0, numero_avaliacoes+1), solucoes_avaliacoes, color='brown')  # Linha preta plotada depois
+    if(porcentagem_criacao == 0):
+        plt.plot(range(0, numero_avaliacoes+1), solucoes_avaliacoes, color='brown')  # Linha marrom/rosa plotada depois
+    else:
+        plt.plot(range(0, numero_avaliacoes+1), solucoes_avaliacoes, color='pink')  # Linha marrom/rosa plotada depois
     # Configurações do gráfico
     plt.xlabel('Número de Avaliações')
     plt.ylabel('Valor da Função Objetivo')
-    plt.title('Evolução da Melhor Solução ao Longo das Avaliações (HS)')
+    if(porcentagem_criacao == 0):
+        plt.title('Evolução da Melhor Solução ao Longo das Avaliações (HS)')
+    else:
+        plt.title('Evolução da Melhor Solução ao Longo das Avaliações (HS - Melhorado)')
     plt.grid(True)
     # Texto adicional no gráfico
     valor_final = alg.truncate(alg.individuos[0].confiabilidade_total, 4)
@@ -216,7 +252,10 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     plt.figtext(0.8, 0.05, texto, wrap=True, horizontalalignment='center', fontsize=8)
     # Ajustes finais e salvamento
     plt.subplots_adjust(bottom=0.2)
-    plt.savefig('./GA/img/SolutionEvolutionHSAvaliacoes.png')
+    if(porcentagem_criacao == 0):
+        plt.savefig('./HS/img/SolutionEvolutionHSAvaliacoes.png')
+    else:
+        plt.savefig('./HS/img/SolutionEvolutionHSMelhoradoAvaliacoes.png')
     plt.show()
 
     return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes

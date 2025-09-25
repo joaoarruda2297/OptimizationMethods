@@ -82,7 +82,15 @@ def main():
     with open('./HS/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_HS, melhor_valor_HS, melhor_individuo_HS, geracao_HS, numero_avaliacoes_HS, solucoes_avaliacoes_HS = HS(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_HS, melhor_valor_HS, melhor_individuo_HS, geracao_HS, numero_avaliacoes_HS, solucoes_avaliacoes_HS = HS(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0)
+        finally:
+            sys.stdout = sys.__stdout__
+
+    # Executa HS melhorado e captura os resultados
+    with open('./HS/outputMelhorado.txt', 'w') as f:
+        sys.stdout = f
+        try:
+            solucoes_HS_melhorado, melhor_valor_HS_melhorado, melhor_individuo_HS_melhorado, geracao_HS_melhorado, numero_avaliacoes_HS_melhorado, solucoes_avaliacoes_HS_melhorado = HS(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0.1)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -134,6 +142,7 @@ def main():
     plt.plot(range(1, len(solucoes_AC) + 1), solucoes_AC, label='ACO ({})'.format(melhor_valor_AC), color='blue')
     plt.plot(range(1, len(solucoes_ABC) + 1), solucoes_ABC, label='ABC ({})'.format(melhor_valor_ABC), color='red')
     plt.plot(range(1, len(solucoes_HS) + 1), solucoes_HS, label='HS ({})'.format(melhor_valor_HS), color='brown')
+    plt.plot(range(1, len(solucoes_HS_melhorado) + 1), solucoes_HS_melhorado, label='HS Melhorado ({})'.format(melhor_valor_HS_melhorado), color='pink')
 
     plt.xlabel('Geração')
     plt.ylabel('log(Função Objetivo)')
@@ -151,11 +160,11 @@ def main():
 
     penalidade_DE = truncate(melhor_individuo_DE.valor_funcao_objetivo - melhor_individuo_DE.confiabilidade_total, 8)
     textoDE = "DE\nAlcançado na geração: " + str(geracao_DE) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_DE.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_DE.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_DE) + "\nCusto: " + str(melhor_individuo_DE.custo) + "\nPeso: " + str(melhor_individuo_DE.peso)
-    plt.figtext(0.54, 0.029, textoDE, wrap=True, horizontalalignment='center', fontsize=8)
+    plt.figtext(0.80, 0.029, textoDE, wrap=True, horizontalalignment='center', fontsize=8)
 
     penalidade_AC = truncate(melhor_individuo_AC.valor_funcao_objetivo - melhor_individuo_AC.confiabilidade_total, 8)
     textoAC = "ACO\nAlcançado na geração: " + str(geracao_AC) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_AC.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_AC.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_AC) + "\nCusto: " + str(melhor_individuo_AC.custo) + "\nPeso: " + str(melhor_individuo_AC.peso)
-    plt.figtext(0.73, 0.029, textoAC, wrap=True, horizontalalignment='center', fontsize=8)
+    plt.figtext(0.67, 0.029, textoAC, wrap=True, horizontalalignment='center', fontsize=8)
 
     penalidade_ABC = truncate(melhor_individuo_ABC.valor_funcao_objetivo - melhor_individuo_ABC.confiabilidade_total, 8)
     textoABC = "ACO\nAlcançado na geração: " + str(geracao_ABC) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_ABC.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_ABC.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_ABC) + "\nCusto: " + str(melhor_individuo_ABC.custo) + "\nPeso: " + str(melhor_individuo_ABC.peso)
@@ -164,6 +173,10 @@ def main():
     penalidade_HS = truncate(melhor_individuo_HS.valor_funcao_objetivo - melhor_individuo_HS.confiabilidade_total, 8)
     textoHS = "HS\nAlcançado na geração: " + str(geracao_HS) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_HS.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_HS.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_HS) + "\nCusto: " + str(melhor_individuo_HS.custo) + "\nPeso: " + str(melhor_individuo_HS.peso)
     plt.figtext(0.40, 0.029, textoHS, wrap=True, horizontalalignment='center', fontsize=8)
+
+    penalidade_HS_melhorado = truncate(melhor_individuo_HS_melhorado.valor_funcao_objetivo - melhor_individuo_HS_melhorado.confiabilidade_total, 8)
+    textoHS_melhorado = "HS Melhorado\nAlcançado na geração: " + str(geracao_HS_melhorado) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_HS_melhorado.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_HS_melhorado.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_HS_melhorado) + "\nCusto: " + str(melhor_individuo_HS_melhorado.custo) + "\nPeso: " + str(melhor_individuo_HS_melhorado.peso)
+    plt.figtext(0.54, 0.029, textoHS_melhorado, wrap=True, horizontalalignment='center', fontsize=8)
 
     # Ajustes finais e salvamento
     plt.subplots_adjust(bottom=0.2)
@@ -177,6 +190,7 @@ def main():
     plt.plot(range(1, len(solucoes_avaliacoes_AC) + 1), solucoes_avaliacoes_AC, label='ACO ({})'.format(melhor_valor_AC), color='blue')
     plt.plot(range(1, len(solucoes_avaliacoes_ABC) + 1), solucoes_avaliacoes_ABC, label='ABC ({})'.format(melhor_valor_ABC), color='red')
     plt.plot(range(1, len(solucoes_avaliacoes_HS) + 1), solucoes_avaliacoes_HS, label='HS ({})'.format(melhor_valor_HS), color='brown')
+    plt.plot(range(1, len(solucoes_avaliacoes_HS_melhorado) + 1), solucoes_avaliacoes_HS_melhorado, label='HS Melhorado ({})'.format(melhor_valor_HS_melhorado), color='pink')
 
     plt.xlabel('Número de Avaliações')
     plt.ylabel('Função Objetivo')
