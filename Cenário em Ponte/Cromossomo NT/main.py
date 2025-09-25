@@ -9,6 +9,7 @@ from GA.Genetic import main as GA
 from PSO.ParticleSwarm import main as PSO
 from AC.AntColony import main as AC
 from ABC.BeeColony import main as ABC
+from HS.HarmonySearch import main as HS
 from Geradores.GeradorComponentes import main as GeradorComponentes
 from Geradores.GeradorIndividuos import main as GeradorIndividuos
 from Geradores.GeradorComponentes import Componente
@@ -77,6 +78,14 @@ def main():
         componentes = ler_componentes_excel("Geradores/Excel/componentes.xlsx")
         individuos = ler_individuos_excel("Geradores/Excel/individuos.xlsx", componentes, custo_max, peso_max)
 
+    # Executa HS e captura os resultados
+    with open('./HS/output.txt', 'w') as f:
+        sys.stdout = f
+        try:
+            solucoes_HS, melhor_valor_HS, melhor_individuo_HS, geracao_HS, numero_avaliacoes_HS, solucoes_avaliacoes_HS = HS(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+        finally:
+            sys.stdout = sys.__stdout__
+
     # Executa GA e captura os resultados
     with open('./GA/output.txt', 'w') as f:
         sys.stdout = f
@@ -124,6 +133,7 @@ def main():
     plt.plot(range(1, len(solucoes_GA) + 1), solucoes_GA, label='GA ({})'.format(melhor_valor_GA), color='orange')
     plt.plot(range(1, len(solucoes_AC) + 1), solucoes_AC, label='ACO ({})'.format(melhor_valor_AC), color='blue')
     plt.plot(range(1, len(solucoes_ABC) + 1), solucoes_ABC, label='ABC ({})'.format(melhor_valor_ABC), color='red')
+    plt.plot(range(1, len(solucoes_HS) + 1), solucoes_HS, label='HS ({})'.format(melhor_valor_HS), color='brown')
 
     plt.xlabel('Geração')
     plt.ylabel('log(Função Objetivo)')
@@ -151,6 +161,10 @@ def main():
     textoABC = "ACO\nAlcançado na geração: " + str(geracao_ABC) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_ABC.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_ABC.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_ABC) + "\nCusto: " + str(melhor_individuo_ABC.custo) + "\nPeso: " + str(melhor_individuo_ABC.peso)
     plt.figtext(0.91, 0.029, textoABC, wrap=True, horizontalalignment='center', fontsize=8)
 
+    penalidade_HS = truncate(melhor_individuo_HS.valor_funcao_objetivo - melhor_individuo_HS.confiabilidade_total, 8)
+    textoHS = "HS\nAlcançado na geração: " + str(geracao_HS) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_HS.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_HS.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_HS) + "\nCusto: " + str(melhor_individuo_HS.custo) + "\nPeso: " + str(melhor_individuo_HS.peso)
+    plt.figtext(0.40, 0.029, textoHS, wrap=True, horizontalalignment='center', fontsize=8)
+
     # Ajustes finais e salvamento
     plt.subplots_adjust(bottom=0.2)
     plt.savefig('./comparativeMethods.png')
@@ -162,6 +176,7 @@ def main():
     plt.plot(range(1, len(solucoes_avaliacoes_GA) + 1), solucoes_avaliacoes_GA, label='GA ({})'.format(melhor_valor_GA), color='orange')
     plt.plot(range(1, len(solucoes_avaliacoes_AC) + 1), solucoes_avaliacoes_AC, label='ACO ({})'.format(melhor_valor_AC), color='blue')
     plt.plot(range(1, len(solucoes_avaliacoes_ABC) + 1), solucoes_avaliacoes_ABC, label='ABC ({})'.format(melhor_valor_ABC), color='red')
+    plt.plot(range(1, len(solucoes_avaliacoes_HS) + 1), solucoes_avaliacoes_HS, label='HS ({})'.format(melhor_valor_HS), color='brown')
 
     plt.xlabel('Número de Avaliações')
     plt.ylabel('Função Objetivo')
