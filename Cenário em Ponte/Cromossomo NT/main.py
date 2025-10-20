@@ -36,13 +36,14 @@ def main():
         factor = 10 ** decimals
         return math.trunc(number * factor) / factor
 
+    #QUALQUER TROCA DE VARIAVEL É OBRIGATORIA A RECRIAÇÃO DE INDIVIDUOS E COMPONENTES
     # Variáveis para geração de componentes e individuos
     confiabilidade_minima = 0.8
     confiabilidade_maxima = 0.9
-    lim_sup_peso = 23
-    lim_inf_peso = 5
+    lim_sup_peso = 24
+    lim_inf_peso = 12
     lim_sup_custo = 18
-    lim_inf_custo = 4
+    lim_inf_custo = 9
     num_tipos_componentes = 10
     num_individuos = 50
     num_variaveis = 5
@@ -51,8 +52,8 @@ def main():
 
     # Variáveis para execução do algoritmo
     num_geracoes = 200
-    peso_max = 50
-    custo_max = 30
+    peso_max = 80
+    custo_max = 60
 
     print("Deseja gerar indivíduos e componentes novamente? (S/N)")
     resposta = input().strip().upper()
@@ -73,17 +74,19 @@ def main():
             lim_inf_peso,
             lim_sup_peso
         )
+        print("Componentes e indivíduos gerados com sucesso.")
     else:
         print("Lendo componentes e indivíduos dos arquivos Excel...")
         componentes = ler_componentes_excel("Geradores/Excel/componentes.xlsx")
         individuos = ler_individuos_excel("Geradores/Excel/individuos.xlsx", componentes, custo_max, peso_max)
+        print("Componentes e indivíduos lidos com sucesso.")
 
 
     # Executa GA e captura os resultados
     with open('./GA/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_GA, melhor_valor_GA, melhor_individuo_GA, geracao_GA, numero_avaliacoes_GA, solucoes_avaliacoes_GA = GA(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_GA, melhor_valor_GA, melhor_individuo_GA, geracao_GA, numero_avaliacoes_GA, solucoes_avaliacoes_GA, tempos_melhor_solucao_GA, melhor_tempo_GA = GA(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -91,7 +94,7 @@ def main():
     with open('./PSO/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_PSO, melhor_valor_PSO, melhor_individuo_PSO, geracao_PSO, numero_avaliacoes_PSO, solucoes_avaliacoes_PSO = PSO(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_PSO, melhor_valor_PSO, melhor_individuo_PSO, geracao_PSO, numero_avaliacoes_PSO, solucoes_avaliacoes_PSO, tempos_melhor_solucao_PSO, melhor_tempo_PSO = PSO(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -99,7 +102,7 @@ def main():
     with open('./DE/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_DE, melhor_valor_DE, melhor_individuo_DE, geracao_DE, numero_avaliacoes_DE, solucoes_avaliacoes_DE = DE(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_DE, melhor_valor_DE, melhor_individuo_DE, geracao_DE, numero_avaliacoes_DE, solucoes_avaliacoes_DE, tempos_melhor_solucao_DE, melhor_tempo_DE = DE(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -107,7 +110,7 @@ def main():
     with open('./AC/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_AC, melhor_valor_AC, melhor_individuo_AC, geracao_AC, numero_avaliacoes_AC, solucoes_avaliacoes_AC = AC(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_AC, melhor_valor_AC, melhor_individuo_AC, geracao_AC, numero_avaliacoes_AC, solucoes_avaliacoes_AC, tempos_melhor_solucao_AC, melhor_tempo_AC = AC(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
     
@@ -115,7 +118,7 @@ def main():
     with open('./ABC/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_ABC, melhor_valor_ABC, melhor_individuo_ABC, geracao_ABC, numero_avaliacoes_ABC, solucoes_avaliacoes_ABC = ABC(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+            solucoes_ABC, melhor_valor_ABC, melhor_individuo_ABC, geracao_ABC, numero_avaliacoes_ABC, solucoes_avaliacoes_ABC, tempos_melhor_solucao_ABC, melhor_tempo_ABC = ABC(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -123,7 +126,7 @@ def main():
     with open('./HS/output.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_HS, melhor_valor_HS, melhor_individuo_HS, geracao_HS, numero_avaliacoes_HS, solucoes_avaliacoes_HS = HS(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0)
+            solucoes_HS, melhor_valor_HS, melhor_individuo_HS, geracao_HS, numero_avaliacoes_HS, solucoes_avaliacoes_HS, tempos_melhor_solucao_HS, melhor_tempo_HS = HS(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -131,7 +134,7 @@ def main():
     with open('./HS/outputMelhorado.txt', 'w') as f:
         sys.stdout = f
         try:
-            solucoes_HS_melhorado, melhor_valor_HS_melhorado, melhor_individuo_HS_melhorado, geracao_HS_melhorado, numero_avaliacoes_HS_melhorado, solucoes_avaliacoes_HS_melhorado = HS(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0.1)
+            solucoes_HS_melhorado, melhor_valor_HS_melhorado, melhor_individuo_HS_melhorado, geracao_HS_melhorado, numero_avaliacoes_HS_melhorado, solucoes_avaliacoes_HS_melhorado, tempos_melhor_solucao_HS_melhorado, melhor_tempo_HS_melhorado = HS(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0.1)
         finally:
             sys.stdout = sys.__stdout__
 
@@ -142,7 +145,7 @@ def main():
     plt.plot(range(1, len(solucoes_AC) + 1), solucoes_AC, label='ACO ({})'.format(melhor_valor_AC), color='blue')
     plt.plot(range(1, len(solucoes_ABC) + 1), solucoes_ABC, label='ABC ({})'.format(melhor_valor_ABC), color='red')
     plt.plot(range(1, len(solucoes_HS) + 1), solucoes_HS, label='HS ({})'.format(melhor_valor_HS), color='brown')
-    plt.plot(range(1, len(solucoes_HS_melhorado) + 1), solucoes_HS_melhorado, label='HS Melhorado ({})'.format(melhor_valor_HS_melhorado), color='pink')
+    plt.plot(range(1, len(solucoes_HS_melhorado) + 1), solucoes_HS_melhorado, label='HS Melhorado ({})'.format(melhor_valor_HS_melhorado), color='#FF69B4')
 
     plt.xlabel('Geração')
     plt.ylabel('log(Função Objetivo)')
@@ -167,7 +170,7 @@ def main():
     plt.figtext(0.67, 0.029, textoAC, wrap=True, horizontalalignment='center', fontsize=8)
 
     penalidade_ABC = truncate(melhor_individuo_ABC.valor_funcao_objetivo - melhor_individuo_ABC.confiabilidade_total, 8)
-    textoABC = "ACO\nAlcançado na geração: " + str(geracao_ABC) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_ABC.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_ABC.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_ABC) + "\nCusto: " + str(melhor_individuo_ABC.custo) + "\nPeso: " + str(melhor_individuo_ABC.peso)
+    textoABC = "ABC\nAlcançado na geração: " + str(geracao_ABC) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_ABC.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_ABC.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_ABC) + "\nCusto: " + str(melhor_individuo_ABC.custo) + "\nPeso: " + str(melhor_individuo_ABC.peso)
     plt.figtext(0.91, 0.029, textoABC, wrap=True, horizontalalignment='center', fontsize=8)
 
     penalidade_HS = truncate(melhor_individuo_HS.valor_funcao_objetivo - melhor_individuo_HS.confiabilidade_total, 8)
@@ -190,15 +193,61 @@ def main():
     plt.plot(range(1, len(solucoes_avaliacoes_AC) + 1), solucoes_avaliacoes_AC, label='ACO ({})'.format(melhor_valor_AC), color='blue')
     plt.plot(range(1, len(solucoes_avaliacoes_ABC) + 1), solucoes_avaliacoes_ABC, label='ABC ({})'.format(melhor_valor_ABC), color='red')
     plt.plot(range(1, len(solucoes_avaliacoes_HS) + 1), solucoes_avaliacoes_HS, label='HS ({})'.format(melhor_valor_HS), color='brown')
-    plt.plot(range(1, len(solucoes_avaliacoes_HS_melhorado) + 1), solucoes_avaliacoes_HS_melhorado, label='HS Melhorado ({})'.format(melhor_valor_HS_melhorado), color='pink')
+    plt.plot(range(1, len(solucoes_avaliacoes_HS_melhorado) + 1), solucoes_avaliacoes_HS_melhorado, label='HS Melhorado ({})'.format(melhor_valor_HS_melhorado), color='#FF69B4')
 
     plt.xlabel('Número de Avaliações')
-    plt.ylabel('Função Objetivo')
+    plt.ylabel('log(Função Objetivo)')
     plt.title('Comparação dos Algoritmos por Número de Avaliações')
     plt.legend()
     plt.grid(True)
     plt.subplots_adjust(bottom=0.2)
     plt.savefig('./comparativeMethodsAvaliacoes.png')
+    plt.show()
+
+    # Gerando o gráfico comparativo por tempo até a melhor solução
+    plt.plot(tempos_melhor_solucao_PSO, solucoes_PSO, label='PSO ({})'.format(melhor_valor_PSO), color='purple')
+    plt.plot(tempos_melhor_solucao_DE, solucoes_DE, label='DE ({})'.format(melhor_valor_DE), color='green')
+    plt.plot(tempos_melhor_solucao_GA, solucoes_GA, label='GA ({})'.format(melhor_valor_GA), color='orange')
+    plt.plot(tempos_melhor_solucao_AC, solucoes_AC, label='ACO ({})'.format(melhor_valor_AC), color='blue')
+    plt.plot(tempos_melhor_solucao_ABC, solucoes_ABC, label='ABC ({})'.format(melhor_valor_ABC), color='red')
+    plt.plot(tempos_melhor_solucao_HS, solucoes_HS, label='HS ({})'.format(melhor_valor_HS), color='brown')
+    plt.plot(tempos_melhor_solucao_HS_melhorado, solucoes_HS_melhorado, label='HS Melhorado ({})'.format(melhor_valor_HS_melhorado), color='#FF69B4')
+
+    plt.xlabel('Tempo até a Melhor Solução (s)')
+    plt.ylabel('log(Função Objetivo)')
+    plt.title('Comparação dos Algoritmos por Tempo até a Melhor Solução')
+    plt.legend()
+    plt.grid(True)
+    plt.subplots_adjust(bottom=0.2)
+    plt.savefig('./comparativeMethodsTempo.png')
+    plt.show()
+
+    plt.figure()
+    for tempo, solucao, cor, label in [
+        (tempos_melhor_solucao_PSO, solucoes_PSO, 'purple', f'PSO ({melhor_valor_PSO})'),
+        (tempos_melhor_solucao_DE, solucoes_DE, 'green', f'DE ({melhor_valor_DE})'),
+        (tempos_melhor_solucao_GA, solucoes_GA, 'orange', f'GA ({melhor_valor_GA})'),
+        (tempos_melhor_solucao_AC, solucoes_AC, 'blue', f'ACO ({melhor_valor_AC})'),
+        (tempos_melhor_solucao_ABC, solucoes_ABC, 'red', f'ABC ({melhor_valor_ABC})'),
+        (tempos_melhor_solucao_HS, solucoes_HS, 'brown', f'HS ({melhor_valor_HS})'),
+        (tempos_melhor_solucao_HS_melhorado, solucoes_HS_melhorado, '#FF69B4', f'HS Melhorado ({melhor_valor_HS_melhorado})')
+    ]:
+        # Filtrar pontos até 1 segundo
+        pontos_filtrados = [(t, s) for t, s in zip(tempo, solucao) if t <= 1.0]
+        if pontos_filtrados:
+            if(tempo[-1] != 1.0):
+                pontos_filtrados.append((1.0, solucao[-1]))
+            tempos, sols = zip(*pontos_filtrados)
+            plt.plot(tempos, sols, label=label, color=cor)
+
+    plt.xlabel('Tempo até a Melhor Solução (s)')
+    plt.ylabel('log(Função Objetivo)')
+    plt.title('Comparação dos Algoritmos por Tempo (truncado em 1s)')
+    plt.legend()
+    plt.grid(True)
+    plt.xlim(-0.04, 1.04)
+    plt.subplots_adjust(bottom=0.2)
+    plt.savefig('./comparativeMethodsTempoTruncado.png')
     plt.show()
 
 if __name__ == "__main__":

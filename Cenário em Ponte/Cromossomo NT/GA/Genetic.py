@@ -31,7 +31,7 @@ class GeneticAlgorithm:
 
         self.individuos = []
         for i in range(self.num_individuos):
-            self.individuos.append(individuos[i])
+            self.individuos.append(deepcopy(individuos[i]))
         self.individuos = sorted(self.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
 
     def verifica_duplicados(self, populacao):
@@ -375,7 +375,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     plt.savefig('./GA/img/SolutionEvolutionGATempo.png')
     plt.show()
 
-    return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes
+    return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes, tempos_melhor_solucao, melhor_tempo
 
 
 if __name__ == "__main__":

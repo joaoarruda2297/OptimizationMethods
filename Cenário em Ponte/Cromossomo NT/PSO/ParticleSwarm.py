@@ -1,3 +1,4 @@
+import time
 import numpy as np
 import sys
 import os
@@ -29,7 +30,7 @@ class ParticleSwarmOptimization:
 
         self.individuos = []
         for i in range(len(individuos)):
-            self.individuos.append(IndividuoPSO(individuos[i].solucao, componentes, None, peso_max, custo_max, num_variaveis))
+            self.individuos.append(IndividuoPSO(deepcopy(individuos[i].solucao), componentes, None, peso_max, custo_max, num_variaveis))
         self.individuos = sorted(self.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
     
     def atualiza_velocidade(self, individuo, globalBest):
@@ -104,6 +105,10 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     melhor_solucao = -10000
     melhor_solucao_log = -10000
 
+    melhor_tempo = 0
+    start_time = time.time()
+    tempos_melhor_solucao = []
+
     for i in range(alg.num_geracoes):
         print("GERACAO {}".format(i+1))
         for j in range(alg.num_particulas):
@@ -124,8 +129,11 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
                 fit_global = fit_best_pos
 
         if i == 0: 
+            solucoes.append(fit_global)
             solucoes_log.append(math.log(fit_global))
             solucoes_avaliacoes.append(fit_global)
+            melhor_tempo = time.time() - start_time
+            tempos_melhor_solucao.append(time.time() - start_time)
         
         print("Populacao antes da execucao:")
         for l in range(len(alg.individuos)):
@@ -151,12 +159,14 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
         fit_global = global_best.valor_funcao_objetivo
         solucoes.append(fit_global)
         solucoes_log.append(math.log(fit_global))
+        tempos_melhor_solucao.append(time.time() - start_time)
         solucoes_avaliacoes.extend([fit_global] * alg.num_particulas)
         numero_avaliacoes += alg.num_particulas
 
         if melhor_solucao < fit_global:
             melhor_solucao_log = math.log(fit_global)
             melhor_solucao = fit_global
+            melhor_tempo = time.time() - start_time
             geracao = i + 1
 
         #atualizacao da inercia
@@ -171,7 +181,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
 
     # Plotando o gráfico
     #plt.axhline(y=0, color='red', linestyle='-', linewidth=0.4)  # Linha vermelha mais fina e plotada primeiro
-    plt.plot(range(1, alg.num_geracoes+1), solucoes, color='purple')  # Linha roxa plotada depois
+    plt.plot(range(0, alg.num_geracoes+1), solucoes, color='purple')  # Linha roxa plotada depois
     # Configurações do gráfico
     plt.xlabel('Geração')
     plt.ylabel('Valor da Função Objetivo')
@@ -218,7 +228,23 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     plt.savefig('./PSO/img/SolutionEvolutionPSOAvaliacoes.png')
     plt.show()
 
-    return solucoes_log, valor_final_log, global_best, geracao, numero_avaliacoes, solucoes_avaliacoes
+    #Plotando o gráfico com o tempo por funcao objetivo
+    plt.plot(tempos_melhor_solucao, solucoes, color='purple')  # Linha roxa plotada depois
+    # Configurações do gráfico
+    plt.xlabel('Tempo (s)')
+    plt.ylabel('Valor da Função Objetivo')
+    plt.title('Evolução do Tempo de Execução ao Longo das Gerações (PSO)')
+    plt.grid(True)
+    # Texto adicional no gráfico
+    valor_final = alg.truncate(melhor_solucao, 4)
+    texto = "Valor final: " + str(valor_final) + "\nAlcançado no tempo: " + str(melhor_tempo)
+    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    # Ajustes finais e salvamento
+    plt.tight_layout()
+    plt.savefig('./PSO/img/SolutionEvolutionPSOTempo.png')
+    plt.show()
+
+    return solucoes_log, valor_final_log, global_best, geracao, numero_avaliacoes, solucoes_avaliacoes, tempos_melhor_solucao, melhor_tempo
         
 
 if __name__ == "__main__":

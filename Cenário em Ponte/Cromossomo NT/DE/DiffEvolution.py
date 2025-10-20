@@ -4,6 +4,7 @@ from copy import deepcopy
 import matplotlib.pyplot as plt
 from decimal import Decimal, getcontext
 import math
+import time
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -122,6 +123,9 @@ def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num
     melhor_solucao = -10000
     melhor_solucao_log = -10000
     geracao = -1
+    melhor_tempo = 0
+    start_time = time.time()
+    tempos_melhor_solucao = []
 
     for i in range(alg.num_geracoes):
         print("GERACAO {}".format(i+1))
@@ -138,6 +142,8 @@ def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num
             solucoes.append(melhor_solucao)
             solucoes_log.append(melhor_solucao_log)
             solucoes_avaliacoes.append(melhor_solucao)
+            melhor_tempo = time.time() - start_time
+            tempos_melhor_solucao.append(time.time() - start_time)
             geracao = 0
 
         mutantes = alg.mutacao(alg.individuos)
@@ -175,10 +181,12 @@ def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num
             if fit_evoluido > melhor_solucao:
                 melhor_solucao = fit_evoluido
                 melhor_solucao_log = math.log(fit_evoluido)
+                melhor_tempo = time.time() - start_time
                 geracao = i + 1
 
         solucoes.append(melhor_solucao)
         solucoes_log.append(melhor_solucao_log)
+        tempos_melhor_solucao.append(time.time() - start_time)
         solucoes_avaliacoes.extend([melhor_solucao] * len(evoluidos))
 
         alg.individuos = alg.verifica_duplicados(alg.individuos)
@@ -254,7 +262,23 @@ def main(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num
     plt.savefig('./DE/img/SolutionEvolutionDEAvaliacoes.png')
     plt.show()
 
-    return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes
+    #Plotando o gráfico com o tempo por funcao objetivo
+    plt.plot(tempos_melhor_solucao, solucoes, color='green')  # Linha verde plotada depois
+    # Configurações do gráfico
+    plt.xlabel('Tempo (s)')
+    plt.ylabel('Valor da Função Objetivo')
+    plt.title('Evolução do Tempo de Execução ao Longo das Gerações (DE)')
+    plt.grid(True)
+    # Texto adicional no gráfico
+    valor_final = alg.truncate(melhor_solucao, 4)
+    texto = "Valor final: " + str(valor_final) + "\nAlcançado no tempo: " + str(melhor_tempo)
+    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    # Ajustes finais e salvamento
+    plt.tight_layout()
+    plt.savefig('./DE/img/SolutionEvolutionDETempo.png')
+    plt.show()
+
+    return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes, tempos_melhor_solucao, melhor_tempo
     
 
 if __name__ == "__main__":

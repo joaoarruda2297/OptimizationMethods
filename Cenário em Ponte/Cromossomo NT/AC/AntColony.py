@@ -8,6 +8,7 @@ from copy import deepcopy
 import matplotlib.pyplot as plt
 from contextlib import redirect_stdout
 import sys
+import time
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from Geradores.GeradorIndividuos import Individuo
 
@@ -33,7 +34,7 @@ class AntColonyOptimization:
 
         self.individuos = []
         for i in range(self.num_formigas):
-            self.individuos.append(individuos[i])
+            self.individuos.append(deepcopy(individuos[i]))
         self.individuos = sorted(self.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
 
     def heuristica(self, tipo):
@@ -124,6 +125,9 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     melhor_solucao_log = -10000
     melhor_solucao = -10000
     geracao = -1
+    melhor_tempo = 0
+    start_time = time.time()
+    tempos_melhor_solucao = []
 
     mapa = aco.construir_mapa_solucoes()
     for l in range(len(mapa)):
@@ -145,6 +149,8 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
             solucoes_log.append(melhor_solucao_log)
             solucoes.append(melhor_solucao)
             solucoes_avaliacoes.append(melhor_solucao)
+            melhor_tempo = time.time() - start_time
+            tempos_melhor_solucao.append(time.time() - start_time)
         
         # Demais gerações: constrói novas soluções para cada formiga
         novas_solucoes = aco.construir_solucao_por_mapa(mapa)
@@ -168,10 +174,12 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
                 log_individuo = math.log(aco.individuos[j].valor_funcao_objetivo)
                 melhor_solucao_log = log_individuo
                 melhor_individuo = aco.individuos[j]
+                melhor_tempo = time.time() - start_time
                 geracao = i + 1
         solucoes_log.append(melhor_solucao_log)
         solucoes.append(melhor_individuo.valor_funcao_objetivo)
         solucoes_avaliacoes.extend([melhor_individuo.valor_funcao_objetivo] * len(novas_solucoes))
+        tempos_melhor_solucao.append(time.time() - start_time)
 
     aco.individuos = sorted(aco.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
     melhor_individuo = aco.individuos[0]
@@ -223,7 +231,23 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     plt.savefig('./AC/img/SolutionEvolutionACAvaliacoes.png')
     plt.show()
 
-    return solucoes_log, valor_final_log, aco.individuos[0], geracao, numero_avaliacoes, solucoes_avaliacoes
+    #Plotando o gráfico com o tempo por funcao objetivo
+    plt.plot(tempos_melhor_solucao, solucoes, color='blue')  # Linha azul plotada depois
+    # Configurações do gráfico
+    plt.xlabel('Tempo (s)')
+    plt.ylabel('Valor da Função Objetivo')
+    plt.title('Evolução do Tempo de Execução ao Longo das Gerações (ACO)')
+    plt.grid(True)
+    # Texto adicional no gráfico
+    valor_final = aco.truncate(aco.individuos[0].confiabilidade_total, 4)
+    texto = "Valor final: " + str(valor_final) + "\nAlcançado no tempo: " + str(melhor_tempo)
+    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    # Ajustes finais e salvamento
+    plt.tight_layout()
+    plt.savefig('./AC/img/SolutionEvolutionACOTempo.png')
+    plt.show()
+
+    return solucoes_log, valor_final_log, aco.individuos[0], geracao, numero_avaliacoes, solucoes_avaliacoes, tempos_melhor_solucao, melhor_tempo
 
 if __name__ == "__main__":
     with open('output.txt', 'w') as f:

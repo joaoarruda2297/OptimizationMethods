@@ -3,6 +3,7 @@ import math
 import sys
 import random
 import os
+import time
 from decimal import Decimal, getcontext
 from contextlib import redirect_stdout
 from copy import deepcopy
@@ -31,7 +32,7 @@ class BeeColonyAlgorithm:
 
         self.individuos = []
         for i in range(len(individuos)):
-            self.individuos.append(IndividuoABC(individuos[i].solucao, componentes, peso_max, custo_max))
+            self.individuos.append(IndividuoABC(deepcopy(individuos[i].solucao), componentes, peso_max, custo_max))
         self.individuos = sorted(self.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
 
     def atualiza_solucao(self, populacao, i):
@@ -143,6 +144,13 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     alg = BeeColonyAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
 
     print("POPULAÇÃO INICIAL:")
+    for l in range(len(individuos)):
+        print("Individuo {}:".format(l+1))
+        print(individuos[l])
+        print(" ")
+    print(" ")
+
+    print("POPULAÇÃO INICIAL 2:")
     for l in range(len(alg.individuos)):
         print("Individuo {}:".format(l+1))
         print(alg.individuos[l])
@@ -157,6 +165,9 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     melhor_solucao_log = -10000
     geracao = -1
     melhor_individuo: IndividuoABC = alg.individuos[1] #qualquer só para inicializar
+    melhor_tempo = 0
+    start_time = time.time()
+    tempos_melhor_solucao = []
 
     for j in range(len(alg.individuos)):
         if(alg.individuos[j].valor_funcao_objetivo > melhor_individuo.valor_funcao_objetivo):
@@ -164,10 +175,12 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
             melhor_solucao_log = log_individuo
             melhor_individuo = alg.individuos[j]
             geracao = 1
+            melhor_tempo = time.time() - start_time
     solucoes_log.append(melhor_solucao_log)
     solucoes.append(melhor_individuo.valor_funcao_objetivo)
     melhores_abelhas.append(melhor_individuo)
     solucoes_avaliacoes.append(melhor_individuo.valor_funcao_objetivo)
+    tempos_melhor_solucao.append(time.time() - start_time)
 
     for i in range(alg.num_geracoes):
         print("GERACAO {}".format(i+1))
@@ -183,10 +196,12 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
                 log_individuo = math.log(alg.individuos[j].valor_funcao_objetivo)
                 melhor_solucao_log = log_individuo
                 melhor_individuo = alg.individuos[j]
+                melhor_tempo = time.time() - start_time
                 geracao = i + 1
         solucoes_log.append(melhor_solucao_log)
         solucoes.append(melhor_individuo.valor_funcao_objetivo)
         melhores_abelhas.append(melhor_individuo)
+        tempos_melhor_solucao.append(time.time() - start_time)
 
         #Fase das abelhas observadoras
         cont_avaliacao_observadoras = alg.abelhas_observadoras(alg.individuos)
@@ -262,7 +277,23 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     plt.savefig('./ABC/img/SolutionEvolutionABCAvaliacoes.png')
     plt.show()
 
-    return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes
+    #Plotando o gráfico com o tempo para alcançar a melhor solução
+    plt.plot(tempos_melhor_solucao, solucoes, color='red')  # Linha vermelha plotada depois
+    # Configurações do gráfico
+    plt.xlabel('Geração')
+    plt.ylabel('Tempo (s)')
+    plt.title('Evolução do Tempo para Alcançar a Melhor Solução (ABC)')
+    plt.grid(True)
+    # Texto adicional no gráfico
+    valor_final = alg.truncate(alg.individuos[0].confiabilidade_total, 4)
+    texto = "Valor final: " + str(valor_final) + "\nAlcançado no tempo: " + str(melhor_tempo)
+    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    # Ajustes finais e salvamento
+    plt.tight_layout()
+    plt.savefig('./ABC/img/SolutionEvolutionABCTempo.png')
+    plt.show()
+
+    return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes, tempos_melhor_solucao, melhor_tempo
 
 
 if __name__ == "__main__":

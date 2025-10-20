@@ -3,6 +3,7 @@ import math
 import sys
 import random
 import os
+import time
 from decimal import Decimal, getcontext
 from contextlib import redirect_stdout
 from copy import deepcopy
@@ -31,7 +32,7 @@ class HarmonySearchAlgorithm:
 
         self.individuos = []
         for i in range(self.num_individuos):
-            self.individuos.append(individuos[i])
+            self.individuos.append(deepcopy(individuos[i]))
         self.individuos = sorted(self.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
 
     def cria_harmonia(self, pior_individuo_pop, populacao):
@@ -111,6 +112,9 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     melhor_solucao_log = -10000
     geracao = -1
     melhor_individuo: IndividuoGA = alg.individuos[1] #qualquer só para inicializar
+    melhor_tempo = 0
+    start_time = time.time()
+    tempos_melhor_solucao = []
 
     for j in range(len(alg.individuos)):
         if(alg.individuos[j].valor_funcao_objetivo > melhor_individuo.valor_funcao_objetivo):
@@ -118,9 +122,11 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
             melhor_solucao_log = log_individuo
             melhor_individuo = alg.individuos[j]
             geracao = 1
+            melhor_tempo = time.time() - start_time
     solucoes_log.append(melhor_solucao_log)
     solucoes.append(melhor_individuo.valor_funcao_objetivo)
     solucoes_avaliacoes.append(melhor_individuo.valor_funcao_objetivo)
+    tempos_melhor_solucao.append(time.time() - start_time)
 
     for i in range(alg.num_geracoes):
         print("GERACAO {}".format(i+1))
@@ -163,9 +169,11 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
                 log_individuo = math.log(alg.individuos[j].valor_funcao_objetivo)
                 melhor_solucao_log = log_individuo
                 melhor_individuo = alg.individuos[j]
+                melhor_tempo = time.time() - start_time
                 geracao = i + 1
         solucoes_log.append(melhor_solucao_log)
         solucoes.append(melhor_individuo.valor_funcao_objetivo)
+        tempos_melhor_solucao.append(time.time() - start_time)
         #devo adicionar a melhor solução atual ao vetor de soluções por avaliações
         if(porcentagem_criacao == 0):
             solucoes_avaliacoes.append(melhor_individuo.valor_funcao_objetivo)
@@ -183,7 +191,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     if(porcentagem_criacao == 0):
         plt.plot(range(0, alg.num_geracoes+1), solucoes, color='brown')  # Linha marrom/rosa plotada depois
     else:
-        plt.plot(range(0, alg.num_geracoes+1), solucoes, color='pink')  # Linha marrom/rosa plotada depois
+        plt.plot(range(0, alg.num_geracoes+1), solucoes, color='#FF69B4')  # Linha marrom/rosa plotada depois
     # Configurações do gráfico
     plt.xlabel('Geração')
     plt.ylabel('Valor da Função Objetivo')
@@ -210,7 +218,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     if(porcentagem_criacao == 0):
         plt.plot(range(0, alg.num_geracoes+1), solucoes_log, color='brown')  # Linha marrom/rosa plotada depois
     else:
-        plt.plot(range(0, alg.num_geracoes+1), solucoes_log, color='pink')  # Linha marrom/rosa plotada depois
+        plt.plot(range(0, alg.num_geracoes+1), solucoes_log, color='#FF69B4')  # Linha marrom/rosa plotada depois
     # Configurações do gráfico
     plt.xlabel('Geração')
     plt.ylabel('log(Função Objetivo)')
@@ -237,7 +245,7 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
     if(porcentagem_criacao == 0):
         plt.plot(range(0, numero_avaliacoes+1), solucoes_avaliacoes, color='brown')  # Linha marrom/rosa plotada depois
     else:
-        plt.plot(range(0, numero_avaliacoes+1), solucoes_avaliacoes, color='pink')  # Linha marrom/rosa plotada depois
+        plt.plot(range(0, numero_avaliacoes+1), solucoes_avaliacoes, color='#FF69B4')  # Linha marrom/rosa plotada depois
     # Configurações do gráfico
     plt.xlabel('Número de Avaliações')
     plt.ylabel('Valor da Função Objetivo')
@@ -258,7 +266,32 @@ def main(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_c
         plt.savefig('./HS/img/SolutionEvolutionHSMelhoradoAvaliacoes.png')
     plt.show()
 
-    return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes
+    # Plotando o gráfico com o tempo para alcançar a melhor solução
+    if(porcentagem_criacao == 0):
+        plt.plot(tempos_melhor_solucao, solucoes, color='brown')  # Linha marrom/rosa plotada depois
+    else:
+        plt.plot(tempos_melhor_solucao, solucoes, color='#FF69B4')  # Linha marrom/rosa plotada depois
+    # Configurações do gráfico
+    plt.xlabel('Geração')
+    plt.ylabel('Tempo (s)')
+    if(porcentagem_criacao == 0):
+        plt.title('Evolução do Tempo para Alcançar a Melhor Solução (HS)')
+    else:
+        plt.title('Evolução do Tempo para Alcançar a Melhor Solução (HS - Melhorado)')
+    plt.grid(True)
+    # Texto adicional no gráfico
+    valor_final = alg.truncate(alg.individuos[0].confiabilidade_total, 4)
+    texto = "Valor final: " + str(valor_final) + "\nAlcançado no tempo: " + str(melhor_tempo)
+    plt.figtext(0.87, 0.029, texto, wrap=True, horizontalalignment='center', fontsize=8)
+    # Ajustes finais e salvamento
+    plt.tight_layout()
+    if(porcentagem_criacao == 0):
+        plt.savefig('./HS/img/SolutionEvolutionHSTempo.png')
+    else:
+        plt.savefig('./HS/img/SolutionEvolutionHSMelhoradoTempo.png')
+    plt.show()
+
+    return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes, tempos_melhor_solucao, melhor_tempo
 
 
 if __name__ == "__main__":
