@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="./Logo_UFABC.png" width="300"/>
+    <img src="../imgs/Logo_UFABC.png" width="300"/>
     <br>
     <p>Projeto de Graduação em Computação</p>
     <p>João Vitor Arruda de Bartolo</p>

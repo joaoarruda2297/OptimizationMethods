@@ -160,7 +160,8 @@ class IndividuoPSO(Individuo):
         return velocidade
     
 class GeradorIndividuos:
-    def __init__(self, num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes):
+    def __init__(self, num_populacoes, num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes):
+        self.num_populacoes = num_populacoes
         self.num_tipos_componentes = num_tipos_componentes
         self.num_individuos = num_individuos
         self.num_variaveis = num_variaveis
@@ -170,8 +171,11 @@ class GeradorIndividuos:
         self.custo_max = custo_max
         self.componentes = componentes
 
+        self.contador = 0
+
     def gera_individuo(self):
         while True:
+            self.contador += 1
             # Gera tipos de componentes aleatórios [0, num_tipos_componentes)
             linha_tipos = np.random.randint(0, self.num_tipos_componentes, self.num_variaveis)
 
@@ -185,28 +189,31 @@ class GeradorIndividuos:
             individuo = Individuo(solucao, self.componentes, self.peso_max, self.custo_max)
 
             # Retorna apenas indivíduos viáveis
-            if individuo.valor_funcao_objetivo >= 0:
+            if individuo.confiabilidade_total == individuo.valor_funcao_objetivo:
                 return individuo
         
     def cria_individuos(self):
         pop_inicial = []
 
-        for _ in range(self.num_individuos):
+        for _ in range(self.num_individuos*self.num_populacoes):
             pop_inicial.append(self.gera_individuo())
 
         return pop_inicial
 
-def main(num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes):
-    generator = GeradorIndividuos(num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes)
+def main(num_populacoes, num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes):
+    generator = GeradorIndividuos(num_populacoes,num_tipos_componentes, num_individuos, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, peso_max, custo_max, componentes)
     individuos = generator.cria_individuos()
+    populacoes = np.array_split(individuos, generator.num_populacoes)
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
     txt_dir = os.path.join(base_dir, 'Txt')
     os.makedirs(txt_dir, exist_ok=True)
 
     with open(os.path.join(txt_dir, 'individuos.txt'), 'w') as f:
-        print("INDIVÍDUOS GERADOS:\n", file=f)
-        for i, individuo in enumerate(individuos):
-            print(f"Individuo {i}: {individuo}", file=f)
+        print(f"Total de tentativas para gerar individuos: {generator.contador}\n", file=f)
+        for p, populacao in enumerate(populacoes):
+            print(f"POPULACAO {p+1}:\n", file=f)
+            for i, individuo in enumerate(populacao):
+                print(f"Individuo {i+1}: {individuo}", file=f)
 
-    return individuos
+    return populacoes
