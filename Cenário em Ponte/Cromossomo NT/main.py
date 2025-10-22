@@ -225,7 +225,7 @@ def main():
         plt.legend()
         plt.grid(True)
         plt.subplots_adjust(bottom=0.2)
-        plt.savefig(f'./comparativeMethodsAvaliacoes{index}.png')
+        plt.savefig(f'./Graficos/comparativeMethodsAvaliacoes{index}.png')
         plt.show()
 
         # Gerando o gráfico comparativo por tempo até a melhor solução
@@ -243,7 +243,7 @@ def main():
         plt.legend()
         plt.grid(True)
         plt.subplots_adjust(bottom=0.2)
-        plt.savefig(f'./comparativeMethodsTempo{index}.png')
+        plt.savefig(f'./Graficos/comparativeMethodsTempo{index}.png')
         plt.show()
 
         plt.figure()
@@ -271,7 +271,7 @@ def main():
         plt.grid(True)
         plt.xlim(-0.04, 1.04)
         plt.subplots_adjust(bottom=0.2)
-        plt.savefig(f'./comparativeMethodsTempoTruncado{index}.png')
+        plt.savefig(f'./Graficos/comparativeMethodsTempoTruncado{index}.png')
         plt.show()
 
 if __name__ == "__main__":
