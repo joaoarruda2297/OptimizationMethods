@@ -12,6 +12,7 @@ import time
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from Geradores.GeradorIndividuos import Individuo
 from Geradores.GeradorGraficos import GeradorGraficos
+from utils import truncate
 
 class SolucaoMapa:
     def __init__(self, tipo_componente, quantidade_componente, ferormonio):
@@ -193,8 +194,8 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     print("\n")
 
     gerador_graficos = GeradorGraficos('./Metodos/AC/img/', 'blue')
-    valor_final = aco.truncate(aco.individuos[0].confiabilidade_total, 4)
-    valor_final_log = aco.truncate(melhor_solucao_log, 4)
+    valor_final = truncate(aco.individuos[0].confiabilidade_total, 4)
+    valor_final_log = truncate(melhor_solucao_log, 4)
 
     # Plotando o gráfico por geração
     gerador_graficos.gera_grafico(f'SolutionEvolutionACO{index}.png', range(0, aco.num_geracoes+1), solucoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (ACO)', 'Geração', 'Função Objetivo', show_plot=False)
@@ -206,6 +207,6 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     gerador_graficos.gera_grafico(f'SolutionEvolutionACOAvaliacoes{index}.png', range(0, numero_avaliacoes+1), solucoes_avaliacoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Avaliações (ACO)', 'Número de Avaliações', 'Função Objetivo', 'Número de Avaliações: ' + str(numero_avaliacoes))
 
     #Plotando o gráfico com o tempo por funcao objetivo
-    gerador_graficos.gera_grafico(f'SolutionEvolutionACOTempo{index}.png', tempos_melhor_solucao, solucoes, valor_final, geracao, 'Evolução do Tempo de Execução ao Longo das Gerações (ACO)', 'Tempo (s)', 'Função Objetivo', 'Tempo alcançado: ' + str(aco.truncate(melhor_tempo,4)) + 's')
+    gerador_graficos.gera_grafico(f'SolutionEvolutionACOTempo{index}.png', tempos_melhor_solucao, solucoes, valor_final, geracao, 'Evolução do Tempo de Execução ao Longo das Gerações (ACO)', 'Tempo (s)', 'Função Objetivo', 'Tempo alcançado: ' + str(truncate(melhor_tempo,4)) + 's')
 
     return solucoes_log, valor_final_log, aco.individuos[0], geracao, numero_avaliacoes, solucoes_avaliacoes, tempos_melhor_solucao, melhor_tempo

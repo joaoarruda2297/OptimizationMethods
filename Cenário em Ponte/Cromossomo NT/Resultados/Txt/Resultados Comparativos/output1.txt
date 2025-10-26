@@ -1,0 +1,57 @@
+===== Resultados Comparativos dos Algoritmos - População 1 =====
+PSO: 
+Alcançado na geração: 33
+Função Objetivo: 0.98562601
+Confiabilidade: 0.98562601
+Penalidade: 0.0
+Custo: 79.89
+Peso: 97.23000000000002
+
+DE: 
+Alcançado na geração: 193
+Função Objetivo: 0.99481871
+Confiabilidade: 0.99481871
+Penalidade: 0.0
+Custo: 79.89
+Peso: 97.23
+
+GA: 
+Alcançado na geração: 141
+Função Objetivo: 0.99528946
+Confiabilidade: 0.99528946
+Penalidade: 0.0
+Custo: 79.89
+Peso: 97.23
+
+ACO: 
+Alcançado na geração: 198
+Função Objetivo: 0.98500434
+Confiabilidade: 0.98500434
+Penalidade: 0.0
+Custo: 78.86000000000001
+Peso: 99.48
+
+ABC: 
+Alcançado na geração: 95
+Função Objetivo: 0.99315429
+Confiabilidade: 0.99315429
+Penalidade: 0.0
+Custo: 79.84
+Peso: 96.68
+
+HS: 
+Alcançado na geração: 1
+Função Objetivo: 0.98457085
+Confiabilidade: 0.98457085
+Penalidade: 0.0
+Custo: 76.11999999999999
+Peso: 96.02
+
+HS Melhorado: HS Melhorado
+Alcançado na geração: 48
+Função Objetivo: 0.99331699
+Confiabilidade: 0.99331699
+Penalidade: 0.0
+Custo: 78.41
+Peso: 97.83
+

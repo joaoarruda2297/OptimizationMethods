@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from Geradores.GeradorIndividuos import IndividuoABC
 from Geradores.GeradorGraficos import GeradorGraficos
+from utils import truncate
     
 class BeeColonyAlgorithm:
     def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
@@ -137,10 +138,6 @@ class BeeColonyAlgorithm:
 
         return populacao_filtrada
 
-    def truncate(self, number, decimals=0):
-        factor = 10 ** decimals
-        return math.trunc(number * factor) / factor
-
 def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
     alg = BeeColonyAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
 
@@ -223,8 +220,8 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     print("\n")
 
     gerador_graficos = GeradorGraficos('./Metodos/ABC/img/', 'red')
-    valor_final = alg.truncate(alg.individuos[0].confiabilidade_total, 4)
-    valor_final_log = alg.truncate(melhor_solucao_log, 4)
+    valor_final = truncate(alg.individuos[0].confiabilidade_total, 4)
+    valor_final_log = truncate(melhor_solucao_log, 4)
 
     # Plotando o gráfico por geração
     gerador_graficos.gera_grafico(f'SolutionEvolutionABC{index}.png', range(0, alg.num_geracoes+1), solucoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (ABC)', 'Geração', 'Função Objetivo', show_plot=False)
@@ -236,7 +233,7 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     gerador_graficos.gera_grafico(f'SolutionEvolutionABCAvaliacoes{index}.png', range(0, numero_avaliacoes+1), solucoes_avaliacoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Avaliações (ABC)', 'Número de Avaliações', 'Função Objetivo', 'Número de avaliações: ' + str(numero_avaliacoes))
 
     # Plotando o gráfico com o tempo para alcançar a melhor solução
-    gerador_graficos.gera_grafico(f'SolutionEvolutionABCTempo{index}.png', tempos_melhor_solucao, solucoes, valor_final, geracao, 'Evolução do Tempo para Alcançar a Melhor Solução (ABC)', 'Tempo (s)', 'Função Objetivo', 'Tempo alcançado: ' + str(alg.truncate(melhor_tempo,4)) + 's')
+    gerador_graficos.gera_grafico(f'SolutionEvolutionABCTempo{index}.png', tempos_melhor_solucao, solucoes, valor_final, geracao, 'Evolução do Tempo para Alcançar a Melhor Solução (ABC)', 'Tempo (s)', 'Função Objetivo', 'Tempo alcançado: ' + str(truncate(melhor_tempo,4)) + 's')
 
     return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes, tempos_melhor_solucao, melhor_tempo
 

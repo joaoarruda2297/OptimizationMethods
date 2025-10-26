@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from Geradores.GeradorIndividuos import Individuo as IndividuoGA
 from Geradores.GeradorGraficos import GeradorGraficos
+from utils import truncate
     
 class HarmonySearchAlgorithm:
     def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
@@ -86,10 +87,6 @@ class HarmonySearchAlgorithm:
                 populacao_filtrada.append(individuo)
 
         return populacao_filtrada
-
-    def truncate(self, number, decimals=0):
-        factor = 10 ** decimals
-        return math.trunc(number * factor) / factor
 
 def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao):
     alg = HarmonySearchAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
@@ -188,8 +185,8 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     print("\n")
 
     gerador_graficos = GeradorGraficos('./Metodos/HS/img/', '#FF69B4' if porcentagem_criacao > 0 else 'brown')
-    valor_final = alg.truncate(alg.individuos[0].confiabilidade_total, 4)
-    valor_final_log = alg.truncate(melhor_solucao_log, 4)
+    valor_final = truncate(alg.individuos[0].confiabilidade_total, 4)
+    valor_final_log = truncate(melhor_solucao_log, 4)
 
     #Plotando o gráfico por geração
     title = 'Evolução da Melhor Solução ao Longo das Gerações (HS - Melhorado)' if porcentagem_criacao > 0 else 'Evolução da Melhor Solução ao Longo das Gerações (HS)'
@@ -209,7 +206,7 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     # Plotando o gráfico por tempo para alcançar a melhor solução
     title_tempo = 'Evolução do Tempo para Alcançar a Melhor Solução (HS - Melhorado)' if porcentagem_criacao > 0 else 'Evolução do Tempo para Alcançar a Melhor Solução (HS)'
     path_tempo = f'SolutionEvolutionHSMelhoradoTempo{index}.png' if porcentagem_criacao > 0 else f'SolutionEvolutionHSTempo{index}.png'
-    gerador_graficos.gera_grafico(path_tempo, tempos_melhor_solucao, solucoes, valor_final, geracao, title_tempo, 'Geração', 'Tempo (s)', "Tempo para alcançar a melhor solução: " + str(alg.truncate(melhor_tempo, 4)) + " s")
+    gerador_graficos.gera_grafico(path_tempo, tempos_melhor_solucao, solucoes, valor_final, geracao, title_tempo, 'Geração', 'Tempo (s)', "Tempo para alcançar a melhor solução: " + str(truncate(melhor_tempo, 4)) + " s")
 
     return solucoes_log, valor_final_log, melhor_individuo, geracao, numero_avaliacoes, solucoes_avaliacoes, tempos_melhor_solucao, melhor_tempo
 

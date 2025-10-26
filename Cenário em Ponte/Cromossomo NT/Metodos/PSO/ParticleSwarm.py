@@ -10,6 +10,7 @@ from decimal import Decimal, getcontext
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from Geradores.GeradorIndividuos import IndividuoPSO
 from Geradores.GeradorGraficos import GeradorGraficos
+from utils import truncate
 
 class ParticleSwarmOptimization:
     def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
@@ -81,10 +82,6 @@ class ParticleSwarmOptimization:
         posicao_final_inteira[0][posicao_final_inteira[0] >= self.num_tipos_componentes] = self.num_tipos_componentes - 1
 
         return posicao_final_inteira
-    
-    def truncate(self, number, decimals=0):
-        factor = 10 ** decimals
-        return math.trunc(number * factor) / factor
 
 def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
     alg = ParticleSwarmOptimization(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
@@ -181,8 +178,8 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     print("\n")
 
     gerador_graficos = GeradorGraficos('./Metodos/PSO/img/', 'purple')
-    valor_final = alg.truncate(melhor_solucao, 4)
-    valor_final_log = alg.truncate(melhor_solucao_log, 4)
+    valor_final = truncate(melhor_solucao, 4)
+    valor_final_log = truncate(melhor_solucao_log, 4)
 
     # Plotando o gráfico por geração
     gerador_graficos.gera_grafico(f'SolutionEvolutionPSO{index}.png', range(0, alg.num_geracoes+1), solucoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (PSO)', 'Geração', 'Função Objetivo', show_plot=False)
@@ -194,7 +191,7 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     gerador_graficos.gera_grafico(f'SolutionEvolutionPSOAvaliacoes{index}.png', range(0, numero_avaliacoes+1), solucoes_avaliacoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Avaliações (PSO)', 'Número de Avaliações', 'Função Objetivo', 'Número de Avaliações: ' + str(numero_avaliacoes))
 
     #Plotando o gráfico com o tempo por funcao objetivo
-    gerador_graficos.gera_grafico(f'SolutionEvolutionPSOTempo{index}.png', tempos_melhor_solucao, solucoes, valor_final, geracao, 'Evolução do Tempo de Execução ao Longo das Gerações (PSO)', 'Tempo (s)', 'Função Objetivo', 'Alcançado no tempo: ' + str(alg.truncate(melhor_tempo, 4)) + 's')
+    gerador_graficos.gera_grafico(f'SolutionEvolutionPSOTempo{index}.png', tempos_melhor_solucao, solucoes, valor_final, geracao, 'Evolução do Tempo de Execução ao Longo das Gerações (PSO)', 'Tempo (s)', 'Função Objetivo', 'Alcançado no tempo: ' + str(truncate(melhor_tempo, 4)) + 's')
 
     return solucoes_log, valor_final_log, global_best, geracao, numero_avaliacoes, solucoes_avaliacoes, tempos_melhor_solucao, melhor_tempo
 
