@@ -25,13 +25,20 @@ def ler_componentes_excel(caminho_excel):
     df = pd.read_excel(caminho_excel)
     return [Componente(row["confiabilidade"], row["custo"], row["peso"]) for _, row in df.iterrows()]
 
-def ler_individuos_excel(caminho_excel, componentes, custo_max, peso_max):
-    df = pd.read_excel(caminho_excel)
-    individuos = []
-    for _, row in df.iterrows():
-        tipos = eval(row["solucao_tipos"])
-        quantidades = eval(row["solucao_quantidades"])
-        solucao = np.vstack([tipos, quantidades])
-        individuo = Individuo(solucao, componentes, custo_max, peso_max)
-        individuos.append(individuo)
-    return individuos
+def ler_individuos_excel(caminho_pasta, componentes, custo_max, peso_max):
+    #encontrar todos os arquivos xlsx na pasta que possuem nome iniciando com "individuos"
+    arquivos = [f for f in os.listdir(caminho_pasta) if f.startswith("individuos") and f.endswith(".xlsx")]
+    if len(arquivos) == 0:
+        raise FileNotFoundError("Nenhum arquivo de indivíduos encontrado na pasta especificada.")
+    populacoes = []
+    for arquivo in arquivos:
+        df = pd.read_excel(os.path.join(caminho_pasta, arquivo))
+        individuos = []
+        for _, row in df.iterrows():
+            tipos = eval(row["solucao_tipos"])
+            quantidades = eval(row["solucao_quantidades"])
+            solucao = np.vstack([tipos, quantidades])
+            individuo = Individuo(solucao, componentes, custo_max, peso_max)
+            individuos.append(individuo)
+        populacoes.append(individuos)
+    return populacoes
