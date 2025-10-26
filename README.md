@@ -11,10 +11,19 @@
 - GA (Genetic Algorithm)
 - PSO (Particle Swarm Optimization)
 - DE (Differential Evolution)
+- ABC (Artificial Bee Colony)
+- AC (Ant Colony)
+- HS (Harmony Search)
+
+<p>Este trabalho visa a otimização de um sistema com o problema de alocação de redundâncias maximizando a confiabilidade e utilizando de peso e custo como penalidades da função objetivo.</p>
 
 <p>Todos os códigos estão em Python e geram logs e imagem de gráfico.</p>
 
 ## Como rodar?
  - Clone esse repositório na sua máquina.
- - Acesse a pasta do algoritmo que deseja:
- - Rode ```python nomeDoArquivo.py```
+ - Acesse a pasta de Cromossomo NT:
+ - Rode ```python main.py```
+
+<p>Parâmetros gerais do sistema para obtenção da otimização estão em main.py, enquanto que os parâmetros parciais de cada algoritmo se encontram em seus respectivos arquivos na pasta Métodos.</p>
+
+<p>Estudo de parâmetros a serem utilizados deve ser escolhido pelo usuário ao rodar o código.</p>
