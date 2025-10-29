@@ -34,7 +34,7 @@ def main():
     lim_sup_custo = 18
     lim_inf_custo = 9
     num_tipos_componentes = 10
-    num_populacoes = 5
+    num_populacoes = 1
     num_individuos = 50
     num_variaveis = 5
     num_max_componentes_subsistema = 3
