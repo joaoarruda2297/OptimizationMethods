@@ -34,7 +34,7 @@ def main():
     lim_sup_custo = 18
     lim_inf_custo = 9
     num_tipos_componentes = 10
-    num_populacoes = 1
+    num_populacoes = 5
     num_individuos = 50
     num_variaveis = 5
     num_max_componentes_subsistema = 3
@@ -46,10 +46,14 @@ def main():
     custo_max = 80
 
     arquivosBase = [f for f in os.listdir('./Geradores/Excel') if f.endswith(".xlsx")]
-    if len(arquivosBase) == 0:
+    arquivosIndividuos = [f for f in os.listdir('./Geradores/Excel') if f.endswith(".xlsx") and f.startswith("individuos")]
+    if len(arquivosIndividuos) == 0:
         print("Não foram encontrados arquivos base na pasta './Geradores/Excel'. Será necessário gerar componentes e indivíduos.")
         resposta = "1"
-    else:
+    elif len(arquivosIndividuos) != num_populacoes:
+        print(f'Quantidade de arquivos base na pasta ./Geradores/Excel ({len(arquivosIndividuos)}) é diferente do utilizado como parâmetro ({num_populacoes}). Será necessário gerar componentes e indivíduos.')
+        resposta = "1"
+    elif len(arquivosIndividuos) == num_populacoes:
         #encontrar se em arquivos existem os individuos e se existem os componentes
         individuos_existentes = any("individuos" in f for f in arquivosBase)
         componentes_existentes = any("componentes" in f for f in arquivosBase)

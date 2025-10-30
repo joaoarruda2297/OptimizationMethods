@@ -81,6 +81,65 @@ def analisa_resultados_parametros_multiplos(resultados_finais, index, nome_varia
                 if isinstance(cell.value, (float, int)):
                     cell.number_format = '0.000000'
 
+def analisa_resultados_parametros_unico(resultados_finais, index, nome_variavel, alg_nome, variavel_abreviada):
+    gerador_graficos = GeradorGraficos(caminho_salvamento="./Resultados/Graficos/Graficos Parametros/")
+    
+    # Organiza os resultados em um formato adequado para o gráfico
+    dicionario_parametros = {}
+    valores_parametro = []
+    melhores_valores = []
+    
+    for ALG_result in resultados_finais:
+        for resultados in ALG_result:
+            melhor_valor, solucoes_avaliacoes, variavel = resultados
+            valores_parametro.append(variavel)
+            
+            dicionario_parametros[variavel] = {
+                'x': range(1, len(solucoes_avaliacoes) + 1),
+                'y': solucoes_avaliacoes,
+                'label': f'{nome_variavel}: {variavel}',
+            }
+            
+            # Guarda o melhor valor para a tabela Excel
+            valor_original = math.exp(melhor_valor)  # Converte do log natural para o valor original
+            melhores_valores.append(valor_original)
+    
+    # Gera o gráfico comparativo
+    gerador_graficos.gera_grafico_comparativo_parametros(
+        nome_arquivo=f'Comparativo_{alg_nome}_{variavel_abreviada}_Pop_{index}.png',
+        dicionario_parametros=dicionario_parametros,
+        title=f'Comparativo {nome_variavel} - População {index}',
+        xlabel='Número de Avaliações',
+        ylabel='log(Função Objetivo)'
+    )
+    print(f"Gráfico comparativo de {nome_variavel} gerado com sucesso para população {index}.")
+    
+    # Criar DataFrame do pandas para Excel
+    df = pd.DataFrame({
+        nome_variavel: valores_parametro,
+        'Melhor Valor': melhores_valores
+    })
+    
+    # Configurar formato com 6 casas decimais
+    df['Melhor Valor'] = df['Melhor Valor'].round(6)
+    
+    # Criar diretório se não existir
+    excel_path = f'./Resultados/Txt/Resultados Parametros/{alg_nome}/resultados_parametros_pop_{index}.xlsx'
+    os.makedirs(os.path.dirname(excel_path), exist_ok=True)
+    
+    # Salvar como Excel com formato específico
+    with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
+        df.to_excel(writer, sheet_name=f'População {index}', index=False)
+        # Configura o formato das células para 6 casas decimais
+        workbook = writer.book
+        worksheet = writer.sheets[f'População {index}']
+        for row in range(len(df.index) + 1):  # +1 para incluir o cabeçalho
+            cell = worksheet.cell(row + 2, 2)  # Coluna 2 (Melhor Valor)
+            if isinstance(cell.value, (float, int)):
+                cell.number_format = '0.000000'
+
+
+
 def ComparacaoParametros(populacoes, componentes, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
     estudo_parametro = True  # Indica que estamos em modo de estudo de parâmetro
     gerador_graficos = GeradorGraficos(caminho_salvamento="./Resultados/Graficos/Graficos Parametros/")
@@ -167,6 +226,21 @@ def ComparacaoParametros(populacoes, componentes, peso_max, custo_max, num_gerac
             DE_resultados_finais.append(DE_resultados)
             print("DE executado com sucesso para população {}.".format(index))
 
+        ACO_resultados_finais = []
+        # Executa ACO e captura os resultados
+        for j, evaporacao in enumerate(ACO_evaporacao):
+            ACO_resultados = []
+            print("Executando ACO para população {} - Evaporação: {}".format(index, evaporacao))
+            with open(f'./Resultados/Txt/Resultados Parametros/ACO/output{index}-Evaporacao{j}.txt', 'w', encoding='utf-8') as f:
+                sys.stdout = f
+                try:
+                    solucoes_ACO, melhor_valor_ACO, melhor_individuo_ACO, geracao_ACO, numero_avaliacoes_ACO, solucoes_avaliacoes_ACO, tempos_melhor_solucao_ACO, melhor_tempo_ACO = AC(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, estudo_parametro, evaporacao=evaporacao)
+                    ACO_resultados.append((melhor_valor_ACO, solucoes_avaliacoes_ACO, evaporacao))
+                finally:
+                    sys.stdout = original_stdout
+            ACO_resultados_finais.append(ACO_resultados)
+            print("ACO executado com sucesso para população {}.".format(index))
+
         HS_resultados_finais = []
         # Executa HS e captura os resultados
         for j, (par, hmcr) in enumerate(HS_parametros):
@@ -186,5 +260,6 @@ def ComparacaoParametros(populacoes, componentes, peso_max, custo_max, num_gerac
         analisa_resultados_parametros_multiplos(PSO_resultados_finais, index, "C1", "C2", "PSO", "c1")
         analisa_resultados_parametros_multiplos(DE_resultados_finais, index, "Passo", "CR", "DE", "passo")
         analisa_resultados_parametros_multiplos(HS_resultados_finais, index, "PAR", "HMCR", "HS", "par")
+        analisa_resultados_parametros_unico(ACO_resultados_finais, index, "Taxa de Evaporação", "ACO", "evap")
 
     
