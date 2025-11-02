@@ -37,8 +37,8 @@ def ler_individuos_excel(caminho_pasta, componentes, custo_max, peso_max):
         for _, row in df.iterrows():
             tipos = eval(row["solucao_tipos"])
             quantidades = eval(row["solucao_quantidades"])
-            solucao = np.vstack([tipos, quantidades])
-            individuo = Individuo(solucao, componentes, custo_max, peso_max)
+            solucao = np.vstack((tipos, quantidades))
+            individuo = Individuo(solucao, componentes, peso_max, custo_max)
             individuos.append(individuo)
         populacoes.append(individuos)
     return populacoes

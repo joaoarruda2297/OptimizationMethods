@@ -102,20 +102,7 @@ class Individuo:
     
 class IndividuoABC(Individuo):
     def __init__(self, solucao=None, componentes=None, peso_max=0, custo_max=0):
-        print("Debug - Antes do super().__init__:")
-        print(f"solucao: {solucao}")
-        print(f"componentes: {[c.confiabilidade for c in componentes]}")
-        print(f"peso_max: {peso_max}")
-        print(f"custo_max: {custo_max}")
-        
         super().__init__(solucao, componentes, peso_max, custo_max)
-        
-        print("Debug - Depois do super().__init__:")
-        print(f"confiabilidade: {self.confiabilidade_total}")
-        print(f"peso: {self.peso}")
-        print(f"custo: {self.custo}")
-        print(f"fo: {self.valor_funcao_objetivo}")
-        
         self.estagnacao = 0
 
     def __str__(self):

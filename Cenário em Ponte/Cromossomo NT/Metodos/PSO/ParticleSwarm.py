@@ -17,8 +17,8 @@ class ParticleSwarmOptimization:
         self.num_particulas = len(individuos)
         self.num_variaveis = 5 #5 subsistemas
         self.num_geracoes = num_geracoes
-        self.exploracao_global = c1 if c1 is not None else 1.49 #C2
-        self.auto_exploracao = c2 if c2 is not None else 1.49 #C1
+        self.exploracao_global = c1 if c1 is not None else 2.5 #C2
+        self.auto_exploracao = c2 if c2 is not None else 2.3 #C1
         self.taxa_inercia = 0.7 #w
         self.damp_inercia = 0.99
 

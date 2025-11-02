@@ -19,8 +19,8 @@ class GeneticAlgorithm:
         self.num_individuos = len(individuos) #quantidade de individuos
         self.num_variaveis = num_variaveis
         self.num_geracoes = num_geracoes
-        self.taxa_cruzamento = taxa_crossover if taxa_crossover is not None else 0.6 #quantidade de pais que gerarão individuos (pais/2)
-        self.taxa_mutacao = taxa_mutacao if taxa_mutacao is not None else 0.3 #quantidade de individuos que vão receber mutação
+        self.taxa_cruzamento = taxa_crossover if taxa_crossover is not None else 0.17 #quantidade de pais que gerarão individuos (pais/2)
+        self.taxa_mutacao = taxa_mutacao if taxa_mutacao is not None else 0.08 #quantidade de individuos que vão receber mutação
 
         self.num_tipos_componentes = num_tipos_componentes
 
@@ -33,6 +33,7 @@ class GeneticAlgorithm:
 
         self.individuos = []
         for i in range(self.num_individuos):
+            print("AQUI:", individuos[i])
             self.individuos.append(deepcopy(individuos[i]))
         self.individuos = sorted(self.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
 

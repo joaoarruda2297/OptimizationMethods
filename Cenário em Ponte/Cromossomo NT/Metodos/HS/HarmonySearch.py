@@ -19,8 +19,8 @@ class HarmonySearchAlgorithm:
         self.num_individuos = len(individuos) #quantidade de individuos
         self.num_variaveis = num_variaveis
         self.num_geracoes = num_geracoes
-        self.HCMR = hmcr if hmcr is not None else 0.8 #Harmony Memory Consideration Rate entre 0.7 e 0.95
-        self.PAR = par if par is not None else 0.3 #Pitch Adjustment Rate entre 0.1 e 0.5
+        self.HCMR = hmcr if hmcr is not None else 0.85 #Harmony Memory Consideration Rate entre 0.7 e 0.95
+        self.PAR = par if par is not None else 0.5 #Pitch Adjustment Rate entre 0.1 e 0.5
         self.bw = 0.8 #pitch bandwidth (por variável) (escala do problema)
 
         self.num_tipos_componentes = num_tipos_componentes

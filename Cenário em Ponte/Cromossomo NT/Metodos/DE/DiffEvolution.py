@@ -17,8 +17,8 @@ class DifferentialEvolution:
         self.num_individuos = len(individuos)
         self.num_variaveis = num_variaveis
         self.num_geracoes = num_geracoes
-        self.passo = passo if passo is not None else 1
-        self.CR = cr if cr is not None else 0.6
+        self.passo = passo if passo is not None else 0.8
+        self.CR = cr if cr is not None else 0.5
 
         self.num_tipos_componentes = num_tipos_componentes
         self.componentes = componentes
@@ -190,8 +190,14 @@ def main(index, componentes,num_tipos_componentes, individuos, peso_max, custo_m
         if(len(alg.individuos) < alg.num_individuos):
             #significa que precisamos completar a população
             evoluidos_rejeitados = sorted(evoluidos_rejeitados, key=lambda x: x.valor_funcao_objetivo, reverse=True)
-            for k in range(alg.num_individuos - len(alg.individuos)):
-                alg.individuos.append(evoluidos_rejeitados[k])
+            num_faltantes = alg.num_individuos - len(alg.individuos)
+            num_rejeitados = len(evoluidos_rejeitados)
+            
+            if num_rejeitados > 0:  # Só tenta adicionar se houver pelo menos um rejeitado
+                for k in range(num_faltantes):
+                    # Usa o operador módulo para reutilizar os rejeitados de forma cíclica
+                    idx = k % num_rejeitados
+                    alg.individuos.append(deepcopy(evoluidos_rejeitados[idx]))
 
         for l in range(len(alg.individuos)):
             print("Individuo {}:".format(l+1))

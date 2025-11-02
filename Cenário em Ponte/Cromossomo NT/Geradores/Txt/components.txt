@@ -1,52 +1,52 @@
 COMPONENTES GERADOS:
 
 Componente 0: {
-  "confiabilidade": 0.89154669
-  "peso": 23.29,
-  "custo": 16.31
+  "confiabilidade": 0.87464334
+  "peso": 22.84,
+  "custo": 16.18
 }
 Componente 1: {
-  "confiabilidade": 0.89032071
-  "peso": 15.62,
-  "custo": 9.34
+  "confiabilidade": 0.87227966
+  "peso": 15.26,
+  "custo": 15.46
 }
 Componente 2: {
-  "confiabilidade": 0.86695202
-  "peso": 14.44,
-  "custo": 15.38
+  "confiabilidade": 0.86040638
+  "peso": 20.13,
+  "custo": 16.94
 }
 Componente 3: {
-  "confiabilidade": 0.85719069
-  "peso": 15.23,
-  "custo": 17.62
+  "confiabilidade": 0.85577812
+  "peso": 15.63,
+  "custo": 11.51
 }
 Componente 4: {
-  "confiabilidade": 0.85252222
-  "peso": 12.71,
-  "custo": 15.93
+  "confiabilidade": 0.853419
+  "peso": 17.46,
+  "custo": 13.07
 }
 Componente 5: {
-  "confiabilidade": 0.82246193
-  "peso": 22.93,
-  "custo": 15.13
+  "confiabilidade": 0.84137089
+  "peso": 12.27,
+  "custo": 14.5
 }
 Componente 6: {
-  "confiabilidade": 0.82198298
-  "peso": 18.4,
-  "custo": 11.96
+  "confiabilidade": 0.84129642
+  "peso": 16.6,
+  "custo": 13.59
 }
 Componente 7: {
-  "confiabilidade": 0.80939348
-  "peso": 20.82,
-  "custo": 9.34
+  "confiabilidade": 0.83459235
+  "peso": 12.38,
+  "custo": 11.49
 }
 Componente 8: {
-  "confiabilidade": 0.80882923
-  "peso": 18.35,
-  "custo": 12.86
+  "confiabilidade": 0.82382803
+  "peso": 20.87,
+  "custo": 14.07
 }
 Componente 9: {
-  "confiabilidade": 0.80617999
-  "peso": 20.15,
-  "custo": 15.19
+  "confiabilidade": 0.81494565
+  "peso": 19.16,
+  "custo": 15.45
 }

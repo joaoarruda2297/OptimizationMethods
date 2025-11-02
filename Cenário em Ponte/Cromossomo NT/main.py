@@ -42,8 +42,8 @@ def main():
 
     # Variáveis para execução do algoritmo
     num_geracoes = 200
-    peso_max = 100
-    custo_max = 80
+    peso_max = 120
+    custo_max = 100
 
     arquivosBase = [f for f in os.listdir('./Geradores/Excel') if f.endswith(".xlsx")]
     arquivosIndividuos = [f for f in os.listdir('./Geradores/Excel') if f.endswith(".xlsx") and f.startswith("individuos")]
@@ -112,7 +112,7 @@ def main():
         print("Iniciando otimização dos sistemas...")
         #Limpa diretórios de imagem e output antes de gerar novos resultados
         print("Limpando diretórios de imagens e outputs...")
-        diretorios = ['./Metodos/GA/img', './Metodos/PSO/img', './Metodos/DE/img', './Metodos/AC/img', './Metodos/ABC/img', './Metodos/HS/img', './Metodos/GA/output', './Metodos/PSO/output', './Metodos/DE/output', './Metodos/AC/output', './Metodos/ABC/output', './Metodos/HS/output', './Resultados/Graficos/Graficos Comparativos', './Resultados/Graficos/Graficos Parametros', './Resultados/Txt/Resultados Comparativos']
+        diretorios = ['./Metodos/GA/img', './Metodos/PSO/img', './Metodos/DE/img', './Metodos/AC/img', './Metodos/ABC/img', './Metodos/HS/img', './Metodos/GA/output', './Metodos/PSO/output', './Metodos/DE/output', './Metodos/AC/output', './Metodos/ABC/output', './Metodos/HS/output', './Resultados/Graficos/Graficos Comparativos', './Resultados/Txt/Resultados Comparativos']
         for diretorio in diretorios:
             limpar_diretorio(diretorio)
         print("Diretórios limpos com sucesso.")
@@ -277,6 +277,63 @@ def main():
                     }
 
             gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsTempoTruncado{index}.png', dicionario_metodos_tempo_filtrado, 'Comparação dos Algoritmos por Tempo (truncado em 1s)', 'Tempo até a Melhor Solução (s)', 'log(Função Objetivo)', [-0.04, 1.04])
+
+            #Gera novo grafico comparativo de 3 metodos apenas
+            dicionario_metodos_animais = {
+                'PSO': {'x': range(1, len(solucoes_avaliacoes_PSO) + 1), 'y': solucoes_avaliacoes_PSO, 'color': 'purple', 'label': 'PSO ({})'.format(melhor_valor_PSO)},
+                'ACO': {'x': range(1, len(solucoes_avaliacoes_AC) + 1), 'y': solucoes_avaliacoes_AC, 'color': 'blue', 'label': 'ACO ({})'.format(melhor_valor_AC)},
+                'ABC': {'x': range(1, len(solucoes_avaliacoes_ABC) + 1), 'y': solucoes_avaliacoes_ABC, 'color': 'red', 'label': 'ABC ({})'.format(melhor_valor_ABC)},
+            }
+
+            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoesAnimais{index}.png', dicionario_metodos_animais, 'Comparação dos Algoritmos por Avaliações', 'Número de Avaliações', 'log(Função Objetivo)')
+
+            #Cria um novo dicionário com os dados truncados em 200 avaliações
+            dicionario_metodos_animais_filtrado = {}
+            for metodo, dados in dicionario_metodos_animais.items():
+                # Filtrar pontos até 1 segundo
+                pontos_filtrados = [(t, s) for t, s in zip(dados['x'], dados['y']) if t <= 200]
+                if pontos_filtrados:
+                    if(dados['x'][-1] != 200):
+                        pontos_filtrados.append((200, dados['y'][-1]))
+                    aval, sols = zip(*pontos_filtrados)
+                    # Criar nova entrada no dicionário filtrado
+                    dicionario_metodos_animais_filtrado[metodo] = {
+                        'x': aval,
+                        'y': sols,
+                        'color': dados['color'],
+                        'label': dados['label']
+                    }
+
+            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoesAnimaisTruncado{index}.png', dicionario_metodos_animais_filtrado, 'Comparação dos Algoritmos por Avaliações (Truncado em 200 avaliações)', 'Número de Avaliações', 'log(Função Objetivo)')
+
+            #Gera novo grafico comparativo de 3 metodos apenas
+            dicionario_metodos_principais = {
+                'DE': {'x': range(1, len(solucoes_avaliacoes_DE) + 1), 'y': solucoes_avaliacoes_DE, 'color': 'green', 'label': 'DE ({})'.format(melhor_valor_DE)},
+                'GA': {'x': range(1, len(solucoes_avaliacoes_GA) + 1), 'y': solucoes_avaliacoes_GA, 'color': 'orange', 'label': 'GA ({})'.format(melhor_valor_GA)},
+                'HS': {'x': range(1, len(solucoes_avaliacoes_HS) + 1), 'y': solucoes_avaliacoes_HS, 'color': 'brown', 'label': 'HS ({})'.format(melhor_valor_HS)},
+                'HS Melhorado': {'x': range(1, len(solucoes_avaliacoes_HS_melhorado) + 1), 'y': solucoes_avaliacoes_HS_melhorado, 'color': '#FF69B4', 'label': 'HSM ({})'.format(melhor_valor_HS_melhorado)}
+            }
+
+            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoesPrincipais{index}.png', dicionario_metodos_principais, 'Comparação dos Algoritmos por Avaliações', 'Número de Avaliações', 'log(Função Objetivo)')
+
+            #Cria um novo dicionário com os dados truncados em 200 avaliações
+            dicionario_metodos_principais_filtrado = {}
+            for metodo, dados in dicionario_metodos_principais.items():
+                # Filtrar pontos até 1 segundo
+                pontos_filtrados = [(t, s) for t, s in zip(dados['x'], dados['y']) if t <= 200]
+                if pontos_filtrados:
+                    if(dados['x'][-1] != 200):
+                        pontos_filtrados.append((200, dados['y'][-1]))
+                    aval, sols = zip(*pontos_filtrados)
+                    # Criar nova entrada no dicionário filtrado
+                    dicionario_metodos_principais_filtrado[metodo] = {
+                        'x': aval,
+                        'y': sols,
+                        'color': dados['color'],
+                        'label': dados['label']
+                    }
+
+            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoesPrincipaisTruncado{index}.png', dicionario_metodos_principais_filtrado, 'Comparação dos Algoritmos por Avaliações (Truncado em 200 avaliações)', 'Número de Avaliações', 'log(Função Objetivo)')
 
 if __name__ == "__main__":
     main()

@@ -32,7 +32,7 @@ class AntColonyOptimization:
         self.custo_max = custo_max
         self.num_max_componentes_subsistema = num_max_componentes_subsistema
         self.num_min_componentes_subsistema = num_min_componentes_subsistema
-        self.evaporation_rate = evaporacao if evaporacao is not None else 0.2
+        self.evaporation_rate = evaporacao if evaporacao is not None else 0.5
 
         self.individuos = []
         for i in range(self.num_formigas):
