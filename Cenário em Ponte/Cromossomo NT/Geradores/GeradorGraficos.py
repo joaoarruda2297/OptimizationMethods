@@ -43,7 +43,8 @@ class GeradorGraficos:
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.title(title)
-        plt.legend()
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.tight_layout()
         plt.grid(True)
         if xlim is not None:
             plt.xlim(xlim[0], xlim[1])
