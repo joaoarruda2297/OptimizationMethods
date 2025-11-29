@@ -33,7 +33,6 @@ class GeneticAlgorithm:
 
         self.individuos = []
         for i in range(self.num_individuos):
-            print("AQUI:", individuos[i])
             self.individuos.append(deepcopy(individuos[i]))
         self.individuos = sorted(self.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
 

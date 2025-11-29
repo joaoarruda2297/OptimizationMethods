@@ -44,7 +44,7 @@ def analisa_resultados_parametros_multiplos(resultados_finais, index, nome_varia
             dicionario_parametros=resultados_por_variavel_one[ALG_variavel_one],
             title=f'{nome_variavel_one} {ALG_variavel_one} - População {index}',
             xlabel='Número de Avaliações',
-            ylabel='log(Função Objetivo)'
+            ylabel='Função Objetivo'
         )
         print(f"Gráfico para {variavel_one} {ALG_variavel_one} gerado com sucesso para população {index}.")
 
@@ -110,7 +110,7 @@ def analisa_resultados_parametros_unico(resultados_finais, index, nome_variavel,
         dicionario_parametros=dicionario_parametros,
         title=f'Comparativo {nome_variavel} - População {index}',
         xlabel='Número de Avaliações',
-        ylabel='log(Função Objetivo)'
+        ylabel='Função Objetivo'
     )
     print(f"Gráfico comparativo de {nome_variavel} gerado com sucesso para população {index}.")
     

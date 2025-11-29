@@ -244,7 +244,7 @@ def main():
                 'HS Melhorado': {'x': range(1, len(solucoes_avaliacoes_HS_melhorado) + 1), 'y': solucoes_avaliacoes_HS_melhorado, 'color': '#FF69B4', 'label': 'HSM ({})'.format(melhor_valor_HS_melhorado)}
             }
 
-            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoes{index}.png', dicionario_metodos_avaliacoes, 'Comparação dos Algoritmos por Número de Avaliações', 'Número de Avaliações', 'log(Função Objetivo)')
+            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoes{index}.png', dicionario_metodos_avaliacoes, 'Comparação dos Algoritmos por Número de Avaliações', 'Número de Avaliações', 'Função Objetivo')
 
             # Gerando o gráfico comparativo por tempo até a melhor solução
             dicionario_metodos_tempo = {
@@ -259,25 +259,7 @@ def main():
 
             gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsTempo{index}.png', dicionario_metodos_tempo, 'Comparação dos Algoritmos por Tempo', 'Tempo até a Melhor Solução (s)', 'log(Função Objetivo)', show_plot=False)
 
-            # Criar um novo dicionário com os dados filtrados
-            dicionario_metodos_tempo_filtrado = {}
-            for metodo, dados in dicionario_metodos_tempo.items():
-                # Filtrar pontos até 1 segundo
-                pontos_filtrados = [(t, s) for t, s in zip(dados['x'], dados['y']) if t <= 1.0]
-                if pontos_filtrados:
-                    if(dados['x'][-1] != 1.0):
-                        pontos_filtrados.append((1.0, pontos_filtrados[-1][1]))
-                    tempos, sols = zip(*pontos_filtrados)
-                    # Criar nova entrada no dicionário filtrado
-                    novo_label = f'{metodo} ({truncate(sols[-1], 5)})'
-                    dicionario_metodos_tempo_filtrado[metodo] = {
-                        'x': tempos,
-                        'y': sols,
-                        'color': dados['color'],
-                        'label': novo_label
-                    }
-
-            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsTempoTruncado{index}.png', dicionario_metodos_tempo_filtrado, 'Comparação dos Algoritmos por Tempo\n(truncado em 1s)', 'Tempo até a Melhor Solução (s)', 'log(Função Objetivo)', [-0.04, 1.04])
+            gerador_graficos.gera_grafico_comparativo_truncado(f'./comparativeMethodsTempoTruncado{index}.png', dicionario_metodos_tempo, 'Comparação dos Algoritmos por Tempo\n(truncado em 1s)', 'Tempo até a Melhor Solução (s)', 'log(Função Objetivo)', 1.0 ,[-0.04, 1.04])
 
             #Gera novo grafico comparativo de 3 metodos apenas
             dicionario_metodos_animais = {
@@ -288,25 +270,7 @@ def main():
 
             gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoesAnimais{index}.png', dicionario_metodos_animais, 'Comparação dos Algoritmos por Avaliações', 'Número de Avaliações', 'log(Função Objetivo)')
 
-            #Cria um novo dicionário com os dados truncados em 200 avaliações
-            dicionario_metodos_animais_filtrado = {}
-            for metodo, dados in dicionario_metodos_animais.items():
-                # Filtrar pontos até 1 segundo
-                pontos_filtrados = [(t, s) for t, s in zip(dados['x'], dados['y']) if t <= 200]
-                if pontos_filtrados:
-                    if(dados['x'][-1] != 200):
-                        pontos_filtrados.append((200, pontos_filtrados[-1][1]))
-                    aval, sols = zip(*pontos_filtrados)
-                    # Criar nova entrada no dicionário filtrado
-                    novo_label = f'{metodo} ({truncate(sols[-1], 5)})'
-                    dicionario_metodos_animais_filtrado[metodo] = {
-                        'x': aval,
-                        'y': sols,
-                        'color': dados['color'],
-                        'label': novo_label
-                    }
-
-            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoesAnimaisTruncado{index}.png', dicionario_metodos_animais_filtrado, 'Comparação dos Algoritmos por Avaliações\n(Truncado em 200 avaliações)', 'Número de Avaliações', 'log(Função Objetivo)')
+            gerador_graficos.gera_grafico_comparativo_truncado(f'./comparativeMethodsAvaliacoesAnimaisTruncado{index}.png', dicionario_metodos_animais, 'Comparação dos Algoritmos por Avaliações\n(Truncado em 200 avaliações)', 'Número de Avaliações', 'Função Objetivo', 200)
 
             #Gera novo grafico comparativo de 3 metodos apenas
             dicionario_metodos_principais = {
@@ -318,25 +282,7 @@ def main():
 
             gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoesPrincipais{index}.png', dicionario_metodos_principais, 'Comparação dos Algoritmos por Avaliações', 'Número de Avaliações', 'log(Função Objetivo)')
 
-            #Cria um novo dicionário com os dados truncados em 200 avaliações
-            dicionario_metodos_principais_filtrado = {}
-            for metodo, dados in dicionario_metodos_principais.items():
-                # Filtrar pontos até 1 segundo
-                pontos_filtrados = [(t, s) for t, s in zip(dados['x'], dados['y']) if t <= 200]
-                if pontos_filtrados:
-                    if(dados['x'][-1] != 200):
-                        pontos_filtrados.append((200, pontos_filtrados[-1][1]))
-                    aval, sols = zip(*pontos_filtrados)
-                    # Criar nova entrada no dicionário filtrado
-                    novo_label = f'{metodo} ({truncate(sols[-1], 5)})'
-                    dicionario_metodos_principais_filtrado[metodo] = {
-                        'x': aval,
-                        'y': sols,
-                        'color': dados['color'],
-                        'label': novo_label
-                    }
-
-            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoesPrincipaisTruncado{index}.png', dicionario_metodos_principais_filtrado, 'Comparação dos Algoritmos por Avaliações\n(Truncado em 200 avaliações)', 'Número de Avaliações', 'log(Função Objetivo)')
+            gerador_graficos.gera_grafico_comparativo_truncado(f'./comparativeMethodsAvaliacoesPrincipaisTruncado{index}.png', dicionario_metodos_principais, 'Comparação dos Algoritmos por Avaliações\n(Truncado em 200 avaliações)', 'Número de Avaliações', 'Função Objetivo', 200)
 
             #Grafico comparativo dos dois ultimos finais
             dicionario_metodos_finais = {
@@ -344,24 +290,7 @@ def main():
                 'ACO': {'x': range(1, len(solucoes_avaliacoes_AC) + 1), 'y': solucoes_avaliacoes_AC, 'color': 'blue', 'label': 'ACO ({})'.format(melhor_valor_AC)},
             }
 
-            dicionario_metodos_finais_filtrado = {}
-            for metodo, dados in dicionario_metodos_finais.items():
-                # Filtrar pontos até 1 segundo
-                pontos_filtrados = [(t, s) for t, s in zip(dados['x'], dados['y']) if t <= 200]
-                if pontos_filtrados:
-                    if(dados['x'][-1] != 200):
-                        pontos_filtrados.append((200, pontos_filtrados[-1][1]))
-                    aval, sols = zip(*pontos_filtrados)
-                    # Criar nova entrada no dicionário filtrado
-                    novo_label = f'{metodo} ({truncate(sols[-1], 5)})'
-                    dicionario_metodos_finais_filtrado[metodo] = {
-                        'x': aval,
-                        'y': sols,
-                        'color': dados['color'],
-                        'label': novo_label
-                    }
-
-            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoesFinaisTruncado{index}.png', dicionario_metodos_finais_filtrado, 'Comparação dos Algoritmos Finais por Avaliações\n(Truncado em 200 avaliações)', 'Número de Avaliações', 'log(Função Objetivo)')
+            gerador_graficos.gera_grafico_comparativo_truncado(f'./comparativeMethodsAvaliacoesFinaisTruncado{index}.png', dicionario_metodos_finais, 'Comparação dos Algoritmos Finais por Avaliações\n(Truncado em 200 avaliações)', 'Número de Avaliações', 'Função Objetivo', 200)
             
 
 if __name__ == "__main__":

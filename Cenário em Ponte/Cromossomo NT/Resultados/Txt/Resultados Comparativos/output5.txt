@@ -1,6 +1,6 @@
 ===== Resultados Comparativos dos Algoritmos - População 5 =====
 PSO: 
-Alcançado na geração: 20
+Alcançado na geração: 23
 Função Objetivo: 0.99473304
 Confiabilidade: 0.99473304
 Penalidade: 0.0
@@ -8,50 +8,50 @@ Custo: 97.09
 Peso: 115.51
 
 DE: 
-Alcançado na geração: 193
-Função Objetivo: 0.99634084
-Confiabilidade: 0.99634084
+Alcançado na geração: 127
+Função Objetivo: 0.99801614
+Confiabilidade: 0.99801614
 Penalidade: 0.0
-Custo: 95.99
-Peso: 118.17
+Custo: 99.68
+Peso: 119.14
 
 GA: 
-Alcançado na geração: 77
+Alcançado na geração: 131
 Função Objetivo: 0.99616298
 Confiabilidade: 0.99616298
 Penalidade: 0.0
-Custo: 99.94
+Custo: 99.94000000000001
 Peso: 117.8
 
 ACO: 
-Alcançado na geração: 55
-Função Objetivo: 0.9960256
-Confiabilidade: 0.9960256
+Alcançado na geração: 188
+Função Objetivo: 0.99634199
+Confiabilidade: 0.99634199
 Penalidade: 0.0
-Custo: 96.64999999999999
-Peso: 116.0
+Custo: 99.0
+Peso: 118.06
 
 ABC: 
-Alcançado na geração: 110
-Função Objetivo: 0.99605102
-Confiabilidade: 0.99605102
+Alcançado na geração: 86
+Função Objetivo: 0.99544636
+Confiabilidade: 0.99544636
 Penalidade: 0.0
-Custo: 99.66
-Peso: 115.89
+Custo: 99.92000000000002
+Peso: 114.55
 
 HS: 
-Alcançado na geração: 140
-Função Objetivo: 0.99561644
-Confiabilidade: 0.99561644
+Alcançado na geração: 1
+Função Objetivo: 0.99276727
+Confiabilidade: 0.99276727
 Penalidade: 0.0
-Custo: 98.11
-Peso: 112.33999999999999
+Custo: 86.75999999999999
+Peso: 111.95000000000002
 
 HS Melhorado: HS Melhorado
-Alcançado na geração: 113
-Função Objetivo: 0.9953618
-Confiabilidade: 0.9953618
+Alcançado na geração: 150
+Função Objetivo: 0.99613716
+Confiabilidade: 0.99613716
 Penalidade: 0.0
-Custo: 99.77
-Peso: 119.66000000000001
+Custo: 99.60999999999999
+Peso: 117.72
 

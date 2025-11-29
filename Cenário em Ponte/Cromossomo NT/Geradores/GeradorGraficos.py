@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import sys
 import os
+from utils import truncate
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 class GeradorGraficos:
@@ -34,6 +35,25 @@ class GeradorGraficos:
             plt.show()
         else:
             plt.close()
+
+    def gera_grafico_comparativo_truncado(self, nome_arquivo, dicionario_metodos, title, xlabel, ylabel, valor_truncamento, xlim=None, show_plot=True):
+        dicionario_metodos_filtrado = {}
+        for metodo, dados in dicionario_metodos.items():
+            # Filtrar pontos até 1 segundo
+            pontos_filtrados = [(t, s) for t, s in zip(dados['x'], dados['y']) if t <= valor_truncamento]
+            if pontos_filtrados:
+                if(dados['x'][-1] != valor_truncamento):
+                    pontos_filtrados.append((valor_truncamento, pontos_filtrados[-1][1]))
+                aval, sols = zip(*pontos_filtrados)
+                # Criar nova entrada no dicionário filtrado
+                novo_label = f'{metodo} ({truncate(sols[-1], 5)})'
+                dicionario_metodos_filtrado[metodo] = {
+                    'x': aval,
+                    'y': sols,
+                    'color': dados['color'],
+                    'label': novo_label
+                }
+        self.gera_grafico_comparativo(nome_arquivo, dicionario_metodos_filtrado, title, xlabel, ylabel, xlim, show_plot)
 
     def gera_grafico_comparativo(self, nome_arquivo, dicionario_metodos, title, xlabel, ylabel, xlim=None, show_plot=True):
         show_plot = False

@@ -57,7 +57,6 @@ class BeeColonyAlgorithm:
         phi = random.uniform(-1,1)
         valor_final_nova_solucao = valor_nova_solucao + phi*(valor_nova_solucao - valor_solucao_diferente)
 
-        #arredondando o valor final da nova solução
         valor_final_nova_solucao_inteira = int(round(valor_final_nova_solucao))
         #corrigindo possíveis erros de extrapolação de limites
         if(linha == 0):
@@ -73,7 +72,6 @@ class BeeColonyAlgorithm:
                 
         nova_solucao[linha][coluna] = valor_final_nova_solucao_inteira
         
-        #cria novo indivíduo com a nova solução
         novo_individuo = IndividuoABC(nova_solucao, self.componentes, self.peso_max,
                             self.custo_max)
 
