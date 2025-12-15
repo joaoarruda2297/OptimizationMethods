@@ -41,7 +41,8 @@ def main():
     num_min_componentes_subsistema = 1
 
     # Variáveis para execução do algoritmo
-    num_geracoes = 200
+    num_geracoes = 500
+    num_max_avaliacoes = 500
     peso_max = 120
     custo_max = 100
 
@@ -104,7 +105,7 @@ def main():
     if(respostaAlgoritmo == "2" or respostaAlgoritmo == "3"):
         #Faz o estudo de parametros inicialmente
         print("Iniciando estudo de parâmetros...")
-        ComparacaoParametros(populacoes, componentes, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+        ComparacaoParametros(populacoes, componentes, peso_max, custo_max, num_geracoes,num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
         print("Estudo de parâmetros concluído.")
 
     if(respostaAlgoritmo == "1" or respostaAlgoritmo == "3"):
@@ -125,7 +126,7 @@ def main():
             with open(f'./Metodos/GA/output/output{index}.txt', 'w', encoding='utf-8') as f:
                 sys.stdout = f
                 try:
-                    solucoes_GA, melhor_valor_GA, melhor_individuo_GA, geracao_GA, numero_avaliacoes_GA, solucoes_avaliacoes_GA, tempos_melhor_solucao_GA, melhor_tempo_GA = GA(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+                    solucoes_GA, melhor_valor_GA, melhor_individuo_GA, geracao_GA, numero_avaliacoes_GA, solucoes_avaliacoes_GA, tempos_melhor_solucao_GA, melhor_tempo_GA = GA(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
                 finally:
                     sys.stdout = original_stdout  # Restore using our saved reference
             print("GA executado com sucesso para população {}.".format(index))
@@ -135,7 +136,7 @@ def main():
             with open(f'./Metodos/PSO/output/output{index}.txt', 'w', encoding='utf-8') as f:
                 sys.stdout = f
                 try:
-                    solucoes_PSO, melhor_valor_PSO, melhor_individuo_PSO, geracao_PSO, numero_avaliacoes_PSO, solucoes_avaliacoes_PSO, tempos_melhor_solucao_PSO, melhor_tempo_PSO = PSO(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+                    solucoes_PSO, melhor_valor_PSO, melhor_individuo_PSO, geracao_PSO, numero_avaliacoes_PSO, solucoes_avaliacoes_PSO, tempos_melhor_solucao_PSO, melhor_tempo_PSO = PSO(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
                 finally:
                     sys.stdout = original_stdout  # Restore using our saved reference
             print("PSO executado com sucesso para população {}.".format(index))
@@ -145,7 +146,7 @@ def main():
             with open(f'./Metodos/DE/output/output{index}.txt', 'w', encoding='utf-8') as f:
                 sys.stdout = f
                 try:
-                    solucoes_DE, melhor_valor_DE, melhor_individuo_DE, geracao_DE, numero_avaliacoes_DE, solucoes_avaliacoes_DE, tempos_melhor_solucao_DE, melhor_tempo_DE = DE(index, componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+                    solucoes_DE, melhor_valor_DE, melhor_individuo_DE, geracao_DE, numero_avaliacoes_DE, solucoes_avaliacoes_DE, tempos_melhor_solucao_DE, melhor_tempo_DE = DE(index, componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
                 finally:
                     sys.stdout = original_stdout  # Restore using our saved reference
             print("DE executado com sucesso para população {}.".format(index))
@@ -155,7 +156,7 @@ def main():
             with open(f'./Metodos/AC/output/output{index}.txt', 'w', encoding='utf-8') as f:
                 sys.stdout = f
                 try:
-                    solucoes_AC, melhor_valor_AC, melhor_individuo_AC, geracao_AC, numero_avaliacoes_AC, solucoes_avaliacoes_AC, tempos_melhor_solucao_AC, melhor_tempo_AC = AC(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+                    solucoes_AC, melhor_valor_AC, melhor_individuo_AC, geracao_AC, numero_avaliacoes_AC, solucoes_avaliacoes_AC, tempos_melhor_solucao_AC, melhor_tempo_AC = AC(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
                 finally:
                     sys.stdout = original_stdout  # Restore using our saved reference
             print("AC executado com sucesso para população {}.".format(index))
@@ -165,7 +166,7 @@ def main():
             with open(f'./Metodos/ABC/output/output{index}.txt', 'w', encoding='utf-8') as f:
                 sys.stdout = f
                 try:
-                    solucoes_ABC, melhor_valor_ABC, melhor_individuo_ABC, geracao_ABC, numero_avaliacoes_ABC, solucoes_avaliacoes_ABC, tempos_melhor_solucao_ABC, melhor_tempo_ABC = ABC(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+                    solucoes_ABC, melhor_valor_ABC, melhor_individuo_ABC, geracao_ABC, numero_avaliacoes_ABC, solucoes_avaliacoes_ABC, tempos_melhor_solucao_ABC, melhor_tempo_ABC = ABC(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
                 finally:
                     sys.stdout = original_stdout  # Restore using our saved reference
             print("ABC executado com sucesso para população {}.".format(index))
@@ -175,7 +176,7 @@ def main():
             with open(f'./Metodos/HS/output/output{index}.txt', 'w', encoding='utf-8') as f:
                 sys.stdout = f
                 try:
-                    solucoes_HS, melhor_valor_HS, melhor_individuo_HS, geracao_HS, numero_avaliacoes_HS, solucoes_avaliacoes_HS, tempos_melhor_solucao_HS, melhor_tempo_HS = HS(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0)
+                    solucoes_HS, melhor_valor_HS, melhor_individuo_HS, geracao_HS, numero_avaliacoes_HS, solucoes_avaliacoes_HS, tempos_melhor_solucao_HS, melhor_tempo_HS = HS(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0)
                 finally:
                     sys.stdout = original_stdout  # Restore using our saved reference
             print("HS executado com sucesso para população {}.".format(index))
@@ -185,24 +186,24 @@ def main():
             with open(f'./Metodos/HS/output/outputMelhorado{index}.txt', 'w', encoding='utf-8') as f:
                 sys.stdout = f
                 try:
-                    solucoes_HS_melhorado, melhor_valor_HS_melhorado, melhor_individuo_HS_melhorado, geracao_HS_melhorado, numero_avaliacoes_HS_melhorado, solucoes_avaliacoes_HS_melhorado, tempos_melhor_solucao_HS_melhorado, melhor_tempo_HS_melhorado = HS(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0.1)
+                    solucoes_HS_melhorado, melhor_valor_HS_melhorado, melhor_individuo_HS_melhorado, geracao_HS_melhorado, numero_avaliacoes_HS_melhorado, solucoes_avaliacoes_HS_melhorado, tempos_melhor_solucao_HS_melhorado, melhor_tempo_HS_melhorado = HS(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao=0.1)
                 finally:
                     sys.stdout = original_stdout  # Restore using our saved reference
-            print("HS Melhorado executado com sucesso para população {}.".format(index))
+            print("IHS executado com sucesso para população {}.".format(index))
 
             # Gerando o gráficos comparativos
             gerador_graficos = GeradorGraficos(caminho_salvamento="./Resultados/Graficos/Graficos Comparativos/")
 
-            dicionario_metodos_geracao = {
+            '''dicionario_metodos_geracao = {
                 'PSO': {'x': range(1, len(solucoes_PSO) + 1), 'y': solucoes_PSO, 'color': 'purple', 'label': 'PSO ({})'.format(melhor_valor_PSO)},
                 'DE': {'x': range(1, len(solucoes_DE) + 1), 'y': solucoes_DE, 'color': 'green', 'label': 'DE ({})'.format(melhor_valor_DE)},
                 'GA': {'x': range(1, len(solucoes_GA) + 1), 'y': solucoes_GA, 'color': 'orange', 'label': 'GA ({})'.format(melhor_valor_GA)},
                 'ACO': {'x': range(1, len(solucoes_AC) + 1), 'y': solucoes_AC, 'color': 'blue', 'label': 'ACO ({})'.format(melhor_valor_AC)},
                 'ABC': {'x': range(1, len(solucoes_ABC) + 1), 'y': solucoes_ABC, 'color': 'red', 'label': 'ABC ({})'.format(melhor_valor_ABC)},
                 'HS': {'x': range(1, len(solucoes_HS) + 1), 'y': solucoes_HS, 'color': 'brown', 'label': 'HS ({})'.format(melhor_valor_HS)},
-                'HSM': {'x': range(1, len(solucoes_HS_melhorado) + 1), 'y': solucoes_HS_melhorado, 'color': '#FF69B4', 'label': 'HSM ({})'.format(melhor_valor_HS_melhorado)}
-            }
-            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethods{index}.png', dicionario_metodos_geracao, 'Comparação dos Algoritmos', 'Geração', 'log(Função Objetivo)', show_plot=False)
+                'IHS': {'x': range(1, len(solucoes_HS_melhorado) + 1), 'y': solucoes_HS_melhorado, 'color': '#FF69B4', 'label': 'IHS ({})'.format(melhor_valor_HS_melhorado)}
+            }'''
+            #gerador_graficos.gera_grafico_comparativo(f'./comparativeMethods{index}.png', dicionario_metodos_geracao, 'Comparação dos Algoritmos', 'Geração', 'log(Função Objetivo)', show_plot=False)
 
             penalidade_GA = truncate(melhor_individuo_GA.valor_funcao_objetivo - melhor_individuo_GA.confiabilidade_total, 8)
             textoGA = "\nAlcançado na geração: " + str(geracao_GA) + "\nFunção Objetivo: " + str(truncate(melhor_individuo_GA.valor_funcao_objetivo, 8)) + "\nConfiabilidade: " + str(truncate(melhor_individuo_GA.confiabilidade_total, 8)) + "\nPenalidade: " + str(penalidade_GA) + "\nCusto: " + str(melhor_individuo_GA.custo) + "\nPeso: " + str(melhor_individuo_GA.peso)
@@ -229,7 +230,7 @@ def main():
                     print("ACO: {}\n".format(textoAC))
                     print("ABC: {}\n".format(textoABC))
                     print("HS: {}\n".format(textoHS))
-                    print("HS Melhorado: {}\n".format(textoHS_melhorado))
+                    print("IHS: {}\n".format(textoHS_melhorado))
                 finally:
                     sys.stdout = original_stdout  # Restore using our saved reference
 
@@ -241,10 +242,10 @@ def main():
                 'ACO': {'x': range(1, len(solucoes_avaliacoes_AC) + 1), 'y': solucoes_avaliacoes_AC, 'color': 'blue', 'label': 'ACO ({})'.format(melhor_valor_AC)},
                 'ABC': {'x': range(1, len(solucoes_avaliacoes_ABC) + 1), 'y': solucoes_avaliacoes_ABC, 'color': 'red', 'label': 'ABC ({})'.format(melhor_valor_ABC)},
                 'HS': {'x': range(1, len(solucoes_avaliacoes_HS) + 1), 'y': solucoes_avaliacoes_HS, 'color': 'brown', 'label': 'HS ({})'.format(melhor_valor_HS)},
-                'HS Melhorado': {'x': range(1, len(solucoes_avaliacoes_HS_melhorado) + 1), 'y': solucoes_avaliacoes_HS_melhorado, 'color': '#FF69B4', 'label': 'HSM ({})'.format(melhor_valor_HS_melhorado)}
+                'IHS': {'x': range(1, len(solucoes_avaliacoes_HS_melhorado) + 1), 'y': solucoes_avaliacoes_HS_melhorado, 'color': '#FF69B4', 'label': 'IHS ({})'.format(melhor_valor_HS_melhorado)}
             }
 
-            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoes{index}.png', dicionario_metodos_avaliacoes, 'Comparação dos Algoritmos por Número de Avaliações', 'Número de Avaliações', 'Função Objetivo')
+            gerador_graficos.gera_grafico_comparativo_truncado(f'./comparativeMethodsAvaliacoes{index}.png', dicionario_metodos_avaliacoes, 'Comparação dos Algoritmos por Número de Avaliações', 'Número de Avaliações', 'Função Objetivo', num_max_avaliacoes)
 
             # Gerando o gráfico comparativo por tempo até a melhor solução
             dicionario_metodos_tempo = {
@@ -254,10 +255,10 @@ def main():
                 'ACO': {'x': tempos_melhor_solucao_AC, 'y': solucoes_AC, 'color': 'blue', 'label': 'ACO ({})'.format(melhor_valor_AC)},
                 'ABC': {'x': tempos_melhor_solucao_ABC, 'y': solucoes_ABC, 'color': 'red', 'label': 'ABC ({})'.format(melhor_valor_ABC)},
                 'HS': {'x': tempos_melhor_solucao_HS, 'y': solucoes_HS, 'color': 'brown', 'label': 'HS ({})'.format(melhor_valor_HS)},
-                'HS Melhorado': {'x': tempos_melhor_solucao_HS_melhorado, 'y': solucoes_HS_melhorado, 'color': '#FF69B4', 'label': 'HSM ({})'.format(melhor_valor_HS_melhorado)}
+                'IHS': {'x': tempos_melhor_solucao_HS_melhorado, 'y': solucoes_HS_melhorado, 'color': '#FF69B4', 'label': 'IHS ({})'.format(melhor_valor_HS_melhorado)}
             }
 
-            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsTempo{index}.png', dicionario_metodos_tempo, 'Comparação dos Algoritmos por Tempo', 'Tempo até a Melhor Solução (s)', 'log(Função Objetivo)', show_plot=False)
+            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsTempo{index}.png', dicionario_metodos_tempo, 'Comparação dos Algoritmos por Tempo', 'Tempo até a Melhor Solução (s)', 'log(Função Objetivo)', show_plot=False )
 
             gerador_graficos.gera_grafico_comparativo_truncado(f'./comparativeMethodsTempoTruncado{index}.png', dicionario_metodos_tempo, 'Comparação dos Algoritmos por Tempo\n(truncado em 1s)', 'Tempo até a Melhor Solução (s)', 'log(Função Objetivo)', 1.0 ,[-0.04, 1.04])
 
@@ -268,21 +269,21 @@ def main():
                 'ABC': {'x': range(1, len(solucoes_avaliacoes_ABC) + 1), 'y': solucoes_avaliacoes_ABC, 'color': 'red', 'label': 'ABC ({})'.format(melhor_valor_ABC)},
             }
 
-            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoesAnimais{index}.png', dicionario_metodos_animais, 'Comparação dos Algoritmos por Avaliações', 'Número de Avaliações', 'log(Função Objetivo)')
+            #gerador_graficos.gera_grafico_comparativo_truncado(f'./comparativeMethodsAvaliacoesAnimais{index}.png', dicionario_metodos_animais, 'Comparação dos Algoritmos por Avaliações', 'Número de Avaliações', 'Função Objetivo', num_max_avaliacoes)
 
-            gerador_graficos.gera_grafico_comparativo_truncado(f'./comparativeMethodsAvaliacoesAnimaisTruncado{index}.png', dicionario_metodos_animais, 'Comparação dos Algoritmos por Avaliações\n(Truncado em 200 avaliações)', 'Número de Avaliações', 'Função Objetivo', 200)
+            gerador_graficos.gera_grafico_comparativo_truncado(f'./comparativeMethodsAvaliacoesAnimaisTruncado{index}.png', dicionario_metodos_animais, f'Comparação dos Algoritmos por Avaliações\n(Truncado em {num_max_avaliacoes} avaliações)', 'Número de Avaliações', 'Função Objetivo', num_max_avaliacoes)
 
             #Gera novo grafico comparativo de 3 metodos apenas
             dicionario_metodos_principais = {
                 'DE': {'x': range(1, len(solucoes_avaliacoes_DE) + 1), 'y': solucoes_avaliacoes_DE, 'color': 'green', 'label': 'DE ({})'.format(melhor_valor_DE)},
                 'GA': {'x': range(1, len(solucoes_avaliacoes_GA) + 1), 'y': solucoes_avaliacoes_GA, 'color': 'orange', 'label': 'GA ({})'.format(melhor_valor_GA)},
                 'HS': {'x': range(1, len(solucoes_avaliacoes_HS) + 1), 'y': solucoes_avaliacoes_HS, 'color': 'brown', 'label': 'HS ({})'.format(melhor_valor_HS)},
-                'HS Melhorado': {'x': range(1, len(solucoes_avaliacoes_HS_melhorado) + 1), 'y': solucoes_avaliacoes_HS_melhorado, 'color': '#FF69B4', 'label': 'HSM ({})'.format(melhor_valor_HS_melhorado)}
+                'IHS': {'x': range(1, len(solucoes_avaliacoes_HS_melhorado) + 1), 'y': solucoes_avaliacoes_HS_melhorado, 'color': '#FF69B4', 'label': 'IHS ({})'.format(melhor_valor_HS_melhorado)}
             }
 
-            gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoesPrincipais{index}.png', dicionario_metodos_principais, 'Comparação dos Algoritmos por Avaliações', 'Número de Avaliações', 'log(Função Objetivo)')
+            #gerador_graficos.gera_grafico_comparativo(f'./comparativeMethodsAvaliacoesPrincipais{index}.png', dicionario_metodos_principais, 'Comparação dos Algoritmos por Avaliações', 'Número de Avaliações', 'Função Objetivo')
 
-            gerador_graficos.gera_grafico_comparativo_truncado(f'./comparativeMethodsAvaliacoesPrincipaisTruncado{index}.png', dicionario_metodos_principais, 'Comparação dos Algoritmos por Avaliações\n(Truncado em 200 avaliações)', 'Número de Avaliações', 'Função Objetivo', 200)
+            gerador_graficos.gera_grafico_comparativo_truncado(f'./comparativeMethodsAvaliacoesPrincipaisTruncado{index}.png', dicionario_metodos_principais, f'Comparação dos Algoritmos por Avaliações\n(Truncado em {num_max_avaliacoes} avaliações)', 'Número de Avaliações', 'Função Objetivo', num_max_avaliacoes)
 
             #Grafico comparativo dos dois ultimos finais
             dicionario_metodos_finais = {
@@ -290,7 +291,7 @@ def main():
                 'ACO': {'x': range(1, len(solucoes_avaliacoes_AC) + 1), 'y': solucoes_avaliacoes_AC, 'color': 'blue', 'label': 'ACO ({})'.format(melhor_valor_AC)},
             }
 
-            gerador_graficos.gera_grafico_comparativo_truncado(f'./comparativeMethodsAvaliacoesFinaisTruncado{index}.png', dicionario_metodos_finais, 'Comparação dos Algoritmos Finais por Avaliações\n(Truncado em 200 avaliações)', 'Número de Avaliações', 'Função Objetivo', 200)
+            gerador_graficos.gera_grafico_comparativo_truncado(f'./comparativeMethodsAvaliacoesFinaisTruncado{index}.png', dicionario_metodos_finais, f'Comparação dos Algoritmos GA+ACO por Avaliações\n(Truncado em {num_max_avaliacoes} avaliações)', 'Número de Avaliações', 'Função Objetivo', num_max_avaliacoes)
             
 
 if __name__ == "__main__":

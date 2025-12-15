@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 import math
+import re
 
 from Geradores.GeradorComponentes import Componente
 from Geradores.GeradorIndividuos import Individuo
@@ -20,6 +21,21 @@ def limpar_diretorio(caminho):
                     os.unlink(caminho_arquivo)
             except Exception as e:
                 print(f'Erro ao deletar {caminho_arquivo}: {e}')
+
+def junta_excels(caminho_pasta, nome_arquivo_saida):
+    arquivos = [f for f in os.listdir(caminho_pasta) if f.endswith('.xlsx')]
+    arquivos.sort(key=lambda x: int(re.findall(r'pop_(\d+)', x)[0]))
+    df_final = None
+    for arquivo in enumerate(arquivos):
+        numero = arquivo[1].replace('resultados_parametros_pop_', '').replace('.xlsx', '')
+        df = pd.read_excel(os.path.join(caminho_pasta, arquivo[1]), dtype=str)  # Lê os valores como string para preservar precisão
+        if df_final is None:
+            col = df.columns[0]
+            df_final = pd.DataFrame({'Params': df[col]})
+        col = df.columns[1]
+        df_final[f'pop{numero}'] = df[col]
+    df_final.to_excel(os.path.join(caminho_pasta, nome_arquivo_saida), index=False)
+    print(f'Junção de excel no arquivo {nome_arquivo_saida} gerado com sucesso!')
 
 def ler_componentes_excel(caminho_excel):
     df = pd.read_excel(caminho_excel)

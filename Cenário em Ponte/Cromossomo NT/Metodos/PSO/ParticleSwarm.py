@@ -13,13 +13,14 @@ from Geradores.GeradorGraficos import GeradorGraficos
 from utils import truncate
 
 class ParticleSwarmOptimization:
-    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, c1=None, c2=None):
+    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, c1=None, c2=None):
         self.num_particulas = len(individuos)
         self.num_variaveis = 5 #5 subsistemas
         self.num_geracoes = num_geracoes
-        self.exploracao_global = c1 if c1 is not None else 2.5 #C2
-        self.auto_exploracao = c2 if c2 is not None else 2.3 #C1
-        self.taxa_inercia = 0.7 #w
+        self.num_max_avaliacoes = num_max_avaliacoes
+        self.exploracao_global = c1 if c1 is not None else 1.6 #C2
+        self.auto_exploracao = c2 if c2 is not None else 2.4 #C1
+        self.taxa_inercia = 1
         self.damp_inercia = 0.99
 
         self.num_tipos_componentes = num_tipos_componentes
@@ -83,8 +84,8 @@ class ParticleSwarmOptimization:
 
         return posicao_final_inteira
 
-def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, estudo_parametro=False, c1=None, c2=None):
-    alg = ParticleSwarmOptimization(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, c1, c2)
+def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, estudo_parametro=False, c1=None, c2=None):
+    alg = ParticleSwarmOptimization(componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, c1, c2)
 
     print("POPULAÇÃO INICIAL:")
     for l in range(len(alg.individuos)):
@@ -108,6 +109,8 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     tempos_melhor_solucao = []
 
     for i in range(alg.num_geracoes):
+        if(numero_avaliacoes >= alg.num_max_avaliacoes):
+            break
         print("GERACAO {}".format(i+1))
         for j in range(alg.num_particulas):
             fit_pos_atual = alg.individuos[j].valor_funcao_objetivo
@@ -170,7 +173,7 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
         #atualizacao da inercia
         alg.taxa_inercia = alg.taxa_inercia * alg.damp_inercia
             
-    print("O algoritmo PSO obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", melhor_solucao)
+    print("O algoritmo PSO obteve em", i, "geracoes o resultado para a funcao objetivo de", melhor_solucao)
     print("Com os seguintes valores para cada variavel de decisao:")
     for z in range(alg.num_variaveis):
         print("T{}: {}".format(z+1, alg.individuos[0].solucao[0][z]))
@@ -184,10 +187,10 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
         gerador_graficos = GeradorGraficos('./Metodos/PSO/img/', 'purple')
 
         # Plotando o gráfico por geração
-        gerador_graficos.gera_grafico(f'SolutionEvolutionPSO{index}.png', range(0, alg.num_geracoes+1), solucoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (PSO)', 'Geração', 'Função Objetivo', show_plot=False)
+        #gerador_graficos.gera_grafico(f'SolutionEvolutionPSO{index}.png', range(0, alg.num_geracoes+1), solucoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (PSO)', 'Geração', 'Função Objetivo', show_plot=False)
 
         # Plotando o gráfico em log por geração
-        gerador_graficos.gera_grafico(f'SolutionEvolutionPSOLog{index}.png', range(0, alg.num_geracoes+1), solucoes_log, valor_final_log, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (PSO)', 'Geração', 'log(Função Objetivo)', show_plot=False)
+        #gerador_graficos.gera_grafico(f'SolutionEvolutionPSOLog{index}.png', range(0, alg.num_geracoes+1), solucoes_log, valor_final_log, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (PSO)', 'Geração', 'log(Função Objetivo)', show_plot=False)
 
         # Plotando o gráfico com o número de avaliações
         gerador_graficos.gera_grafico(f'SolutionEvolutionPSOAvaliacoes{index}.png', range(0, numero_avaliacoes+1), solucoes_avaliacoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Avaliações (PSO)', 'Número de Avaliações', 'Função Objetivo', 'Número de Avaliações: ' + str(numero_avaliacoes))

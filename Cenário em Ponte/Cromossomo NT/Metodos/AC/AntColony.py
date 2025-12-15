@@ -22,17 +22,18 @@ class SolucaoMapa:
         self.probabilidade = 0
 
 class AntColonyOptimization:
-    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, evaporacao=None):
+    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, evaporacao=None):
         self.num_formigas = len(individuos)
         self.num_variaveis = num_variaveis
         self.num_geracoes = num_geracoes
+        self.num_max_avaliacoes = num_max_avaliacoes
         self.num_tipos_componentes = num_tipos_componentes
         self.componentes = componentes
         self.peso_max = peso_max
         self.custo_max = custo_max
         self.num_max_componentes_subsistema = num_max_componentes_subsistema
         self.num_min_componentes_subsistema = num_min_componentes_subsistema
-        self.evaporation_rate = evaporacao if evaporacao is not None else 0.5
+        self.evaporation_rate = evaporacao if evaporacao is not None else 0.1
 
         self.individuos = []
         for i in range(self.num_formigas):
@@ -110,8 +111,8 @@ class AntColonyOptimization:
         factor = 10 ** decimals
         return math.trunc(number * factor) / factor
 
-def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, estudo_parametro=False, evaporacao=None):
-    aco = AntColonyOptimization(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, evaporacao)
+def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, estudo_parametro=False, evaporacao=None):
+    aco = AntColonyOptimization(componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, evaporacao)
 
     print("POPULAÇÃO INICIAL:")
     for l in range(len(aco.individuos)):
@@ -140,6 +141,8 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
         print("")
 
     for i in range(aco.num_geracoes):
+        if(numero_avaliacoes >= aco.num_max_avaliacoes):
+            break
         print(f"GERACAO {i+1}")
         if i == 0:
             # Primeira geração: usa apenas a população inicial
@@ -186,7 +189,7 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     aco.individuos = sorted(aco.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
     melhor_individuo = aco.individuos[0]
 
-    print("O algoritmo ACO obteve em", aco.num_geracoes, "geracoes o resultado para a funcao objetivo de", aco.individuos[0].valor_funcao_objetivo)
+    print("O algoritmo ACO obteve em", i, "geracoes o resultado para a funcao objetivo de", aco.individuos[0].valor_funcao_objetivo)
     print("Com os seguintes valores para cada variavel de decisao:")
     for z in range(aco.num_variaveis):
         print(f"T{z+1}: {aco.individuos[0].solucao[0][z]}")
@@ -200,10 +203,10 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
         gerador_graficos = GeradorGraficos('./Metodos/AC/img/', 'blue')
 
         # Plotando o gráfico por geração
-        gerador_graficos.gera_grafico(f'SolutionEvolutionACO{index}.png', range(0, aco.num_geracoes+1), solucoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (ACO)', 'Geração', 'Função Objetivo', show_plot=False)
+        #gerador_graficos.gera_grafico(f'SolutionEvolutionACO{index}.png', range(0, aco.num_geracoes+1), solucoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (ACO)', 'Geração', 'Função Objetivo', show_plot=False)
 
         # Plotando o gráfico em log por geração
-        gerador_graficos.gera_grafico(f'SolutionEvolutionACOLog{index}.png', range(0, aco.num_geracoes+1), solucoes_log, valor_final_log, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (ACO)', 'Geração', 'log(Função Objetivo)', show_plot=False)
+        #gerador_graficos.gera_grafico(f'SolutionEvolutionACOLog{index}.png', range(0, aco.num_geracoes+1), solucoes_log, valor_final_log, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (ACO)', 'Geração', 'log(Função Objetivo)', show_plot=False)
 
         # Plotando o gráfico com o número de avaliações
         gerador_graficos.gera_grafico(f'SolutionEvolutionACOAvaliacoes{index}.png', range(0, numero_avaliacoes+1), solucoes_avaliacoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Avaliações (ACO)', 'Número de Avaliações', 'Função Objetivo', 'Número de Avaliações: ' + str(numero_avaliacoes))

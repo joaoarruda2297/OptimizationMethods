@@ -14,12 +14,12 @@ from Geradores.GeradorGraficos import GeradorGraficos
 from utils import truncate
     
 class BeeColonyAlgorithm:
-    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
         #variáveis para execução do algoritmo de colônia de abelhas
         self.num_individuos = len(individuos) #quantidade de individuos
         self.num_variaveis = num_variaveis
         self.num_geracoes = num_geracoes
-
+        self.num_max_avaliacoes = num_max_avaliacoes
         self.num_tipos_componentes = num_tipos_componentes
 
         self.componentes = componentes
@@ -136,8 +136,8 @@ class BeeColonyAlgorithm:
 
         return populacao_filtrada
 
-def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
-    alg = BeeColonyAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
+def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema):
+    alg = BeeColonyAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema)
 
     print("POPULACAO INICIAL:")
     for l in range(len(alg.individuos)):
@@ -172,6 +172,8 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     tempos_melhor_solucao.append(time.time() - start_time)
 
     for i in range(alg.num_geracoes):
+        if(numero_avaliacoes >= alg.num_max_avaliacoes):
+            break
         print("GERACAO {}".format(i+1))
         #Fase das abelhas empregadas
         alg.abelhas_empregadas(alg.individuos)
@@ -210,7 +212,7 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
         print("-----------------------------------------")
 
     melhor_individuo = melhores_abelhas[-1]
-    print("O algoritmo de colônia de abelhas obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", alg.individuos[0].valor_funcao_objetivo)
+    print("O algoritmo de colônia de abelhas obteve em", i, "geracoes o resultado para a funcao objetivo de", alg.individuos[0].valor_funcao_objetivo)
     print("Com os seguintes valores para cada variavel de decisão:")
     for z in range(alg.num_variaveis):
         print("T{}: {}".format(z+1, melhor_individuo.solucao[0][z]))
@@ -222,10 +224,10 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     valor_final_log = truncate(melhor_solucao_log, 4)
 
     # Plotando o gráfico por geração
-    gerador_graficos.gera_grafico(f'SolutionEvolutionABC{index}.png', range(0, alg.num_geracoes+1), solucoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (ABC)', 'Geração', 'Função Objetivo', show_plot=False)
+    #gerador_graficos.gera_grafico(f'SolutionEvolutionABC{index}.png', range(0, alg.num_geracoes+1), solucoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (ABC)', 'Geração', 'Função Objetivo', show_plot=False)
 
     # Plotando o gráfico em log por geração
-    gerador_graficos.gera_grafico(f'SolutionEvolutionABCLog{index}.png', range(0, alg.num_geracoes+1), solucoes_log, valor_final_log, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (ABC)', 'Geração', 'log(Função Objetivo)', show_plot=False)
+    #gerador_graficos.gera_grafico(f'SolutionEvolutionABCLog{index}.png', range(0, alg.num_geracoes+1), solucoes_log, valor_final_log, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (ABC)', 'Geração', 'log(Função Objetivo)', show_plot=False)
 
     # Plotando o gráfico com o número de avaliações
     gerador_graficos.gera_grafico(f'SolutionEvolutionABCAvaliacoes{index}.png', range(0, numero_avaliacoes+1), solucoes_avaliacoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Avaliações (ABC)', 'Número de Avaliações', 'Função Objetivo', 'Número de avaliações: ' + str(numero_avaliacoes))

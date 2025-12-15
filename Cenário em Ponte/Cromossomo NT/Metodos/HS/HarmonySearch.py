@@ -14,13 +14,14 @@ from Geradores.GeradorGraficos import GeradorGraficos
 from utils import truncate
     
 class HarmonySearchAlgorithm:
-    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, hmcr=None, par=None):
+    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, hmcr=None, par=None):
         #variáveis para execução do algoritmo de busca por harmonia
         self.num_individuos = len(individuos) #quantidade de individuos
         self.num_variaveis = num_variaveis
         self.num_geracoes = num_geracoes
-        self.HCMR = hmcr if hmcr is not None else 0.85 #Harmony Memory Consideration Rate entre 0.7 e 0.95
-        self.PAR = par if par is not None else 0.5 #Pitch Adjustment Rate entre 0.1 e 0.5
+        self.num_max_avaliacoes = num_max_avaliacoes
+        self.HCMR = hmcr if hmcr is not None else 0.88 #Harmony Memory Consideration Rate entre 0.7 e 0.95
+        self.PAR = par if par is not None else 0.45 #Pitch Adjustment Rate entre 0.1 e 0.5
         self.bw = 0.8 #pitch bandwidth (por variável) (escala do problema)
 
         self.num_tipos_componentes = num_tipos_componentes
@@ -88,8 +89,8 @@ class HarmonySearchAlgorithm:
 
         return populacao_filtrada
 
-def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao, estudo_parametro=False, hmcr=None, par=None):
-    alg = HarmonySearchAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, hmcr, par)
+def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, porcentagem_criacao, estudo_parametro=False, hmcr=None, par=None):
+    alg = HarmonySearchAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, hmcr, par)
 
     print("POPULAÇÃO INICIAL:")
     for l in range(len(alg.individuos)):
@@ -127,6 +128,8 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     tempos_melhor_solucao.append(time.time() - start_time)
 
     for i in range(alg.num_geracoes):
+        if(numero_avaliacoes >= alg.num_max_avaliacoes):
+            break
         print("GERACAO {}".format(i+1))
 
         for _ in range(int(numero_recalc)):
@@ -177,7 +180,7 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
             solucoes_avaliacoes.append(melhor_individuo.valor_funcao_objetivo)
 
     populacao = alg.individuos
-    print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", alg.individuos[0].valor_funcao_objetivo)
+    print("O algoritmo genetico obteve em", i, "geracoes o resultado para a funcao objetivo de", alg.individuos[0].valor_funcao_objetivo)
     print("Com os seguintes valores para cada variavel de decisao:")
     for z in range(alg.num_variaveis):
         print("T{}: {}".format(z+1, populacao[0].solucao[0][z]))
@@ -193,12 +196,12 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
         #Plotando o gráfico por geração
         title = 'Evolução da Melhor Solução ao Longo das Gerações (HS - Melhorado)' if porcentagem_criacao > 0 else 'Evolução da Melhor Solução ao Longo das Gerações (HS)'
         path = f'SolutionEvolutionHSMelhorado{index}.png' if porcentagem_criacao > 0 else f'SolutionEvolutionHS{index}.png'
-        gerador_graficos.gera_grafico(path, range(0, alg.num_geracoes+1), solucoes, valor_final, geracao, title, 'Geração', 'Função Objetivo', show_plot=False)
+        #gerador_graficos.gera_grafico(path, range(0, alg.num_geracoes+1), solucoes, valor_final, geracao, title, 'Geração', 'Função Objetivo', show_plot=False)
 
         # Plotando o gráfico por geração com log
         title_log = 'Evolução da Melhor Solução ao Longo das Gerações (HS - Log Melhorado)' if porcentagem_criacao > 0 else 'Evolução da Melhor Solução ao Longo das Gerações (HS - Log)'
         path_log = f'SolutionEvolutionHSMelhoradoLog{index}.png' if porcentagem_criacao > 0 else f'SolutionEvolutionHSLog{index}.png'
-        gerador_graficos.gera_grafico(path_log, range(0, alg.num_geracoes+1), solucoes_log, valor_final_log, geracao, title_log, 'Geração', 'log(Função Objetivo)', show_plot=False)
+        #gerador_graficos.gera_grafico(path_log, range(0, alg.num_geracoes+1), solucoes_log, valor_final_log, geracao, title_log, 'Geração', 'log(Função Objetivo)', show_plot=False)
 
         # Plotando o gráfico por número de avaliações
         title_avaliacoes = 'Evolução da Melhor Solução ao Longo das Avaliações (HS - Melhorado)' if porcentagem_criacao > 0 else 'Evolução da Melhor Solução ao Longo das Avaliações (HS)'

@@ -14,13 +14,14 @@ from Geradores.GeradorGraficos import GeradorGraficos
 from utils import truncate
     
 class GeneticAlgorithm:
-    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, taxa_mutacao=None, taxa_crossover=None):
+    def __init__(self, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, taxa_mutacao=None, taxa_crossover=None):
         #variáveis para execução do algoritmo genético
         self.num_individuos = len(individuos) #quantidade de individuos
         self.num_variaveis = num_variaveis
         self.num_geracoes = num_geracoes
-        self.taxa_cruzamento = taxa_crossover if taxa_crossover is not None else 0.17 #quantidade de pais que gerarão individuos (pais/2)
-        self.taxa_mutacao = taxa_mutacao if taxa_mutacao is not None else 0.08 #quantidade de individuos que vão receber mutação
+        self.num_max_avaliacoes = num_max_avaliacoes
+        self.taxa_cruzamento = taxa_crossover if taxa_crossover is not None else 0.85 #quantidade de pais que gerarão individuos (pais/2)
+        self.taxa_mutacao = taxa_mutacao if taxa_mutacao is not None else 0.02 #quantidade de individuos que vão receber mutação
 
         self.num_tipos_componentes = num_tipos_componentes
 
@@ -201,8 +202,8 @@ class GeneticAlgorithm:
 
         return mutantes
 
-def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, estudo_parametro=False, taxa_mutacao=None, taxa_crossover=None):
-    alg = GeneticAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, taxa_mutacao, taxa_crossover)
+def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, estudo_parametro=False, taxa_mutacao=None, taxa_crossover=None):
+    alg = GeneticAlgorithm(componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_tipos_componentes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, taxa_mutacao, taxa_crossover)
 
     print("POPULACAO INICIAL:")
     for l in range(len(alg.individuos)):
@@ -235,6 +236,8 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
     tempos_melhor_solucao.append(time.time() - start_time)
 
     for i in range(alg.num_geracoes):
+        if(numero_avaliacoes >= alg.num_max_avaliacoes):
+            break
         print("GERACAO {}".format(i+1))
 
         pais = alg.seleciona_pais(alg.individuos)
@@ -300,7 +303,7 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
         solucoes_avaliacoes.extend([melhor_individuo.valor_funcao_objetivo] * (len(mutantes) + len(filhos)))
         tempos_melhor_solucao.append(time.time() - start_time)
 
-    print("O algoritmo genetico obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", alg.individuos[0].valor_funcao_objetivo)
+    print("O algoritmo genetico obteve em", i, "geracoes o resultado para a funcao objetivo de", alg.individuos[0].valor_funcao_objetivo)
     print("Com os seguintes valores para cada variavel de decisao:")
     for z in range(alg.num_variaveis):
         print("T{}: {}".format(z+1, populacao[0].solucao[0][z]))
@@ -314,10 +317,10 @@ def main(index, componentes, individuos, peso_max, custo_max, num_geracoes, num_
         gerador_graficos = GeradorGraficos('./Metodos/GA/img/', 'orange')
 
         # Plotando o gráfico por geração
-        gerador_graficos.gera_grafico(f'SolutionEvolutionGA{index}.png', range(0, alg.num_geracoes+1), solucoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (GA)', 'Geração', 'Função Objetivo', show_plot=False)
+        #gerador_graficos.gera_grafico(f'SolutionEvolutionGA{index}.png', range(0, alg.num_geracoes+1), solucoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (GA)', 'Geração', 'Função Objetivo', show_plot=False)
 
         # Plotando o gráfico em log por geração
-        gerador_graficos.gera_grafico(f'SolutionEvolutionGALog{index}.png', range(0, alg.num_geracoes+1), solucoes_log, valor_final_log, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (GA)', 'Geração', 'log(Função Objetivo)', show_plot=False)
+        #gerador_graficos.gera_grafico(f'SolutionEvolutionGALog{index}.png', range(0, alg.num_geracoes+1), solucoes_log, valor_final_log, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (GA)', 'Geração', 'log(Função Objetivo)', show_plot=False)
 
         # Plotando o gráfico com o número de avaliações
         gerador_graficos.gera_grafico(f'SolutionEvolutionGAAvaliacoes{index}.png', range(0, numero_avaliacoes+1), solucoes_avaliacoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Avaliações (GA)', 'Número de Avaliações', 'Função Objetivo', 'Número de Avaliações: ' + str(numero_avaliacoes))

@@ -57,41 +57,62 @@ class GeradorGraficos:
 
     def gera_grafico_comparativo(self, nome_arquivo, dicionario_metodos, title, xlabel, ylabel, xlim=None, show_plot=True):
         show_plot = False
+        fig, ax = plt.subplots(figsize=(12, 6))
+        fig.subplots_adjust(right=0.55)  # reserva espaço à direita para a legenda
         for metodo, data in dicionario_metodos.items():
-            plt.plot(data['x'], data['y'], label=data['label'], color=data['color'])
+            ax.plot(data['x'], data['y'], label=data['label'], color=data['color'])
         # Configurações do gráfico
-        plt.xlabel(xlabel)
-        plt.ylabel(ylabel)
-        plt.title(title)
-        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-        plt.tight_layout()
-        plt.grid(True)
+        ax.set_xlabel(xlabel)
+        ax.set_ylabel(ylabel)
+        ax.set_title(title)
+        ax.grid(True)
         if xlim is not None:
-            plt.xlim(xlim[0], xlim[1])
-        plt.savefig(self.caminho_salvamento + nome_arquivo)
+            ax.set_xlim(xlim[0], xlim[1])
+        ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+        fig.savefig(self.caminho_salvamento + nome_arquivo)
         if show_plot:
             plt.show()
         else:
-            plt.close()
+            plt.close(fig)
 
     def gera_grafico_comparativo_parametros(self, nome_arquivo, dicionario_parametros, title, xlabel, ylabel, xlim=None, show_plot=True):
         show_plot = False
+        fig, ax = plt.subplots(figsize=(12, 6))
+        fig.subplots_adjust(right=0.55)  # reserva espaço à direita para a legenda
         # Verifica se há mais parâmetros que cores
         if len(dicionario_parametros) > len(self.cores):
             print(f"Aviso: Mais parâmetros ({len(dicionario_parametros)}) que cores disponíveis ({len(self.cores)})")
 
         for i, (parametro, data) in enumerate(dicionario_parametros.items()):
-            plt.plot(data['x'], data['y'], label=data['label'], color=self.cores[i % len(self.cores)])
+            ax.plot(data['x'], data['y'], label=data['label'], color=self.cores[i % len(self.cores)])
         # Configurações do gráfico
-        plt.xlabel(xlabel)
-        plt.ylabel(ylabel)
-        plt.title(title)
-        plt.legend()
-        plt.grid(True)
+        ax.set_xlabel(xlabel)
+        ax.set_ylabel(ylabel)
+        ax.set_title(title)
+        ax.grid(True)
         if xlim is not None:
-            plt.xlim(xlim[0], xlim[1])
-        plt.savefig(self.caminho_salvamento + nome_arquivo)
+            ax.set_xlim(xlim[0], xlim[1])
+        ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+        fig.savefig(self.caminho_salvamento + nome_arquivo)
         if show_plot:
             plt.show()
         else:
-            plt.close()
+            plt.close(fig)
+    
+    def gera_grafico_comparativo_parametros_truncado(self, nome_arquivo, dicionario_parametros, title, xlabel, ylabel, valor_truncamento, xlim=None, show_plot=True):
+        dicionario_parametros_filtrado = {}
+        for parametro, dados in dicionario_parametros.items():
+            # Filtrar pontos até valor_truncamento
+            pontos_filtrados = [(t, s) for t, s in zip(dados['x'], dados['y']) if t <= valor_truncamento]
+            if pontos_filtrados:
+                if(dados['x'][-1] != valor_truncamento):
+                    pontos_filtrados.append((valor_truncamento, pontos_filtrados[-1][1]))
+                aval, sols = zip(*pontos_filtrados)
+                # Criar nova entrada no dicionário filtrado
+                novo_label = f'{parametro} ({truncate(sols[-1], 5)})'
+                dicionario_parametros_filtrado[parametro] = {
+                    'x': aval,
+                    'y': sols,
+                    'label': novo_label
+                }
+        self.gera_grafico_comparativo_parametros(nome_arquivo, dicionario_parametros_filtrado, title, xlabel, ylabel, xlim, show_plot)

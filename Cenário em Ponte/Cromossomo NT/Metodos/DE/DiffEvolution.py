@@ -13,12 +13,13 @@ from Geradores.GeradorGraficos import GeradorGraficos
 from utils import truncate
 
 class DifferentialEvolution:
-    def __init__(self, componentes, num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, passo=None, cr=None):
+    def __init__(self, componentes, num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, passo=None, cr=None):
         self.num_individuos = len(individuos)
         self.num_variaveis = num_variaveis
         self.num_geracoes = num_geracoes
-        self.passo = passo if passo is not None else 0.8
-        self.CR = cr if cr is not None else 0.5
+        self.num_max_avaliacoes = num_max_avaliacoes
+        self.passo = passo if passo is not None else 0.7
+        self.CR = cr if cr is not None else 0.6
 
         self.num_tipos_componentes = num_tipos_componentes
         self.componentes = componentes
@@ -103,8 +104,8 @@ class DifferentialEvolution:
         
         return mutantes
 
-def main(index, componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, estudo_parametro=False, passo=None, cr=None):
-    alg = DifferentialEvolution(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, passo, cr)
+def main(index, componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, estudo_parametro=False, passo=None, cr=None):
+    alg = DifferentialEvolution(componentes,num_tipos_componentes, individuos, peso_max, custo_max, num_geracoes, num_max_avaliacoes, num_variaveis, num_max_componentes_subsistema, num_min_componentes_subsistema, passo, cr)
 
     print("POPULAÇÃO INICIAL:")
     for l in range(len(alg.individuos)):
@@ -125,6 +126,8 @@ def main(index, componentes,num_tipos_componentes, individuos, peso_max, custo_m
     tempos_melhor_solucao = []
 
     for i in range(alg.num_geracoes):
+        if(numero_avaliacoes >= alg.num_max_avaliacoes):
+            break
         print("GERACAO {}".format(i+1))
 
         if i == 0:
@@ -208,7 +211,7 @@ def main(index, componentes,num_tipos_componentes, individuos, peso_max, custo_m
     alg.individuos = sorted(alg.individuos, key=lambda x: x.valor_funcao_objetivo, reverse=True)
     melhor_individuo = alg.individuos[0]
 
-    print("O algoritmo de evolução diferencial obteve em", alg.num_geracoes, "geracoes o resultado para a funcao objetivo de", melhor_solucao)
+    print("O algoritmo de evolução diferencial obteve em", i, "geracoes o resultado para a funcao objetivo de", melhor_solucao)
     print("Com os seguintes valores para cada variavel de decisao:")
     for z in range(alg.num_variaveis):
         print("T{}: {}".format(z+1, alg.individuos[0].solucao[0][z]))
@@ -222,10 +225,10 @@ def main(index, componentes,num_tipos_componentes, individuos, peso_max, custo_m
         gerador_graficos = GeradorGraficos('./Metodos/DE/img/', 'green')
 
         # Plotando o gráfico por geração
-        gerador_graficos.gera_grafico(f'SolutionEvolutionDE{index}.png', range(0, alg.num_geracoes + 1), solucoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (DE)', 'Geração', 'Função Objetivo', show_plot=False)
+        #gerador_graficos.gera_grafico(f'SolutionEvolutionDE{index}.png', range(0, alg.num_geracoes + 1), solucoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (DE)', 'Geração', 'Função Objetivo', show_plot=False)
 
         # Plotando o gráfico em log por geração
-        gerador_graficos.gera_grafico(f'SolutionEvolutionDELog{index}.png', range(0, alg.num_geracoes + 1), solucoes_log, valor_final_log, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (DE)', 'Geração', 'log(Função Objetivo)', show_plot=False)
+        #gerador_graficos.gera_grafico(f'SolutionEvolutionDELog{index}.png', range(0, alg.num_geracoes + 1), solucoes_log, valor_final_log, geracao, 'Evolução da Melhor Solução ao Longo das Gerações (DE)', 'Geração', 'log(Função Objetivo)', show_plot=False)
 
         # Plotando o gráfico com o número de avaliações
         gerador_graficos.gera_grafico(f'SolutionEvolutionDEAvaliacoes{index}.png', range(0, numero_avaliacoes + 1), solucoes_avaliacoes, valor_final, geracao, 'Evolução da Melhor Solução ao Longo das Avaliações (DE)', 'Número de Avaliações', 'Função Objetivo', 'Número de Avaliações: ' + str(numero_avaliacoes))
